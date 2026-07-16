@@ -1,6 +1,16 @@
-# План деплоя сайта курса
+# Деплой сайта курса
 
 Сайт — статика (HTML + CSS + SVG + шрифты), без бэкенда. Папка `site/` — это уже готовый корень сайта, собирать ничего не нужно.
+
+## ✅ Сайт задеплоен на GitHub Pages
+
+- **Живой адрес:** https://tuptop.github.io/dopechatka/
+- **Репозиторий:** https://github.com/tuptop/dopechatka (публичный)
+- **Как обновить сайт:** закоммитить изменения в `main` и запушить — GitHub Actions (`.github/workflows/pages.yml`) сам выложит содержимое `site/`:
+  ```bash
+  git add -A && git commit -m "Обновление" && git push
+  ```
+- **Свой домен:** в настройках репозитория → Pages → Custom domain, у регистратора CNAME-запись `www` → `tuptop.github.io` (и A-записи apex на IP GitHub Pages).
 
 ## Перед выкладкой (блокеры)
 
