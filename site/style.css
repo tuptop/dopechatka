@@ -1,0 +1,165 @@
+/* ===== Шрифты: везде TT Norms ===== */
+@font-face {
+  font-family: 'TT Norms';
+  src: url('fonts/TTNorms-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TT Norms';
+  src: url('fonts/TTNorms-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TT Norms';
+  src: url('fonts/TTNorms-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'TT Norms';
+  src: url('fonts/TTNorms-Black.otf') format('opentype');
+  font-weight: 900;
+  font-display: swap;
+}
+
+/* ===== База ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: #fff; color: #000; }
+
+/* Страница — холст 1440px, масштабируется скриптом под ширину окна */
+#viewport { overflow: hidden; }
+#page {
+  position: relative;
+  width: 1440px;
+  transform-origin: top left;
+}
+#page img { display: block; }
+
+/* Секции: фиксированная высота из макета, всё внутри — по координатам */
+/* Горизонталь режем (баблы выходят за края холста), вертикаль — нет,
+   чтобы не срезать выносные элементы букв на стыках секций */
+section.canvas { position: relative; overflow-x: clip; overflow-y: visible; }
+.abs { position: absolute; }
+
+/* ===== Типографика ===== */
+.h-xl {
+  font: 900 87.7px/normal 'TT Norms', sans-serif;
+  white-space: nowrap;
+}
+.h-lg { font: 900 45.5px/normal 'TT Norms', sans-serif; }
+.norms-32 { font: 700 31.9px/normal 'TT Norms', sans-serif; }
+.norms-29 { font: 700 29.2px/normal 'TT Norms', sans-serif; white-space: nowrap; }
+.norms-15 { font: 700 15px/normal 'TT Norms', sans-serif; }
+.body { font: 400 20px/1.35 'TT Norms', sans-serif; }
+.body-n { font: 400 20px/normal 'TT Norms', sans-serif; }
+.dim { opacity: 0.1; }
+
+/* ===== Баблы (вопросы из чатов) ===== */
+.b {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  width: var(--w); height: var(--h);
+  display: flex; align-items: center; justify-content: center;
+}
+.bubble {
+  transform: rotate(var(--r, 0deg));
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 16px 16px 0 16px;
+  padding: 19px 16.5px 11px;
+  display: flex; flex-direction: column; gap: 11px;
+}
+.bubble > p {
+  font: 500 19.35px/1 'TT Norms', sans-serif;
+  letter-spacing: 0.58px;
+  width: var(--tw);
+  word-break: break-word;
+}
+.bubble .meta {
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.bubble .meta img { width: 32px; height: 31px; }
+.bubble .meta time {
+  font: 700 12.24px/1.67 'TT Norms', sans-serif;
+  letter-spacing: 0.37px;
+  white-space: nowrap;
+}
+
+/* ===== Карточка цены (клякса в правом верхнем углу) ===== */
+.price {
+  position: absolute;
+  left: 999px; top: -113px;
+  width: 358.4px; height: 443px;
+  z-index: 10;
+}
+.price .frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+.price .logo { position: absolute; left: 51px; top: 141px; width: 250px; height: 98px; }
+.price p { position: absolute; white-space: nowrap; }
+.price .label {
+  left: 55px; top: 265px;
+  font: 500 19.35px/1.25 'TT Norms', sans-serif;
+  letter-spacing: 0.58px;
+}
+.price .sum {
+  left: 51px; top: 289px;
+  font: 900 34.9px/normal 'TT Norms', sans-serif;
+}
+.btn {
+  position: absolute;
+  left: 62px; top: 358px;
+  background: #000;
+  border: 2px solid #000;
+  border-radius: 14px;
+  padding: 10px 21px;
+  font: 700 22.3px/normal 'TT Norms', sans-serif;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn:hover { background: #fff; color: #000; }
+
+/* ===== Эксперты ===== */
+.center-x { transform: translateX(-50%); text-align: center; }
+
+/* ===== Программа курса ===== */
+.program {
+  position: absolute;
+  left: 185px; top: 27px;
+  width: 557px;
+  display: flex; flex-direction: column; gap: 31px;
+}
+.program section { display: flex; flex-direction: column; gap: 12.5px; }
+
+/* Аннотации справа от программы */
+.note {
+  position: absolute;
+  width: 409px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.note p:last-child { width: 349px; }
+
+/* ===== Вопросы ===== */
+.faq-link { color: #000; text-decoration: underline; }
+.faq-link:hover { text-decoration: none; }
+
+/* Ссылка-урок в программе */
+.lesson-link { color: #000; text-decoration: underline; text-underline-position: from-font; }
+.lesson-link:hover { text-decoration: none; }
+
+/* ===== Сделка (футер с ценой) ===== */
+.deal {
+  position: absolute;
+  left: 120px; top: 96px;
+  width: 1200px;
+  display: flex; flex-direction: column; gap: 32px;
+}
+.deal h2 { font: 700 48px/normal 'TT Norms', sans-serif; }
+.deal .prices { font: 700 32px/normal 'TT Norms', sans-serif; width: 900px; }
+.deal .features { width: 900px; }
+.deal .order {
+  font: 700 24px/normal 'TT Norms', sans-serif;
+  color: #000; text-decoration: none;
+}
+.deal .order:hover { text-decoration: underline; }
