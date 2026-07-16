@@ -397,5 +397,36 @@
   </div>
 </div>
 
+<script>
+  // Плашки-вопросы можно перетаскивать мышкой
+  (() => {
+    let z = 20; // поверх остальных плашек, но под кляксой с ценой (z-index: 100)
+    let drag = null;
+
+    document.querySelectorAll('.b').forEach(b => {
+      b.addEventListener('pointerdown', e => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        e.preventDefault();
+        drag = { el: b, dx: e.clientX - b.offsetLeft, dy: e.clientY - b.offsetTop };
+        b.style.zIndex = ++z;
+        b.classList.add('dragging');
+      });
+    });
+
+    window.addEventListener('pointermove', e => {
+      if (!drag) return;
+      drag.el.style.left = (e.clientX - drag.dx) + 'px';
+      drag.el.style.top = (e.clientY - drag.dy) + 'px';
+    });
+
+    const drop = () => {
+      if (!drag) return;
+      drag.el.classList.remove('dragging');
+      drag = null;
+    };
+    window.addEventListener('pointerup', drop);
+    window.addEventListener('pointercancel', drop);
+  })();
+</script>
 </body>
 </html>

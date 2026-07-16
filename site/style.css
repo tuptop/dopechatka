@@ -69,7 +69,10 @@ section.canvas { position: relative; }
   left: var(--x); top: var(--y);
   width: var(--w); height: var(--h);
   display: flex; align-items: center; justify-content: center;
+  cursor: grab;
 }
+.b.dragging { cursor: grabbing; }
+.b.dragging .bubble { box-shadow: 6px 8px 0 rgba(0, 0, 0, 0.12); }
 .bubble {
   transform: rotate(var(--r, 0deg));
   background: #fff;
