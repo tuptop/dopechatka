@@ -71,8 +71,17 @@ section.canvas { position: relative; }
   display: flex; align-items: center; justify-content: center;
   cursor: grab;
 }
+/* Подсказка при наведении: плашка приподнимается — её можно таскать */
+.bubble { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.b:hover .bubble {
+  transform: translate(-2px, -3px) rotate(var(--r, 0deg));
+  box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.1);
+}
 .b.dragging { cursor: grabbing; }
-.b.dragging .bubble { box-shadow: 6px 8px 0 rgba(0, 0, 0, 0.12); }
+.b.dragging .bubble {
+  transform: translate(-2px, -3px) rotate(var(--r, 0deg));
+  box-shadow: 6px 8px 0 rgba(0, 0, 0, 0.14);
+}
 .bubble {
   transform: rotate(var(--r, 0deg));
   background: #fff;
