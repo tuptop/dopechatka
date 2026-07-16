@@ -138,7 +138,7 @@ section.canvas { position: relative; }
 /* ===== Программа курса ===== */
 .program {
   position: absolute;
-  left: 185px; top: 27px;
+  left: 185px; top: 101px;
   width: 557px;
   display: flex; flex-direction: column; gap: 31px;
 }
