@@ -422,7 +422,7 @@
     window.addEventListener('pointerup', drop);
     window.addEventListener('pointercancel', drop);
 
-    // Кляксу с ценой можно двигать по вертикали
+    // Кляксу с ценой можно двигать по горизонтали
     const price = document.querySelector('.price');
     let priceDrag = null;
     price.addEventListener('dragstart', e => e.preventDefault());
@@ -430,16 +430,16 @@
       if (e.pointerType !== 'mouse' || e.button !== 0) return;
       if (e.target.closest('a')) return; // кнопка внутри остаётся кликабельной
       e.preventDefault();
-      priceDrag = { dy: e.clientY - price.getBoundingClientRect().top };
+      priceDrag = { dx: e.clientX - price.getBoundingClientRect().left };
       price.classList.add('dragging');
     });
     window.addEventListener('pointermove', e => {
       if (!priceDrag) return;
-      const top = e.clientY - priceDrag.dy;
+      const left = e.clientX - priceDrag.dx;
       // не даём утащить кляксу совсем за экран
-      const min = -price.offsetHeight + 80;
-      const max = window.innerHeight - 80;
-      price.style.top = Math.min(max, Math.max(min, top)) + 'px';
+      const min = -price.offsetWidth + 80;
+      const max = window.innerWidth - 80;
+      price.style.left = Math.min(max, Math.max(min, left)) + 'px';
     });
     const priceDrop = () => { priceDrag = null; price.classList.remove('dragging'); };
     window.addEventListener('pointerup', priceDrop);
