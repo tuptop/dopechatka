@@ -144,6 +144,14 @@ section.canvas { position: relative; }
 /* ===== Эксперты ===== */
 .center-x { transform: translateX(-50%); text-align: center; }
 
+/* Вакансии: плюсики и подписи — ссылки в Телеграм */
+.vacancy {
+  color: #000;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+.vacancy:hover { transform: scale(1.04); }
+
 /* ===== Программа курса ===== */
 .program {
   position: absolute;
