@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=1440">
   <title>Курс по допечатке — проблемы с допечаткой? Мы сделаем курс, который сильно всё упростит</title>
   <meta name="description" content="Курс по допечатной подготовке для дизайнеров, менеджеров и печатников. 15 уроков в трёх частях, рабочий инструмент к каждому уроку. Сейчас — 1 000₽ по предзаказу.">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
 <div id="viewport">
@@ -385,15 +385,8 @@
           <p>15 000 ₽ — когда выйдут все 15 уроков</p>
         </div>
         <p class="body-n features">15 уроков в трёх частях · рабочий инструмент к каждому · доступ в закрытую группу навсегда · ответы автора и трёх экспертов · 50+ разобранных ситуаций из практики</p>
-        <a class="order" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">[ Оформить предзаказ ]</a>
+        <a class="btn-deal" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Оформить предзаказ</a>
       </div>
-    </section>
-
-    <!-- ===== 8. Скетчи внизу ===== -->
-    <section class="canvas" style="height:340px" aria-hidden="true">
-      <img class="abs" src="assets/sketch-1.svg" alt="" style="left:146.5px; top:29.5px; width:266.6px; height:262.9px">
-      <img class="abs" src="assets/sketch-2.svg" alt="" style="left:418.8px; top:55.2px; width:378.8px; height:243.8px">
-      <img class="abs" src="assets/sketch-3.svg" alt="" style="left:902.8px; top:21.5px; width:392.6px; height:273.9px">
     </section>
 
   </div>
@@ -428,6 +421,29 @@
     };
     window.addEventListener('pointerup', drop);
     window.addEventListener('pointercancel', drop);
+
+    // Кляксу с ценой можно двигать по вертикали
+    const price = document.querySelector('.price');
+    let priceDrag = null;
+    price.addEventListener('dragstart', e => e.preventDefault());
+    price.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      if (e.target.closest('a')) return; // кнопка внутри остаётся кликабельной
+      e.preventDefault();
+      priceDrag = { dy: e.clientY - price.getBoundingClientRect().top };
+      price.classList.add('dragging');
+    });
+    window.addEventListener('pointermove', e => {
+      if (!priceDrag) return;
+      const top = e.clientY - priceDrag.dy;
+      // не даём утащить кляксу совсем за экран
+      const min = -price.offsetHeight + 80;
+      const max = window.innerHeight - 80;
+      price.style.top = Math.min(max, Math.max(min, top)) + 'px';
+    });
+    const priceDrop = () => { priceDrag = null; price.classList.remove('dragging'); };
+    window.addEventListener('pointerup', priceDrop);
+    window.addEventListener('pointercancel', priceDrop);
   })();
 </script>
 </body>
