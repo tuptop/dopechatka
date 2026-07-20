@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=1440">
   <title>Курс по допечатке — проблемы с допечаткой? Мы сделаем курс, который сильно всё упростит</title>
   <meta name="description" content="Курс по допечатной подготовке для дизайнеров, менеджеров и печатников. 15 уроков в трёх частях, рабочий инструмент к каждому уроку. Сейчас — 1 000₽ по предзаказу.">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
 <div id="viewport">
@@ -454,10 +454,11 @@
     const circle = document.getElementById('nastya-circle');
     const video = circle.querySelector('video');
     const ring = circle.querySelector('.ring path');
-    (function tick() {
+    const setProgress = () => {
       if (video.duration) ring.style.strokeDashoffset = 100 - (video.currentTime / video.duration) * 100;
-      requestAnimationFrame(tick);
-    })();
+    };
+    video.addEventListener('timeupdate', setProgress);
+    video.addEventListener('loadedmetadata', setProgress);
     const state = () => {
       circle.classList.toggle('paused', video.paused);
       circle.classList.toggle('playing', !video.paused);

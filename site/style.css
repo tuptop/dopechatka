@@ -171,6 +171,8 @@ section.canvas { position: relative; }
   stroke-linecap: round;
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
+  /* timeupdate тикает ~4 раза в секунду — переход сглаживает движение линии */
+  transition: stroke-dashoffset 0.3s linear;
 }
 
 /* Рисованные иконки состояний: плей — пока на паузе, пауза — при наведении во время игры.
