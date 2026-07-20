@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=1440">
   <title>Курс по допечатке — проблемы с допечаткой? Мы сделаем курс, который сильно всё упростит</title>
   <meta name="description" content="Курс по допечатной подготовке для дизайнеров, менеджеров и печатников. 15 уроков в трёх частях, рабочий инструмент к каждому уроку. Сейчас — 1 000₽ по предзаказу.">
-  <link rel="stylesheet" href="style.css?v=16">
+  <link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
 <div id="viewport">
@@ -528,24 +528,19 @@
       return; // без анимации и без ленты
     }
 
-    // 1) стартовые плашки влетают по одной
-    existing.forEach((b, i) => setTimeout(() => b.classList.add('in'), 120 + i * 65));
-    const introDone = 120 + existing.length * 65;
+    // 1) стартовые плашки влетают по одной в случайном порядке
+    const order = existing.slice();
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    order.forEach((b, i) => setTimeout(() => b.classList.add('in'), 120 + i * 65));
+    const introDone = 120 + order.length * 65;
 
-    // 2) дальше — живая лента: новая плашка раз в 2–5 секунд
-    const live = [];      // добавленные в ленте плашки
-    const LIVE_MAX = 12;  // чтобы экран не забился — держим окно
+    // 2) дальше — живая лента: новая плашка раз в 2–5 секунд, без лимита
     const spawn = () => {
       if (poolIdx >= POOL.length) poolIdx = 0; // пул кончился — идём по кругу
-      const b = makeBubble(POOL[poolIdx++]);
-      show(b);
-      live.push(b);
-      if (live.length > LIVE_MAX) {
-        const old = live.shift();
-        old.classList.remove('in');
-        old.classList.add('out');
-        setTimeout(() => old.remove(), 500);
-      }
+      show(makeBubble(POOL[poolIdx++]));
       setTimeout(spawn, rnd(2000, 5000));
     };
     setTimeout(spawn, introDone + rnd(600, 1500));
