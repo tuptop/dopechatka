@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=1440">
   <title>Курс по допечатке — проблемы с допечаткой? Мы сделаем курс, который сильно всё упростит</title>
   <meta name="description" content="Курс по допечатной подготовке для дизайнеров, менеджеров и печатников. 15 уроков в трёх частях, рабочий инструмент к каждому уроку. Сейчас — 1 000₽ по предзаказу.">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 <div id="viewport">
@@ -211,13 +211,16 @@
 
       <img class="abs" src="assets/circle-fill.svg" alt="" style="left:175.7px; top:241px; width:287px; height:287px">
       <img class="abs" src="assets/circle-fill.svg" alt="" style="left:568.7px; top:241px; width:287px; height:287px">
-      <img class="abs" src="assets/circle-fill.svg" alt="" style="left:974.7px; top:241px; width:287px; height:287px">
+      <div class="abs video-circle" id="nastya-circle" style="left:974.7px; top:241px; width:287px; height:287px" title="Кружок от Насти — нажмите, чтобы включить звук">
+        <video src="assets/nastya-circle.mp4" muted autoplay loop playsinline></video>
+        <svg class="ring" viewBox="0 0 287 287" aria-hidden="true"><circle cx="143.5" cy="143.5" r="140" pathLength="100"/></svg>
+      </div>
       <img class="abs" src="assets/circle-sketch.svg" alt="" style="left:174.7px; top:248.3px; width:291px; height:268px">
       <img class="abs" src="assets/circle-sketch.svg" alt="" style="left:564.4px; top:248.3px; width:291px; height:268px">
-      <img class="abs" src="assets/circle-sketch.svg" alt="" style="left:970.7px; top:248.3px; width:291px; height:268px">
+      <img class="abs" src="assets/circle-sketch.svg" alt="" style="pointer-events:none; left:970.7px; top:248.3px; width:291px; height:268px">
       <img class="abs" src="assets/eyes.svg" alt="" style="left:388.4px; top:253.5px; width:30.3px; height:19.5px">
       <img class="abs" src="assets/eyes.svg" alt="" style="left:778.1px; top:253.5px; width:30.3px; height:19.5px">
-      <img class="abs" src="assets/eyes.svg" alt="" style="left:1184.4px; top:253.5px; width:30.3px; height:19.5px">
+      <img class="abs" src="assets/eyes.svg" alt="" style="pointer-events:none; left:1184.4px; top:253.5px; width:30.3px; height:19.5px">
 
       <p class="abs h-lg center-x" style="left:321.5px; top:542px; white-space:nowrap">Паша</p>
       <p class="abs h-lg center-x" style="left:705.5px; top:542px; white-space:nowrap">Тоня</p>
@@ -444,6 +447,20 @@
     const priceDrop = () => { priceDrag = null; price.classList.remove('dragging'); };
     window.addEventListener('pointerup', priceDrop);
     window.addEventListener('pointercancel', priceDrop);
+
+    // Кружок от Насти: круговой таймбар, клик — звук, ещё клик — пауза
+    const circle = document.getElementById('nastya-circle');
+    const video = circle.querySelector('video');
+    const ring = circle.querySelector('.ring circle');
+    (function tick() {
+      if (video.duration) ring.style.strokeDashoffset = 100 - (video.currentTime / video.duration) * 100;
+      requestAnimationFrame(tick);
+    })();
+    circle.addEventListener('click', () => {
+      if (video.muted) { video.muted = false; video.currentTime = 0; video.play(); }
+      else if (video.paused) video.play();
+      else video.pause();
+    });
   })();
 </script>
 </body>
