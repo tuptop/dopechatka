@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=1440">
   <title>Курс по допечатке — проблемы с допечаткой? Мы сделаем курс, который сильно всё упростит</title>
   <meta name="description" content="Курс по допечатной подготовке для дизайнеров, менеджеров и печатников. 15 уроков в трёх частях, рабочий инструмент к каждому уроку. Сейчас — 1 000₽ по предзаказу.">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
 <div id="viewport">
@@ -211,8 +211,10 @@
 
       <img class="abs" src="assets/circle-fill.svg" alt="" style="left:175.7px; top:241px; width:287px; height:287px">
       <img class="abs" src="assets/circle-fill.svg" alt="" style="left:568.7px; top:241px; width:287px; height:287px">
-      <div class="abs video-circle" id="nastya-circle" style="left:974.7px; top:241px; width:287px; height:287px" title="Кружок от Насти — нажмите, чтобы включить звук">
-        <video src="assets/nastya-circle.mp4" muted autoplay loop playsinline></video>
+      <div class="abs video-circle paused" id="nastya-circle" style="left:974.7px; top:241px; width:287px; height:287px" title="Кружок от Насти — нажмите, чтобы посмотреть">
+        <video src="assets/nastya-circle.mp4" loop playsinline preload="auto"></video>
+        <img class="state-icon icon-play" src="assets/play-icon.svg" alt="">
+        <img class="state-icon icon-pause" src="assets/pause-icon.svg" alt="">
         <svg class="ring" viewBox="0 0 292.913 269.676" aria-hidden="true"><path pathLength="100" d="M236.424 20.7858C236.915 22.1974 239.812 27.3014 259.096 48.5232C266.58 56.7602 270.046 61.3154 275.801 72.4172C278.485 77.5949 280.947 84.7538 284.473 102.205C287.02 114.814 289.515 135.339 291.008 149.074C294.252 178.915 288.033 190.472 284.007 197.259C279.773 204.396 270.841 212.669 262.459 220.863C250.985 232.079 236.165 243.562 224.28 251.508C216.501 256.709 198.5 261.404 170.308 266.812C156.861 269.391 144.705 268.893 132.262 267.714C107.178 265.336 87.6592 258.82 75.402 254.044C58.5017 247.459 42.5857 232.703 31.5011 220.711C23.2752 211.813 18.1901 198.084 13.4301 184.796C3.64367 157.476 2.54932 143.06 1.44213 134.256C-0.507399 118.753 4.31286 109.062 9.40387 96.4518C18.6621 73.5187 28.8306 55.2745 33.4914 48.3297C41.3812 36.5738 56.7458 25.6585 71.5711 16.2386C81.1371 10.1604 99.1201 8.45072 125.521 2.88767C137.982 1.97621 143.769 1.56593 147.108 1.36408C149.175 1.29545 151.999 1.29545 155.09 1.00007"/></svg>
       </div>
       <img class="abs" src="assets/circle-sketch.svg" alt="" style="left:174.7px; top:248.3px; width:291px; height:268px">
@@ -448,7 +450,7 @@
     window.addEventListener('pointerup', priceDrop);
     window.addEventListener('pointercancel', priceDrop);
 
-    // Кружок от Насти: круговой таймбар, клик — звук, ещё клик — пауза
+    // Кружок от Насти: default (плей) → play (звук) → hover (пауза), таймбар по рисованной линии
     const circle = document.getElementById('nastya-circle');
     const video = circle.querySelector('video');
     const ring = circle.querySelector('.ring path');
@@ -456,9 +458,14 @@
       if (video.duration) ring.style.strokeDashoffset = 100 - (video.currentTime / video.duration) * 100;
       requestAnimationFrame(tick);
     })();
+    const state = () => {
+      circle.classList.toggle('paused', video.paused);
+      circle.classList.toggle('playing', !video.paused);
+    };
+    video.addEventListener('play', state);
+    video.addEventListener('pause', state);
     circle.addEventListener('click', () => {
-      if (video.muted) { video.muted = false; video.currentTime = 0; video.play(); }
-      else if (video.paused) video.play();
+      if (video.paused) { video.muted = false; video.play(); }
       else video.pause();
     });
   })();
