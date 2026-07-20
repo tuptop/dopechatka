@@ -147,15 +147,8 @@ section.canvas { position: relative; }
 /* ===== Эксперты ===== */
 .center-x { transform: translateX(-50%); text-align: center; }
 
-/* Кружок (видео) + круговой таймбар */
+/* Кружок (видео) + рисованный таймбар */
 .video-circle { cursor: pointer; }
-/* Чёрная скетч-обводка теперь внутри контейнера — едет вместе с кружком */
-.video-circle .sketch-overlay {
-  position: absolute;
-  left: -4px; top: 7.3px;
-  width: 291px; height: 268px;
-  pointer-events: none;
-}
 /* Рукописные подписи-ярлычки («дизайнер», «нам бы») */
 .label-hand {
   position: absolute;
@@ -171,25 +164,30 @@ section.canvas { position: relative; }
   object-fit: cover;
   display: block;
 }
-/* Таймбар — та же рисованная линия, что и обводка кружка:
-   зелёная «прорисовывается» поверх чёрной от узелка по ходу видео */
+/* Таймбар — сама рисованная обводка кружка: узелок едет по контуру,
+   а пройденная линия за ним стирается (как в макете) */
 .video-circle .ring {
   position: absolute;
-  left: -4px; top: 7.3px;   /* точно поверх circle-sketch.svg */
-  width: 291px; height: 268px;
+  left: -5.36px; top: -4px;   /* центр контура → центр видео (viewBox 293×291) */
+  width: 293px; height: 291px;
   overflow: visible;
   pointer-events: none;
 }
-.video-circle .ring path {
+.video-circle .ring .track,
+.video-circle .ring .knot path {
   fill: none;
-  stroke: #8EE05F; /* зелёный рукописных пометок */
-  stroke-width: 4;
+  stroke: #000;
+  stroke-width: 2;
   stroke-linecap: round;
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  /* timeupdate тикает ~4 раза в секунду — переход сглаживает движение линии */
-  transition: stroke-dashoffset 0.3s linear;
+  stroke-linejoin: round;
 }
+/* dash 100 / gap 100: смещение назад по ходу пути прячет пройденный участок */
+.video-circle .ring .track {
+  stroke-dasharray: 100 100;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.28s linear; /* timeupdate ~4/сек → сглаживаем */
+}
+.video-circle .ring .knot { transition: transform 0.28s linear; }
 
 /* Рисованные иконки состояний: плей — пока на паузе, пауза — при наведении во время игры.
    visibility вместо display: правило #page img { display: block } сильнее по специфичности */
