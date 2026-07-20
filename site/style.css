@@ -70,6 +70,24 @@ section.canvas { position: relative; }
   width: var(--w); height: var(--h);
   display: flex; align-items: center; justify-content: center;
   cursor: grab;
+  /* до анимации появления плашки скрыты */
+  opacity: 0;
+  transform: scale(0.6);
+}
+/* влёт появляются с лёгким «отскоком» */
+.b.in {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.26s ease, transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+/* уходят из живой ленты плавно */
+.b.out {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .b, .b.in { transition: none; }
 }
 /* Подсказка при наведении: плашка приподнимается — её можно таскать */
 .bubble { transition: transform 0.15s ease, box-shadow 0.15s ease; }
