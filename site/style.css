@@ -124,6 +124,30 @@ section.canvas { position: relative; }
   white-space: nowrap;
 }
 
+/* ===== Кнопка звука живой ленты ===== */
+.sound-toggle {
+  position: fixed;
+  left: 20px; bottom: 20px;
+  z-index: 200;
+  width: 52px; height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #000;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.sound-toggle svg { width: 26px; height: 26px; display: block; }
+.sound-toggle .spk { fill: #000; }
+.sound-toggle .wave { fill: none; stroke: #000; stroke-width: 2; stroke-linecap: round; }
+.sound-toggle .slash { stroke: #000; stroke-width: 2; stroke-linecap: round; display: none; }
+.sound-toggle.muted .wave { display: none; }
+.sound-toggle.muted .slash { display: block; }
+.sound-toggle:hover { background: #000; }
+.sound-toggle:hover .spk { fill: #fff; }
+.sound-toggle:hover .wave { stroke: #fff; }
+.sound-toggle:hover .slash { stroke: #fff; }
+
 /* ===== Карточка цены (клякса в правом верхнем углу) =====
    Зафиксирована сверху: остаётся на месте при скролле */
 .price {

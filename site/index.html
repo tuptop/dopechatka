@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=1440">
   <title>Курс по допечатке — проблемы с допечаткой? Мы сделаем курс, который сильно всё упростит</title>
   <meta name="description" content="Курс по допечатной подготовке для дизайнеров, менеджеров и печатников. 15 уроков в трёх частях, рабочий инструмент к каждому уроку. Сейчас — 1 000₽ по предзаказу.">
-  <link rel="stylesheet" href="style.css?v=17">
+  <link rel="stylesheet" href="style.css?v=18">
 </head>
 <body>
 <div id="viewport">
@@ -407,6 +407,16 @@
   </div>
 </div>
 
+<!-- Переключатель звука живой ленты -->
+<button id="sound-toggle" class="sound-toggle" type="button" aria-label="Выключить звук" title="Звук уведомлений">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path class="spk" d="M4 9v6h4l5 4V5L8 9H4z"/>
+    <path class="wave wave1" d="M15.5 9a4.2 4.2 0 0 1 0 6"/>
+    <path class="wave wave2" d="M18 6.5a7.5 7.5 0 0 1 0 11"/>
+    <line class="slash" x1="3.5" y1="3.5" x2="20.5" y2="20.5"/>
+  </svg>
+</button>
+
 <script>
   // Плашки-вопросы: появление по одной, живая лента новых, перетаскивание мышкой
   (() => {
@@ -424,34 +434,41 @@
     ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(ev =>
       window.addEventListener(ev, wake, { passive: true }));
 
+    let muted = localStorage.getItem('dp_muted') === '1';
+
+    // Короткое тёплое «ди-динь» вверх с маримба-обертоном — в духе messenger-уведомления
     const playPop = () => {
+      if (muted) return;
       const c = audio();
       if (!c || c.state !== 'running') return; // до жеста пользователя — тихо
-      const t = c.currentTime;
+      const t0 = c.currentTime;
       const master = c.createGain();
-      master.gain.value = 0.16;
+      master.gain.value = 0.24;
       master.connect(c.destination);
-      // основной «боп» с лёгким скольжением вниз
-      const o = c.createOscillator();
-      o.type = 'sine';
-      o.frequency.setValueAtTime(920, t);
-      o.frequency.exponentialRampToValueAtTime(660, t + 0.09);
-      const g = c.createGain();
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(1, t + 0.008);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.19);
-      o.connect(g).connect(master);
-      o.start(t); o.stop(t + 0.2);
-      // короткий «тик»-призвук для «пузырька»
-      const o2 = c.createOscillator();
-      o2.type = 'triangle';
-      o2.frequency.setValueAtTime(1650, t);
-      const g2 = c.createGain();
-      g2.gain.setValueAtTime(0.0001, t);
-      g2.gain.exponentialRampToValueAtTime(0.35, t + 0.004);
-      g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
-      o2.connect(g2).connect(master);
-      o2.start(t); o2.stop(t + 0.06);
+      const note = (freq, delay, dur, peak) => {
+        const t = t0 + delay;
+        const g = c.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(peak, t + 0.005);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        g.connect(master);
+        // основной тон
+        const o = c.createOscillator();
+        o.type = 'sine';
+        o.frequency.value = freq;
+        o.connect(g);
+        o.start(t); o.stop(t + dur + 0.02);
+        // неровный обертон — «деревянный» маримба/колокольчик тембр
+        const o2 = c.createOscillator();
+        o2.type = 'sine';
+        o2.frequency.value = freq * 2.76;
+        const g2 = c.createGain();
+        g2.gain.value = 0.16;
+        o2.connect(g2).connect(g);
+        o2.start(t); o2.stop(t + dur * 0.5 + 0.02);
+      };
+      note(784, 0, 0.16, 1);        // G5
+      note(1175, 0.075, 0.20, 0.9); // D6 — быстрый скачок вверх
     };
 
     const makeDraggable = b => {
@@ -586,6 +603,20 @@
       setTimeout(spawn, rnd(2000, 5000));
     };
     setTimeout(spawn, introDone + rnd(600, 1500));
+
+    // Кнопка вкл/выкл звука (выбор запоминается)
+    const soundBtn = document.getElementById('sound-toggle');
+    const applyMuted = () => {
+      soundBtn.classList.toggle('muted', muted);
+      soundBtn.setAttribute('aria-label', muted ? 'Включить звук' : 'Выключить звук');
+    };
+    applyMuted();
+    soundBtn.addEventListener('click', () => {
+      muted = !muted;
+      localStorage.setItem('dp_muted', muted ? '1' : '0');
+      applyMuted();
+      if (!muted) { wake(); playPop(); } // включили — сразу коротко подтверждаем звуком
+    });
 
     // Кляксу с ценой можно двигать по горизонтали
     const price = document.querySelector('.price');
