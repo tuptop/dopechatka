@@ -413,6 +413,47 @@
     let z = 20; // поверх остальных плашек, но под кляксой с ценой (z-index: 100)
     let drag = null;
 
+    // ===== Звук «пришло сообщение» (синтез через Web Audio, без внешних файлов) =====
+    let actx = null;
+    const audio = () => {
+      if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
+      return actx;
+    };
+    // браузеры блокируют звук до первого действия — будим контекст на любом жесте
+    const wake = () => { const c = audio(); if (c && c.state === 'suspended') c.resume(); };
+    ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(ev =>
+      window.addEventListener(ev, wake, { passive: true }));
+
+    const playPop = () => {
+      const c = audio();
+      if (!c || c.state !== 'running') return; // до жеста пользователя — тихо
+      const t = c.currentTime;
+      const master = c.createGain();
+      master.gain.value = 0.16;
+      master.connect(c.destination);
+      // основной «боп» с лёгким скольжением вниз
+      const o = c.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(920, t);
+      o.frequency.exponentialRampToValueAtTime(660, t + 0.09);
+      const g = c.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(1, t + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.19);
+      o.connect(g).connect(master);
+      o.start(t); o.stop(t + 0.2);
+      // короткий «тик»-призвук для «пузырька»
+      const o2 = c.createOscillator();
+      o2.type = 'triangle';
+      o2.frequency.setValueAtTime(1650, t);
+      const g2 = c.createGain();
+      g2.gain.setValueAtTime(0.0001, t);
+      g2.gain.exponentialRampToValueAtTime(0.35, t + 0.004);
+      g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+      o2.connect(g2).connect(master);
+      o2.start(t); o2.stop(t + 0.06);
+    };
+
     const makeDraggable = b => {
       b.addEventListener('pointerdown', e => {
         if (e.pointerType !== 'mouse' || e.button !== 0) return;
@@ -541,6 +582,7 @@
     const spawn = () => {
       if (poolIdx >= POOL.length) poolIdx = 0; // пул кончился — идём по кругу
       show(makeBubble(POOL[poolIdx++]));
+      playPop(); // «пришло сообщение»
       setTimeout(spawn, rnd(2000, 5000));
     };
     setTimeout(spawn, introDone + rnd(600, 1500));
