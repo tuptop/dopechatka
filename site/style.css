@@ -194,6 +194,21 @@ section.canvas { position: relative; }
   border-radius: 50%;
   object-fit: cover;
 }
+/* Круг с фото, которое нужно отмасштабировать под общий размер головы */
+.photo-frame {
+  border-radius: 50%;
+  overflow: hidden;
+}
+.photo-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* фото Паши крупнее по плану — уменьшаем, плечи держим у нижнего края */
+.photo-scaled {
+  transform: scale(0.82);
+  transform-origin: center bottom;
+}
 
 /* Кружок (видео) + рисованный таймбар */
 .video-circle { cursor: pointer; }
