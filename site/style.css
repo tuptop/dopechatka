@@ -189,6 +189,12 @@ section.canvas { position: relative; }
 /* ===== Эксперты ===== */
 .center-x { transform: translateX(-50%); text-align: center; }
 
+/* Фото эксперта в круге (скетч-обводка кладётся сверху отдельным слоем) */
+.photo-circle {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 /* Кружок (видео) + рисованный таймбар */
 .video-circle { cursor: pointer; }
 /* Рукописные подписи-ярлычки («дизайнер», «нам бы») */
