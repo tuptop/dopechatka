@@ -264,10 +264,12 @@ section.canvas { position: relative; }
   left: -5.4px; top: 0;
   width: 293px; height: 287px;
 }
-/* плей — бейджиком в правом-нижнем углу, выступает за край */
+/* плей — бейджиком в правом-нижнем углу, выступает за край;
+   z-index выше обводки-кольца, чтобы линия круга уходила под кнопку */
 .video-circle .icon-play {
   left: 196.2px; top: 196.5px;
   width: 86.4px; height: 101.1px;
+  z-index: 2;
 }
 .video-circle.paused .icon-play { visibility: visible; }
 .video-circle.playing:hover .icon-pause { visibility: visible; }
