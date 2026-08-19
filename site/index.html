@@ -174,7 +174,7 @@
         <img class="logo" src="assets/logo.svg" alt="Курс по допечатке">
         <p class="label">Сейчас курс стоит</p>
         <p class="sum">ТЫЩУ РУБЛЕЙ</p>
-        <a class="btn" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Оформить предзаказ</a>
+        <a class="btn js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Оформить предзаказ</a>
       </aside>
 
       <h1 class="abs h-xl" style="left:118px; top:783px">Проблемы с допечаткой?</h1>
@@ -410,7 +410,7 @@
           <p>15 000 ₽ — когда выйдут все 15 уроков</p>
         </div>
         <p class="body-n features">15 уроков в трёх частях · рабочий инструмент к каждому · доступ в закрытую группу навсегда · ответы автора и трёх экспертов · 50+ разобранных ситуаций из практики</p>
-        <a class="btn-deal" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Оформить предзаказ</a>
+        <a class="btn-deal js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Оформить предзаказ</a>
       </div>
     </section>
 
@@ -428,6 +428,41 @@
 </button>
 
 <script>
+  /* ============================================================
+     ОПЛАТА (Продамус) — единственная точка настройки.
+     Чтобы включить оплату: впиши поддомен payform в PRODAMUS_SHOP.
+     Пока пусто — кнопки «Оформить предзаказ» ведут в Телеграм.
+     ============================================================ */
+  (() => {
+    const PAY = {
+      shop: '',                 // ← поддомен payform, напр. 'dopechatka' → https://dopechatka.payform.ru
+      price: '1000',            // цена предзаказа, ₽ (без пробелов)
+      product: 'Курс по допечатке — предзаказ',
+      fallback: 'https://t.me/tuptoppppp' // запасной вариант, пока нет платёжной ссылки
+    };
+    // база сайта, напр. https://tuptop.github.io/dopechatka/
+    const base = location.origin + location.pathname.replace(/[^/]*$/, '');
+    const checkoutUrl = () => {
+      if (!PAY.shop) return PAY.fallback;
+      const p = new URLSearchParams({
+        do: 'pay',
+        'products[0][name]': PAY.product,
+        'products[0][price]': PAY.price,
+        'products[0][quantity]': '1',
+        urlSuccess: base + 'success.html',
+        urlReturn: base + 'fail.html'
+      });
+      return 'https://' + PAY.shop + '.payform.ru/?' + p.toString();
+    };
+    const url = checkoutUrl();
+    const external = !PAY.shop; // платёжку открываем в той же вкладке, Телеграм — в новой
+    document.querySelectorAll('.js-checkout').forEach(a => {
+      a.href = url;
+      if (external) { a.target = '_blank'; a.rel = 'noopener'; }
+      else { a.removeAttribute('target'); a.removeAttribute('rel'); }
+    });
+  })();
+
   // Плашки-вопросы: появление по одной, живая лента новых, перетаскивание мышкой
   (() => {
     let z = 20; // поверх остальных плашек, но под кляксой с ценой (z-index: 100)
