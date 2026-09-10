@@ -1,2 +1,7 @@
 .DS_Store
 .claude/
+
+# Рабочие/исходные файлы, не часть сайта
+/!_assets/
+/*.zip
+/Frame 3.png
