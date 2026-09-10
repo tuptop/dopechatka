@@ -306,6 +306,27 @@ section.canvas { position: relative; }
 .faq-link { color: #000; text-decoration: underline; }
 .faq-link:hover { text-decoration: none; }
 
+/* ===== FAQ: аккордеон в два столбца ===== */
+.faq-wrap { position: relative; padding: 57px 120px 90px; }
+.faq-wrap > .h-lg { margin: 0 0 40px; }
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; align-items: start; }
+.faq-col { display: flex; flex-direction: column; border-bottom: 1px solid #111; }
+.faq-item { border-top: 1px solid #111; }
+.faq-item summary {
+  list-style: none; cursor: pointer; position: relative;
+  padding: 22px 48px 22px 0;
+  font: 700 24px/1.25 'TT Norms', sans-serif;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+'; position: absolute; right: 2px; top: 20px;
+  font: 400 34px/1 'TT Norms', sans-serif;
+}
+.faq-item[open] summary::after { content: '\2212'; }
+.faq-a { padding: 0 48px 24px 0; font: 400 20px/1.4 'TT Norms', sans-serif; }
+.faq-a a { color: #000; }
+.faq-more { margin-top: 40px; }
+
 /* Ссылка-урок в программе */
 .lesson-link { color: #000; text-decoration: underline; text-underline-position: from-font; }
 .lesson-link:hover { text-decoration: none; }
