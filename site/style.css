@@ -286,10 +286,13 @@ section.canvas { position: relative; }
 .program {
   position: absolute;
   left: 185px; top: 101px;
-  width: 557px;
-  display: flex; flex-direction: column; gap: 31px;
+  width: 600px;
+  display: flex; flex-direction: column; gap: 40px;
 }
-.program section { display: flex; flex-direction: column; gap: 12.5px; }
+.program section { display: flex; flex-direction: column; gap: 24px; }
+.program .lesson { display: flex; flex-direction: column; gap: 6px; }
+.program .lesson .norms-32 { line-height: 1.05; }
+.program .lesson .body-n { max-width: 560px; }
 
 /* Аннотации справа от программы */
 .note {
