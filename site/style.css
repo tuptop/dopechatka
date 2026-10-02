@@ -227,10 +227,16 @@ img { display: block; }
   letter-spacing: -0.36px;
   color: #fff;
 }
+/* Линия перечёркивания. В ките она 2px (контур обводкой), а не волосяная,
+   и проходит по середине цифр. Координату из макета сюда брать нельзя: там
+   «22 500» набрано Spectral SC, у капительных цифр своя высота, и y=7 от
+   контейнера посчитан под неё. У нас обычный Spectral с маюскульными цифрами —
+   положение снято с рендера: краска цифр идёт с 1,75 до 14 от верха бокса,
+   середина 7,9, и линия встаёт на 1px выше неё, как в макете. */
 .badge-old::after {
   content: '';
-  position: absolute; left: -1px; top: 9px;
-  width: 51px; height: 1.5px;
+  position: absolute; left: -1px; top: 5.9px;
+  width: 51px; height: 2px;
   background: #bd0600;
 }
 .badge-now {
@@ -528,8 +534,8 @@ img { display: block; }
 }
 .buy-old::after {
   content: '';
-  position: absolute; left: -1px; top: 9px;
-  width: 51px; height: 1.5px;
+  position: absolute; left: -1px; top: 5.9px;
+  width: 51px; height: 2px;
   background: #bd0600;
 }
 .buy-now {
