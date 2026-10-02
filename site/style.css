@@ -99,7 +99,7 @@ img { display: block; }
 
 /* ===== Типографика макета ===== */
 .h1 {
-  font: 300 124px/105.4px 'Spectral', Cambria, Georgia, serif;
+  font: 300 124px/96.72px 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -4.96px;
 }
 .h2 {
@@ -164,7 +164,7 @@ img { display: block; }
 .hero .h1 { position: absolute; left: 32px; top: 380px; }
 .hero-sub {
   position: absolute;
-  left: 32px; top: 628px;
+  left: 32px; top: 602px;
   width: 570px;
   font: 400 24px/1.25 'Graphik', sans-serif;
 }
@@ -638,7 +638,7 @@ img { display: block; }
   .btn { height: 52px; }
 
   /* Типографика */
-  .h1 { font: 400 59px/51px 'Spectral', Cambria, Georgia, serif; letter-spacing: -1.77px; }
+  .h1 { font: 400 60px/51px 'Spectral', Cambria, Georgia, serif; letter-spacing: -1.8px; }
   .h2 { font: 400 38px/36.8px 'Spectral', Cambria, Georgia, serif; letter-spacing: -0.76px; }
   .h3 { font: 700 23px/21.1px 'Spectral', Cambria, Georgia, serif; }
 
