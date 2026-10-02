@@ -24,7 +24,7 @@
   <meta name="twitter:description" content="Онлайн-курс для дизайнеров и менеджеров по работе с печатной продукцией. Сейчас — 4 500 ₽ по предзаказу.">
   <meta name="twitter:image" content="https://tuptop.github.io/dopechatka/assets/og-image.png">
 
-  <link rel="stylesheet" href="style.css?v=71">
+  <link rel="stylesheet" href="style.css?v=73">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -196,7 +196,7 @@
         <img class="inside-doodle" src="assets/stepik-badge.png" alt="Степик">
 
         <div class="inside-notes">
-          <p class="inside-note">Для практики понадобятся<br>графические редакторы<br>Фотошоп&#8201;<img class="app" src="assets/app-ps.png" alt="Photoshop">, Иллюстратор&#8201;<img class="app" src="assets/app-ai.png" alt="Illustrator">,<br>Индизайн&#8201;<img class="app" src="assets/app-id.png" alt="InDesign"> и Фигма&#8201;<img class="app" src="assets/app-fig.png" alt="Figma">.</p>
+          <p class="inside-note">Для практики понадобятся<br>графические редакторы<br>Фотошоп<img class="app" src="assets/app-ps.png" alt="Photoshop">, Иллюстратор<img class="app" src="assets/app-ai.png" alt="Illustrator">,<br>Индизайн<img class="app" src="assets/app-id.png" alt="InDesign"> и Фигма<img class="app" src="assets/app-fig.png" alt="Figma">.</p>
           <p class="inside-note">После покупки доступ<br>к курсу остаётся навсегда <img class="inf" src="assets/infinity.svg" alt="бессрочно">.<br>Новые уроки, которые выйдут<br>позже, включены в стоимость.</p>
         </div>
       </section>
@@ -614,8 +614,15 @@
     video.addEventListener('play', state);
     video.addEventListener('pause', state);
     circle.addEventListener('click', () => {
-      if (video.paused) { video.muted = false; video.play(); }
-      else video.pause();
+      if (!video.paused) { video.pause(); return; }
+      // На телефоне воспроизведение со звуком могут не разрешить — тогда
+      // play() молча отвалится промисом. Пробуем ещё раз без звука, чтобы
+      // кружок хотя бы заиграл, а не выглядел сломанным.
+      video.muted = false;
+      video.play().catch(() => {
+        video.muted = true;
+        video.play().catch(() => {});
+      });
     });
   })();
 </script>

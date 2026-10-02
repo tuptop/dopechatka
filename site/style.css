@@ -278,8 +278,11 @@ img { display: block; }
 .sprint-cols { display: flex; gap: 20px; padding-left: 4px; }
 .sprint-col { width: 312px; display: flex; flex-direction: column; gap: 20px; }
 .grp { display: flex; flex-direction: column; gap: 6px; }
-.grp-t { font: 600 18px/1.15 'Graphik', sans-serif; }
+/* .grp p бьёт .grp-t по специфичности (0,1,1 против 0,1,0), поэтому
+   заголовок группы задаём через .grp .grp-t — иначе он теряет Semibold
+   и выглядит так же, как пункты внутри. */
 .grp p { font: 400 18px/1.2 'Graphik', sans-serif; }
+.grp .grp-t { font: 600 18px/1.15 'Graphik', sans-serif; }
 /* то, что ещё не вышло */
 .later { opacity: 0.5; }
 
@@ -304,21 +307,26 @@ img { display: block; }
   left: 748.5px; top: 112.6px;
   width: 174.6px; height: 174.6px;
 }
+/* Стиль «soft&availability» из макета: Graphik Regular 32, интерлиньяж 1.02.
+   Строки в Фигме разложены по 33px с зазором 5, поэтому тут шаг 38. */
 .inside-notes {
   position: absolute;
-  left: 0; top: 938px;
+  left: 0; top: 936px;
   display: flex; gap: 53px;
-  font: 500 24px/1.35 'Graphik', sans-serif;
+  font: 400 32px/38px 'Graphik', sans-serif;
+  letter-spacing: -0.32px;
 }
 .inside-note:first-child { width: 456px; }
 .inside-note:last-child { width: 477px; }
 .app {
   display: inline-block;
   width: 32px; height: 32px;
-  vertical-align: -8px;
-  border-radius: 6px;
+  vertical-align: -13px;
+  border-radius: 5px;
+  /* зазоры из автолейаута: 6 до иконки, 3 после */
+  margin: 0 3px 0 6px;
 }
-.inf { display: inline-block; width: 49px; height: 33px; vertical-align: -7px; }
+.inf { display: inline-block; width: 49px; height: 33px; vertical-align: -12px; margin-right: 3px; }
 
 /* ===== Авторы ===== */
 .authors { top: 3674px; left: 32px; width: 986px; height: 527px; }
@@ -666,12 +674,14 @@ img { display: block; }
     position: static;
     flex-direction: column; gap: 28px;
     margin-top: 32px;
-    font-size: 18px;
+    font-size: 22px;
+    line-height: 27px;
+    letter-spacing: -0.22px;
   }
   .inside-note:first-child,
   .inside-note:last-child { width: auto; }
-  .app { width: 24px; height: 24px; vertical-align: -5px; }
-  .inf { width: 36px; height: 24px; vertical-align: -5px; }
+  .app { width: 22px; height: 22px; vertical-align: -9px; margin: 0 2px 0 4px; }
+  .inf { width: 34px; height: 22px; vertical-align: -8px; }
 
   /* ===== Авторы ===== */
   .authors { margin-top: 80px !important; }
@@ -697,13 +707,17 @@ img { display: block; }
   .tg .btn { display: flex; margin-top: 40px; }
   /* фото упирается в нижний край карточки и обрезается зубцами;
      aspect-ratio заодно срезает зубчатый край, впечатанный в саму картинку */
+  /* Фото идёт во всю ширину карточки, как в присланном шейпе, и показано
+     целиком: пропорции совпадают с исходником, поэтому cover ничего не режет.
+     Снизу срезаются только зубцы, впечатанные в саму картинку. */
   .tg-phone {
     position: static;
-    width: 100%; height: auto;
-    aspect-ratio: 311 / 334;
+    width: calc(100% + 32px);
+    margin: 0 -16px;
+    height: auto;
+    aspect-ratio: 415 / 408;
     object-fit: cover;
     object-position: 50% 0;
-    margin-top: 0;
   }
 
   /* ===== Вопросы ===== */
@@ -724,12 +738,15 @@ img { display: block; }
   .buy-old { position: relative; width: auto; order: 1; margin-top: 40px; }
   .buy-now { order: 2; margin-top: -4px; }
   .buy .btn { display: flex; order: 3; margin-top: 16px; }
+  /* то же самое с птицей: раньше тут стояло 311/360, и cover срезал
+     её крылья по бокам */
   .buy-photo {
     position: static;
     order: 9;
-    width: 100%; height: auto;
-    aspect-ratio: 311 / 360;
-    margin-top: 0;
+    width: calc(100% + 32px);
+    margin: 0 -16px;
+    height: auto;
+    aspect-ratio: 440 / 483;
     object-fit: cover;
     object-position: 50% 50%;
   }
