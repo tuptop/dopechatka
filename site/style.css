@@ -86,7 +86,11 @@ img { display: block; }
   margin: 0;
   background: #fff;
   border-radius: 4px;
-  overflow: hidden;
+  /* Не режем: облако реплик нарочно вылезает за полотно вверх и по бокам,
+     на серый фон. Горизонтальной полосы прокрутки от этого не будет —
+     её снимает `overflow-x: clip` на `body`. На мобильном обрез остаётся:
+     там полотно во всю ширину экрана, и резать нечему. */
+  overflow: visible;
 }
 .sheet > section { position: absolute; }
 
