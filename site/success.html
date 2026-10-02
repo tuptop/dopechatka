@@ -6,24 +6,37 @@
   <title>Спасибо за предзаказ — Курс по допечатке</title>
   <meta name="robots" content="noindex">
   <style>
-    @font-face { font-family:'TT Norms'; src:url('fonts/TTNorms-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
-    @font-face { font-family:'TT Norms'; src:url('fonts/TTNorms-Bold.otf') format('opentype'); font-weight:700; font-display:swap; }
-    @font-face { font-family:'TT Norms'; src:url('fonts/TTNorms-Black.otf') format('opentype'); font-weight:900; font-display:swap; }
+    @font-face { font-family:'Graphik'; src:url('fonts/Graphik-Bold.ttf') format('truetype'); font-weight:700; font-display:swap; }
+    @font-face { font-family:'Nunito Sans'; src:url('fonts/NunitoSans-Variable.ttf') format('truetype'); font-weight:200 1000; font-display:swap; }
     * { margin:0; padding:0; box-sizing:border-box; -webkit-text-size-adjust:100%; }
-    html, body { background:#fff; color:#000; font-family:'TT Norms', sans-serif; }
+    html, body { background:#f5f5f5; color:#282828; font-family:'Nunito Sans', sans-serif; }
     .wrap { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:40px 24px; gap:24px; }
     .logo { width:220px; max-width:70vw; height:auto; margin-bottom:8px; }
-    h1 { font-weight:900; font-size:clamp(40px, 9vw, 72px); line-height:1.05; }
+    h1 { font-family:'Graphik', sans-serif; font-weight:700; letter-spacing:-0.04em; font-size:clamp(40px, 9vw, 72px); line-height:1.05; }
     p { font-weight:400; font-size:clamp(17px, 4.5vw, 21px); line-height:1.4; max-width:520px; }
-    .muted { color:#000; opacity:.55; font-size:clamp(15px, 4vw, 18px); }
+    .muted { color:#282828; opacity:.55; font-size:clamp(15px, 4vw, 18px); }
     .btn { display:inline-block; background:#000; color:#fff; text-decoration:none; font-weight:700; font-size:20px; border:2px solid #000; border-radius:14px; padding:12px 24px; }
     .btn:hover { background:#fff; color:#000; }
     .row { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
-    .link { color:#000; text-decoration:underline; font-weight:700; }
+    .link { color:#282828; text-decoration:underline; font-weight:700; }
     .link:hover { text-decoration:none; }
   </style>
 </head>
 <body>
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=113259666', 'ym');
+
+      ym(113259666, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/113259666" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
   <main class="wrap">
     <img class="logo" src="assets/logo.svg" alt="Курс по допечатке">
     <h1>Спасибо!</h1>

@@ -1,370 +1,762 @@
-/* ===== Шрифты: везде TT Norms ===== */
+/* ===== Шрифты =====
+   Серифный — Spectral, теперь он же стоит и в макете (раньше там была
+   Cambria, и кегли приходилось подгонять по ширине — больше не нужно).
+   Cambria и Georgia — запасные. Наборный — Graphik LC Web. */
 @font-face {
-  font-family: 'TT Norms';
-  src: url('fonts/TTNorms-Regular.otf') format('opentype');
+  font-family: 'Spectral';
+  src: url('fonts/Spectral-Regular.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
-  font-family: 'TT Norms';
-  src: url('fonts/TTNorms-Medium.otf') format('opentype');
+  font-family: 'Spectral';
+  src: url('fonts/Spectral-Medium.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
-  font-family: 'TT Norms';
-  src: url('fonts/TTNorms-Bold.otf') format('opentype');
+  font-family: 'Spectral';
+  src: url('fonts/Spectral-Bold.ttf') format('truetype');
   font-weight: 700;
   font-display: swap;
 }
 @font-face {
-  font-family: 'TT Norms';
-  src: url('fonts/TTNorms-Black.otf') format('opentype');
-  font-weight: 900;
+  font-family: 'Graphik';
+  src: url('fonts/Graphik-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Graphik';
+  src: url('fonts/Graphik-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Graphik';
+  src: url('fonts/Graphik-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Graphik';
+  src: url('fonts/Graphik-Bold.ttf') format('truetype');
+  font-weight: 700;
   font-display: swap;
 }
 
 /* ===== База ===== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body {
-  background: #fff;
+  background: #1b1b1c;
   color: #000;
-  /* Запрет мобильного «раздувания» текста — иначе графика едет */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Плашки хиро выходят за холст: показываем их, но без горизонтального скролла */
   overflow-x: clip;
 }
-
-/* Страница — холст 1440px; на телефоне браузер вписывает его целиком (meta viewport width=1440) */
+/* Резиновый холст. Вёрстка сделана в натуральную величину макета
+   (полотно 1050), а на экран её кладёт zoom. Потолок — 1200/1050 ≈ 1.1429:
+   при широком окне белое полотно занимает ровно 1200px. Внутри ничего не
+   пересчитываем — всё масштабируется целиком, поэтому и не разъезжается.
+   При сужении окна зум падает, тёмные поля по краям съедаются, полотно
+   остаётся по центру. Точное значение выставляет скрипт в конце страницы. */
 #page {
   position: relative;
-  width: 1440px;
+  width: 1050px;
   margin: 0 auto;
+  min-height: 6725px;
+  padding-top: 24px;
+  zoom: var(--zoom, 1.1429);
 }
-#page img { display: block; }
+img { display: block; }
 
-/* Секции: фиксированная высота из макета, всё внутри — по координатам */
-/* Плашки и скетчи могут выходить за холст 1440 — не кадрируем,
-   лишнее срежет overflow-x: clip на body по краю окна */
-section.canvas { position: relative; }
-.abs { position: absolute; }
-
-/* ===== Типографика ===== */
-.h-xl {
-  font: 900 87.7px/normal 'TT Norms', sans-serif;
-  white-space: nowrap;
-}
-.h-lg { font: 900 45.5px/normal 'TT Norms', sans-serif; }
-.norms-32 { font: 700 31.9px/normal 'TT Norms', sans-serif; }
-.norms-29 { font: 700 29.2px/normal 'TT Norms', sans-serif; white-space: nowrap; }
-.norms-15 { font: 700 15px/normal 'TT Norms', sans-serif; }
-.body { font: 400 20px/1.35 'TT Norms', sans-serif; }
-.body-n { font: 400 20px/normal 'TT Norms', sans-serif; }
-.dim { opacity: 0.1; }
-
-/* ===== Баблы (вопросы из чатов) ===== */
-.b {
-  position: absolute;
-  left: var(--x); top: var(--y);
-  width: var(--w); height: var(--h);
-  display: flex; align-items: center; justify-content: center;
-  cursor: grab;
-  /* до анимации появления плашки скрыты */
-  opacity: 0;
-  transform: scale(0.6);
-}
-/* влёт появляются с лёгким «отскоком» */
-.b.in {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 0.26s ease, transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-/* уходят из живой ленты плавно */
-.b.out {
-  opacity: 0;
-  transform: scale(0.6);
-  transition: opacity 0.45s ease, transform 0.45s ease;
-}
-@media (prefers-reduced-motion: reduce) {
-  .b, .b.in { transition: none; }
-}
-/* Подсказка при наведении: плашка приподнимается — её можно таскать */
-.bubble { transition: transform 0.15s ease, box-shadow 0.15s ease; }
-.b:hover .bubble {
-  transform: translate(-2px, -3px) rotate(var(--r, 0deg));
-  box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.1);
-}
-.b.dragging { cursor: grabbing; }
-.b.dragging .bubble {
-  transform: translate(-2px, -3px) rotate(var(--r, 0deg));
-  box-shadow: 6px 8px 0 rgba(0, 0, 0, 0.14);
-}
-.bubble {
-  transform: rotate(var(--r, 0deg));
+/* Белое полотно 1050px: всё, что вылезает за него, кадрируется */
+.sheet {
+  position: relative;
+  width: 1050px;
+  height: 6592px;
+  margin: 0;
   background: #fff;
-  border: 2px solid #000;
-  border-radius: 16px 16px 0 16px;
-  padding: 19px 16.5px 11px;
-  display: flex; flex-direction: column; gap: 11px;
+  border-radius: 4px;
+  overflow: hidden;
 }
-.bubble > p {
-  font: 500 19.35px/1 'TT Norms', sans-serif;
-  letter-spacing: 0.58px;
-  width: var(--tw);
-  word-break: break-word;
-}
-.bubble .meta {
-  display: flex; align-items: flex-end; justify-content: space-between;
-}
-.bubble .meta img { width: 32px; height: 31px; }
-.bubble .meta time {
-  font: 700 12.24px/1.67 'TT Norms', sans-serif;
-  letter-spacing: 0.37px;
-  white-space: nowrap;
+.sheet > section { position: absolute; }
+
+/* Spectral по умолчанию ставит минускульные (разновысокие) цифры,
+   а в макете цифры маюскульные — включаем их везде, где серифом набраны числа */
+.badge-old, .badge-now, .buy-old, .buy-now {
+  font-variant-numeric: lining-nums;
+  font-feature-settings: 'lnum' 1;
 }
 
-/* ===== Кнопка звука живой ленты ===== */
-.sound-toggle {
-  position: fixed;
-  left: 20px; bottom: 20px;
-  z-index: 200;
-  width: 52px; height: 52px;
-  padding: 0;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid #000;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
+/* ===== Типографика макета ===== */
+.h1 {
+  font: 400 124px/105.4px 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -4.96px;
 }
-.sound-toggle svg { width: 26px; height: 26px; display: block; }
-.sound-toggle .spk { fill: #000; }
-.sound-toggle .wave { fill: none; stroke: #000; stroke-width: 2; stroke-linecap: round; }
-.sound-toggle .slash { stroke: #000; stroke-width: 2; stroke-linecap: round; display: none; }
-.sound-toggle.muted .wave { display: none; }
-.sound-toggle.muted .slash { display: block; }
-.sound-toggle:hover { background: #000; }
-.sound-toggle:hover .spk { fill: #fff; }
-.sound-toggle:hover .wave { stroke: #fff; }
-.sound-toggle:hover .slash { stroke: #fff; }
+.h2 {
+  font: 500 72px/62.64px 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -1.44px;
+}
+/* H3 в макете набран наборным, не серифом */
+.h3 {
+  font: 600 28px/1 'Graphik', sans-serif;
+}
+.u { color: inherit; text-decoration: underline; }
+.u:hover { text-decoration: none; }
 
-/* ===== Карточка цены (клякса в правом верхнем углу) =====
-   Зафиксирована сверху: остаётся на месте при скролле */
-.price {
-  position: fixed;
-  left: calc(50% + 279px); /* = 999px на холсте 1440 */
-  top: -113px;
-  width: 358.4px; height: 443px;
-  z-index: 100;
-  cursor: grab; /* кляксу можно двигать по вертикали */
-}
-.price.dragging { cursor: grabbing; }
-.price a { cursor: pointer; }
-.price .frame { position: absolute; inset: 0; width: 100%; height: 100%; }
-.price .logo { position: absolute; left: 51px; top: 141px; width: 250px; height: 98px; }
-.price p { position: absolute; white-space: nowrap; }
-.price .label {
-  left: 55px; top: 265px;
-  font: 500 19.35px/1.25 'TT Norms', sans-serif;
-  letter-spacing: 0.58px;
-}
-.price .sum {
-  left: 51px; top: 289px;
-  font: 900 34.9px/normal 'TT Norms', sans-serif;
-}
+/* ===== Кнопки ===== */
 .btn {
-  position: absolute;
-  left: 62px; top: 358px;
-  background: #000;
-  border: 2px solid #000;
-  border-radius: 14px;
-  padding: 10px 21px;
-  font: 700 22.3px/normal 'TT Norms', sans-serif;
-  color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 24px 18px;
+  border-radius: 8px;
+  font: 700 20px/normal 'Graphik', sans-serif;
   text-decoration: none;
   white-space: nowrap;
 }
-.btn:hover { background: #fff; color: #000; }
+.btn-light { background: #fff; color: #000; }
+.btn-light:hover { background: #ececec; }
+.btn-dark { background: #000; color: #fff; }
+.btn-dark:hover { background: #2b2b2b; }
 
-/* ===== Эксперты ===== */
-.center-x { transform: translateX(-50%); text-align: center; }
-
-/* Фото эксперта в круге (скетч-обводка кладётся сверху отдельным слоем) */
-.photo-circle {
-  border-radius: 50%;
-  object-fit: cover;
+/* ===== Зубчатый край, как у оторванного билета (шаг 10px, высота 4px — снято с макета) ===== */
+.zig {
+  position: relative;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
 }
-/* Круг с фото, которое нужно отмасштабировать под общий размер головы */
-.photo-frame {
-  border-radius: 50%;
-  overflow: hidden;
-}
-.photo-frame img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-}
-/* фото Паши крупнее по плану — уменьшаем, плечи держим у нижнего края */
-.photo-scaled {
-  transform: scale(0.82);
-  transform-origin: center bottom;
-}
-
-/* Кружок (видео) + рисованный таймбар */
-.video-circle { cursor: pointer; }
-/* Рукописные подписи-ярлычки («дизайнер», «нам бы») */
-.label-hand {
+/* Зубцы лежат поверх фотографии в карточке и закрашены цветом полотна:
+   фото доходит до самого края карточки, а всё, что выше оторванной линии,
+   съедает этот слой — так картинка обрезается по контуру, а не прямоугольником. */
+.zig::before, .zig::after {
+  content: '';
   position: absolute;
-  top: 15px;
-  transform: translateX(-50%);
-  font: 900 22.96px/normal 'TT Norms', sans-serif;
-  white-space: nowrap;
-  text-align: center;
+  left: -1px; right: -1px;
+  height: 4px;
+  z-index: 2;
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='4'%3E%3Cpath d='M0 0H10V3.7L5 0.3L0 3.7Z' fill='white'/%3E%3Cpath d='M0 3.7L5 0.3L10 3.7' fill='none' stroke='%23000' stroke-width='0.8'/%3E%3C/svg%3E") repeat-x;
+}
+.zig::before { top: 0; }
+.zig::after { bottom: 0; transform: scaleY(-1); }
+/* Чёрная карточка: зубцы выедают заливку сверху и снизу */
+.zig-dark {
+  background: #000;
+  border-color: transparent;
+}
+.zig-dark::before, .zig-dark::after {
+  height: 5px;
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5'%3E%3Cpath d='M0 0L5 4.4L10 0Z' fill='%23fff'/%3E%3C/svg%3E") repeat-x;
+}
+
+/* ===== Хиро ===== */
+.hero { top: -40px; left: 0; width: 1050px; height: 859px; }
+.hero .h1 { position: absolute; left: 32px; top: 380px; }
+.hero-sub {
+  position: absolute;
+  left: 32px; top: 628px;
+  width: 570px;
+  font: 500 24px/1.25 'Graphik', sans-serif;
+}
+
+/* Реплики из чатов.
+   Плашка — ровно 280×138,5, и рисуется она одной картинкой: контур целиком
+   это один путь, взятый из кита (`spch bbl 1` и `spch bbl 2`, узлы 1558:3650
+   и 1558:3651). Раньше контур собирался из border плюс треугольник на
+   ::after, и в месте стыка рамка рвалась. Форм в ките две — с хвостиком
+   слева и справа, каждой своя иконка; вторая вешается классом .bbl-2.
+   Размер фиксированный, потому что картинка не тянется. */
+.bubbles { position: absolute; left: 0; top: 0; width: 1050px; height: 404px; }
+.bbl {
+  position: absolute;
+  width: 280px; height: 138.5px;
+  color: #000;
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280.6' height='139.285' viewBox='0 0 280.6 139.285' fill='none'%3E%3Cpath d='M0.3 9.9C0.3 6.53969 0.3 4.85953 0.953961 3.57606C1.5292 2.44708 2.44708 1.5292 3.57606 0.953961C4.85953 0.3 6.53969 0.3 9.9 0.3H270.7C274.06 0.3 275.74 0.3 277.024 0.953961C278.153 1.5292 279.071 2.44708 279.646 3.57606C280.3 4.85953 280.3 6.53969 280.3 9.9V111.7C280.3 115.06 280.3 116.74 279.646 118.024C279.071 119.153 278.153 120.071 277.024 120.646C275.74 121.3 274.06 121.3 270.7 121.3H71.1777C71.0368 121.3 70.9664 121.3 70.8974 121.31C70.8362 121.318 70.7758 121.332 70.7172 121.352C70.6512 121.374 70.5882 121.406 70.4622 121.469L35.8 138.8V121.3H9.9C6.53968 121.3 4.85953 121.3 3.57606 120.646C2.44708 120.071 1.5292 119.153 0.953961 118.024C0.3 116.74 0.3 115.06 0.3 111.7V9.9Z' fill='white' stroke='black' stroke-width='0.6'/%3E%3C/svg%3E") no-repeat -0.3px -0.3px;
+  background-size: 280.6px 139.285px;
+  opacity: 0;
+  transform: rotate(var(--rot, 0deg)) scale(0.6);
+  transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.bbl-2 {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280.6' height='139.285' viewBox='0 0 280.6 139.285' fill='none'%3E%3Cpath d='M0.3 8.3C0.3 5.49974 0.3 4.09961 0.844967 3.03005C1.32433 2.08924 2.08924 1.32433 3.03005 0.844967C4.09961 0.3 5.49974 0.3 8.3 0.3H272.3C275.1 0.3 276.5 0.3 277.57 0.844967C278.511 1.32433 279.276 2.08924 279.755 3.03005C280.3 4.09961 280.3 5.49974 280.3 8.3V113.3C280.3 116.1 280.3 117.5 279.755 118.57C279.276 119.511 278.511 120.276 277.57 120.755C276.5 121.3 275.1 121.3 272.3 121.3H244.8V138.8L209.8 121.3H8.29999C5.49974 121.3 4.09961 121.3 3.03005 120.755C2.08924 120.276 1.32433 119.511 0.844967 118.57C0.3 117.5 0.3 116.1 0.3 113.3V8.3Z' fill='white' stroke='black' stroke-width='0.6'/%3E%3C/svg%3E");
+}
+.bbl.in { opacity: 1; transform: rotate(var(--rot, 0deg)) scale(1); }
+/* плашку можно взять мышью и переложить */
+.bbl { cursor: grab; user-select: none; }
+.bbl.held { cursor: grabbing; }
+/* события ловит сама плашка, а не текст с иконкой внутри — иначе браузер
+   норовит начать своё перетаскивание картинки */
+.bbl * { pointer-events: none; }
+.bbl p {
+  position: absolute;
+  left: 17.81px; top: 16px;
+  width: 248px; height: 72px;
+  overflow: hidden;
+  font: 400 15px/1.25 'Graphik', sans-serif;
+  letter-spacing: -0.15px;
+}
+.bbl-foot {
+  position: absolute;
+  left: 17.81px; top: 88px;
+  width: 248px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+/* иконка 24×24, контур 0,6 вылезает за габарит — отсюда 24,6 и минусовый отступ */
+.bbl-foot img { width: 24.6px; height: 24.6px; margin: -0.3px; }
+.bbl-foot time { font: 400 13px/1.25 'Graphik', sans-serif; }
+@media (prefers-reduced-motion: reduce) {
+  .bbl { transition: none; }
+}
+
+/* Плашка с ценой */
+.badge { position: absolute; left: 712px; top: 584px; width: 305px; height: 201px; }
+.badge-bg { position: absolute; inset: 0; width: 305px; height: 201px; }
+.badge-old {
+  position: absolute; left: 18px; top: 30px;
+  font: 400 18px/1 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -0.36px;
+  color: #fff;
+}
+.badge-old::after {
+  content: '';
+  position: absolute; left: -1px; top: 9px;
+  width: 51px; height: 1.5px;
+  background: #bd0600;
+}
+.badge-now {
+  position: absolute; left: 18px; top: 44px;
+  font: 400 54.97px/1 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -1.65px;
+  color: #fff;
+}
+.badge-now .rub { font-size: 36px; letter-spacing: -0.72px; }
+.badge .btn { position: absolute; left: 20px; top: 106px; width: 265px; }
+
+/* ===== Вступление с буквицей =====
+   Все три куска стоят по координатам из Фигмы относительно секции:
+   буквица −17/36, первая строка 70/104, остальной текст 0/131.
+   Раньше секция была сдвинута на 2px, а буквица ещё на 8 — из-за этого
+   «К» не попадала под строку «урс последовательно…». */
+.intro { top: 819px; left: 32px; width: 986px; height: 277px; }
+.intro-cap {
+  position: absolute;
+  left: -17px; top: 36px;
+  font: 400 124px/105.4px 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -4.96px;
+}
+.intro-first {
+  position: absolute;
+  left: 70px; top: 104px;
+  width: 487px;
+  font: 500 20px/1.35 'Graphik', sans-serif;
+}
+.intro-rest {
+  position: absolute;
+  left: 0; top: 131px;
+  width: 620px;
+  font: 500 20px/1.35 'Graphik', sans-serif;
+}
+.intro-rest p + p { margin-top: 8px; }
+
+/* ===== Программа ===== */
+.program { top: 1186px; left: 32px; width: 986px; height: 1223px; }
+.program .h2 { margin-bottom: 40px; }
+.sprint { position: absolute; left: 0; width: 986px; }
+.sprint:nth-of-type(1) { top: 106px; }
+.sprint:nth-of-type(2) { top: 514px; }
+.sprint:nth-of-type(3) { top: 980px; }
+.sprint .h3 {
+  margin-top: 12px;
+  padding-bottom: 32px;
+  border-top: 0;
+}
+.sprint::before {
+  content: '';
+  display: block;
+  width: 980px; height: 1px;
+  background: #000;
+}
+.sprint-cols { display: flex; gap: 20px; padding-left: 4px; }
+.sprint-col { width: 312px; display: flex; flex-direction: column; gap: 20px; }
+.grp { display: flex; flex-direction: column; gap: 6px; }
+.grp-t { font: 600 18px/1.15 'Graphik', sans-serif; }
+.grp p { font: 400 18px/1.2 'Graphik', sans-serif; }
+/* то, что ещё не вышло */
+.later { opacity: 0.5; }
+
+/* ===== Что внутри ===== */
+.inside { top: 2499px; left: 32px; width: 986px; height: 1085px; }
+.inside .h2 { margin-bottom: 24px; }
+.inside-lead {
+  width: 571px;
+  font: 500 20px/1.35 'Graphik', sans-serif;
+}
+.inside-shot {
+  position: absolute;
+  left: 0; top: 208px;
+  width: 986px; height: 670px;
+}
+/* Значок Степика: повёрнутый скруглённый квадрат, фон вокруг прозрачный.
+   В Фигме это картинка в повёрнутой маске, и экспорт её обрезки приходит
+   битым — поэтому фон выбит заливкой от краёв (белая «S» внутри осталась).
+   Габарит 174,6 — это сторона 156 со скруглением 55,5, повёрнутая на 47,73°. */
+.inside-doodle {
+  position: absolute;
+  left: 748.5px; top: 112.6px;
+  width: 174.6px; height: 174.6px;
+}
+.inside-notes {
+  position: absolute;
+  left: 0; top: 938px;
+  display: flex; gap: 53px;
+  font: 500 24px/1.35 'Graphik', sans-serif;
+}
+.inside-note:first-child { width: 456px; }
+.inside-note:last-child { width: 477px; }
+.app {
+  display: inline-block;
+  width: 32px; height: 32px;
+  vertical-align: -8px;
+  border-radius: 6px;
+}
+.inf { display: inline-block; width: 49px; height: 33px; vertical-align: -7px; }
+
+/* ===== Авторы ===== */
+.authors { top: 3674px; left: 32px; width: 986px; height: 527px; }
+.authors .h2 { margin-bottom: 40px; }
+.authors-row { display: flex; gap: 44px; }
+.author { width: 292px; }
+.author-wide { width: 312px; }
+.author-pic { position: relative; width: 292px; height: 288px; }
+.author-pic > img {
+  width: 288px; height: 288px;
+  margin-left: 1px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.author p {
+  margin-top: 28px;
+  width: 300px;
+  font: 500 20px/1.35 'Graphik', sans-serif;
+}
+.author p b { font-weight: 600; }
+
+/* Кружок с видео */
+.video-circle {
+  position: absolute;
+  left: 1px; top: 0;
+  width: 288px; height: 288px;
+  cursor: pointer;
 }
 .video-circle video {
   width: 100%; height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  display: block;
 }
-/* Таймбар — сама рисованная обводка кружка: узелок едет по контуру,
-   а пройденная линия за ним стирается (как в макете) */
+/* Таймбар по киту: бледная окружность целиком, поверх неё яркая дуга
+   пройденного и белый узелок на её конце. Радиус 134,62 — это 9,38 внутрь
+   от края кружка, как в ките. */
 .video-circle .ring {
-  position: absolute;
-  left: -5.36px; top: -4px;   /* центр контура → центр видео (viewBox 293×291) */
-  width: 293px; height: 291px;
+  position: absolute; inset: 0;
+  width: 288px; height: 288px;
+  pointer-events: none;
   overflow: visible;
-  pointer-events: none;
 }
-.video-circle .ring .track,
-.video-circle .ring .knot path {
+.video-circle .ring circle {
   fill: none;
-  stroke: #000;
+  stroke: #fff;
   stroke-width: 2;
+}
+.video-circle .ring .ring-bg { opacity: 0.41; }
+.video-circle .ring .ring-bar {
   stroke-linecap: round;
-  stroke-linejoin: round;
-}
-/* dash 100 / gap 100: смещение назад по ходу пути прячет пройденный участок */
-.video-circle .ring .track {
   stroke-dasharray: 100 100;
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 0.28s linear; /* timeupdate ~4/сек → сглаживаем */
+  stroke-dashoffset: 100;
+  transform: rotate(-90deg);
+  transform-origin: 144px 144px;
+  transition: stroke-dashoffset 0.28s linear;
 }
-.video-circle .ring .knot { transition: transform 0.28s linear; }
-
-/* Рисованные иконки состояний: плей — пока на паузе, пауза — при наведении во время игры.
-   visibility вместо display: правило #page img { display: block } сильнее по специфичности */
-.video-circle .state-icon {
-  visibility: hidden;
-  position: absolute;
-  pointer-events: none;
+/* узелок едет по окружности поворотом вокруг центра: 0° — двенадцать часов */
+.video-circle .ring .ring-knob {
+  fill: #fff;
+  stroke: none;
+  transform: rotate(var(--p, 0deg));
+  transform-origin: 144px 144px;
+  transition: transform 0.28s linear;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
 }
-/* пауза — по центру кружка */
-.video-circle .icon-pause {
-  left: -5.4px; top: 0;
-  width: 293px; height: 287px;
-}
-/* плей — бейджиком в правом-нижнем углу, выступает за край;
-   z-index выше обводки-кольца, чтобы линия круга уходила под кнопку */
 .video-circle .icon-play {
-  left: 196.2px; top: 196.5px;
-  width: 86.4px; height: 101.1px;
-  z-index: 2;
+  position: absolute;
+  left: 114px; top: 114px;
+  width: 60px; height: 60px;
+  pointer-events: none;
+  visibility: hidden;
 }
 .video-circle.paused .icon-play { visibility: visible; }
-.video-circle.playing:hover .icon-pause { visibility: visible; }
 
-/* Вакансии: плюсики и подписи — ссылки в Телеграм */
-.vacancy {
-  color: #000;
-  text-decoration: none;
-  transition: transform 0.15s ease;
-}
-.vacancy:hover { transform: scale(1.04); }
-
-/* ===== Программа курса ===== */
-.program {
+/* ===== Телеграм-канал ===== */
+.tg { top: 4291px; left: 32px; width: 986px; height: 440px; background: #fff; }
+.tg-title {
   position: absolute;
-  left: 185px; top: 101px;
-  width: 600px;
-  display: flex; flex-direction: column; gap: 40px;
+  left: 32px; top: 46px;
+  width: 526px;
+  font: 700 60px/1 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -1.2px;
 }
-.program section { display: flex; flex-direction: column; gap: 24px; }
-.program .lesson { display: flex; flex-direction: column; gap: 6px; }
-.program .lesson .norms-32 { line-height: 1.05; }
-.program .lesson .body-n { max-width: 560px; }
-
-/* Аннотации справа от программы */
-.note {
+.tg-text {
   position: absolute;
-  width: 409px;
-  display: flex; flex-direction: column; gap: 14px;
+  left: 32px; top: 190px;
+  width: 526px;
+  font: 500 20px/1.35 'Graphik', sans-serif;
 }
-.note p:last-child { width: 349px; }
+.tg .btn { position: absolute; left: 32px; top: 324px; }
+/* Фото прижато к правому нижнему углу карточки: его низ попадает
+   на зубчатый край, и телефон обрезается контуром, как в макете. */
+.tg-phone {
+  position: absolute;
+  right: 0; bottom: 0;
+  width: 415px; height: 412px;
+}
 
 /* ===== Вопросы ===== */
-.faq-link { color: #000; text-decoration: underline; }
-.faq-link:hover { text-decoration: none; }
-
-/* ===== FAQ: аккордеон в два столбца ===== */
-.faq-wrap { position: relative; padding: 57px 120px 90px; }
-.faq-wrap > .h-lg { margin: 0 0 40px; }
-.faq-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; align-items: start; }
-.faq-col { display: flex; flex-direction: column; border-bottom: 1px solid #111; }
-.faq-item { border-top: 1px solid #111; }
-.faq-item summary {
-  list-style: none; cursor: pointer; position: relative;
-  padding: 22px 48px 22px 0;
-  font: 700 24px/1.25 'TT Norms', sans-serif;
+.faq { top: 4821px; left: 32px; width: 986px; height: 640px; }
+.faq .h2 { margin-bottom: 40px; }
+.faq-item { margin-bottom: 32px; }
+.faq-item .h3 { margin-bottom: 8px; }
+.faq-item p {
+  width: 640px;
+  font: 400 20px/1.35 'Graphik', sans-serif;
 }
-.faq-item summary::-webkit-details-marker { display: none; }
-.faq-item summary::after {
-  content: '+'; position: absolute; right: 2px; top: 20px;
-  font: 400 34px/1 'TT Norms', sans-serif;
-}
-.faq-item[open] summary::after { content: '\2212'; }
-.faq-a { padding: 0 48px 24px 0; font: 400 20px/1.4 'TT Norms', sans-serif; }
-.faq-a a { color: #000; }
-.faq-more { margin-top: 40px; }
+/* В макете у каждого ответа своя ширина — от неё зависит, где рвётся строка.
+   Высоты блоков (54 / 81 / 108 / 54) из этого и складываются. */
+.faq-item:nth-of-type(1) p { width: 540px; }
+.faq-item:nth-of-type(2) p { width: 637px; }
+.faq-item:nth-of-type(3) p { width: 574px; }
+.faq-item:nth-of-type(4) p { width: 397px; }
 
-/* Ссылка-урок в программе */
-.lesson-link { color: #000; text-decoration: underline; text-underline-position: from-font; }
-.lesson-link:hover { text-decoration: none; }
-
-/* ===== Сделка (футер с ценой) ===== */
-.deal {
+/* ===== Чёрная карточка с ценой ===== */
+.buy { top: 5551px; left: 32px; width: 986px; height: 645px; }
+.buy-card { position: relative; width: 986px; height: 491px; overflow: hidden; }
+/* Фото на всю высоту карточки — верх и низ уходят под зубцы */
+.buy-photo {
   position: absolute;
-  left: 120px; top: 96px;
-  width: 1200px;
-  display: flex; flex-direction: column; gap: 32px;
+  right: 0; bottom: 0;
+  width: 440px; height: 491px;
 }
-.deal h2 { font: 700 48px/normal 'TT Norms', sans-serif; }
-.deal .prices { font: 700 32px/normal 'TT Norms', sans-serif; width: 900px; }
-.deal .features { width: 900px; }
-.btn-deal {
-  align-self: flex-start;
-  background: #000;
-  border: 2px solid #000;
-  border-radius: 14px;
-  padding: 10px 21px;
-  font: 700 22.3px/normal 'TT Norms', sans-serif;
+.buy-title {
+  position: absolute;
+  left: 33px; top: 42px;
+  width: 635px;
+  font: 700 60px/1 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -1.2px;
   color: #fff;
-  text-decoration: none;
-  white-space: nowrap;
 }
-.btn-deal:hover { background: #fff; color: #000; }
+.buy-text {
+  position: absolute;
+  left: 33px; top: 186px;
+  width: 485px;
+  font: 500 20px/1.35 'Graphik', sans-serif;
+  color: #fff;
+}
+.buy-pay {
+  position: absolute;
+  left: 33px; top: 302px;
+  width: 279px;
+  padding-left: 40px;
+  font: 400 15px/1.25 'Graphik', sans-serif;
+  color: #fff;
+}
+.buy-pay img { position: absolute; left: 0; top: 0; width: 34px; height: 34px; }
+.buy .btn { position: absolute; left: 33px; top: 375px; width: 265px; }
+.buy-old {
+  position: absolute;
+  left: 342px; top: 371px;
+  font: 400 18px/1 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -0.36px;
+  color: #fff;
+}
+.buy-old::after {
+  content: '';
+  position: absolute; left: -1px; top: 9px;
+  width: 51px; height: 1.5px;
+  background: #bd0600;
+}
+.buy-now {
+  position: absolute;
+  left: 342px; top: 385px;
+  font: 400 54.97px/1 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -1.65px;
+  color: #fff;
+}
+.buy-now .rub { font-size: 36px; letter-spacing: -0.72px; }
 
-/* ===== Подвал: реквизиты и тарифы ===== */
-.site-footer {
-  border-top: 2px solid #000;
-  margin-top: 40px;
-  padding: 44px 120px 60px;
-  display: flex;
-  gap: 90px;
-  flex-wrap: wrap;
-  font: 400 20px/1.4 'TT Norms', sans-serif;
+/* Таймлайн */
+.when { position: absolute; left: 0; top: 531px; width: 986px; height: 114px; }
+/* Линия со стрелкой и засечками — одной картинкой из макета (Footer Line).
+   Засечки там торчат по 10px вверх и вниз от линии, поэтому картинка
+   начинается на 3px выше верха блока. */
+.when-line {
+  position: absolute;
+  left: 0; top: -3px;
+  width: 988px; height: 27px;
+  background: url('assets/timeline-line.svg') no-repeat;
 }
-.site-footer .foot-col { display: flex; flex-direction: column; gap: 6px; }
-.site-footer .foot-name { font-weight: 700; }
-.site-footer a { color: #000; text-decoration: underline; }
-.site-footer a:hover { text-decoration: none; }
+.when-col { position: absolute; top: 35px; width: 230px; }
+.when-col:nth-of-type(2) { left: 0; }
+.when-col:nth-of-type(3) { left: 254px; }
+.when-col:nth-of-type(4) { left: 508px; }
+.when-col:nth-of-type(5) { left: 762px; }
+.when-date { font: 400 18px/1.2 'Graphik', sans-serif; }
+.when-what {
+  margin-top: 6px;
+  font: 600 18px/1.2 'Graphik', sans-serif;
+}
+
+/* ===== Если пока не определились ===== */
+.undecided { top: 6286px; left: 32px; width: 986px; height: 204px; }
+.undecided .h2 { margin-bottom: 24px; }
+.undecided p {
+  width: 571px;
+  font: 500 20px/1.35 'Graphik', sans-serif;
+}
+
+/* ===== Подвал ===== */
+.site-footer {
+  position: absolute;
+  left: 0; top: 6648px;
+  width: 1050px;
+  display: flex; align-items: center; justify-content: space-between;
+  font: 400 15px/1.25 'Graphik', sans-serif;
+  color: #fff;
+}
+.foot-left { display: flex; gap: 20px; align-items: center; }
+/* страниц под оферту и оплату пока нет — подчёркнуто, но не кликается */
+.foot-off { text-decoration: underline; opacity: 0.85; cursor: default; }
+
+/* ============================================================
+   МОБИЛЬНАЯ РАСКЛАДКА (макет 375px)
+   Жёсткий холст 1440 остаётся десктопу; на телефоне отдаём
+   обычный поток в одну колонку. Переключение — скриптом в <head>,
+   который меняет meta viewport по ширине экрана.
+   ============================================================ */
+@media (max-width: 759px) {
+  #page {
+    zoom: 1;
+    width: 100%;
+    min-height: 0;
+    padding-top: 16px;
+  }
+  .sheet {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    overflow: hidden;
+    padding-bottom: 80px;
+  }
+  .sheet > section,
+  .sheet > .hero {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0 16px;
+    z-index: auto;
+  }
+
+  /* Сбрасываем десктопные координаты: на мобильном всё в потоке.
+     Таймлайн (.when-col) не трогаем — он и на мобильном живёт по своей сетке. */
+  .intro-cap, .intro-first, .intro-rest,
+  .inside-shot, .inside-notes,
+  .tg-title, .tg-text, .tg .btn, .tg-phone,
+  .buy-title, .buy-text, .buy-pay, .buy .btn, .buy-old, .buy-now, .buy-photo,
+  .when, .sprint, .video-circle, .bubbles, .site-footer {
+    left: auto; top: auto; right: auto; bottom: auto;
+  }
+
+  /* перенос строки, который нужен только широкому экрану */
+  .wide-only { display: none; }
+
+  /* Типографика */
+  .h1 { font: 400 59px/51px 'Spectral', Cambria, Georgia, serif; letter-spacing: -1.77px; }
+  .h2 { font: 400 38px/36.8px 'Spectral', Cambria, Georgia, serif; letter-spacing: -0.76px; }
+  .h3 { font: 700 23px/21.1px 'Spectral', Cambria, Georgia, serif; }
+
+  /* ===== Хиро ===== */
+  .hero { margin: 0 !important; }
+  /* Высота облака плюс отступ дают 284 — ровно столько от верха полотна
+     до заголовка в макете. Сами плашки лежат абсолютно и за эту высоту
+     не выходят: нижняя граница AREA подобрана с запасом на наклон. */
+  .bubbles {
+    position: relative;
+    width: 100%; height: 284px;
+    margin-bottom: 0;
+  }
+  .hero .h1 { position: static; margin: 0 16px; }
+  .hero-sub {
+    position: static;
+    width: auto; max-width: 292px;
+    margin: 16px 16px 0;
+    font-size: 18px;
+    line-height: 23px;
+  }
+  .badge {
+    position: relative;
+    left: auto; top: auto;
+    width: auto; height: 201px;
+    margin: 40px 16px 0;
+    padding: 0;
+    background: #000;
+  }
+  /* на мобильной плашке зубцы рисуем теми же, что у чёрной карточки */
+  .badge::before, .badge::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 5px;
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5'%3E%3Cpath d='M0 0L5 4.4L10 0Z' fill='%23fff'/%3E%3C/svg%3E") repeat-x;
+  }
+  .badge::before { top: 0; }
+  .badge::after { bottom: 0; transform: scaleY(-1); }
+  .badge-bg { display: none; }
+  .badge-old { left: 16px; top: 30px; }
+  .badge-now { left: 16px; top: 44px; }
+  .badge .btn { left: 16px; right: 16px; top: 106px; width: auto; }
+
+  /* ===== Вступление ===== */
+  .intro { position: static; width: auto; height: auto; margin-top: 80px !important; }
+  .intro-cap {
+    position: static;
+    float: left;
+    margin: 6px 6px 0 0;
+    font: 400 59px/51px 'Spectral', Cambria, Georgia, serif;
+  }
+  .intro-first,
+  .intro-rest { position: static; width: auto; font-size: 16px; }
+  /* «К» обтекается текстом: первая строка и первый абзац — один поток */
+  .intro-first, .intro-rest, .intro-rest p:first-child { display: inline; }
+  .intro-rest p:last-child { display: block; margin-top: 8px; }
+
+  /* ===== Программа ===== */
+  .program { margin-top: 80px !important; }
+  .program .h2 { margin-bottom: 24px; }
+  .sprint { position: static; width: auto; margin-bottom: 40px; }
+  .sprint::before { width: 100%; }
+  .sprint .h3 { padding-bottom: 20px; }
+  .sprint-cols { flex-direction: column; gap: 20px; padding-left: 0; }
+  .sprint-col { width: auto; }
+  .grp-t, .grp p { font-size: 16px; }
+
+  /* ===== Что внутри ===== */
+  .inside { margin-top: 80px !important; }
+  .inside-lead { width: auto; font-size: 16px; }
+  .inside-shot {
+    position: static;
+    width: 100%; height: auto;
+    margin-top: 24px;
+  }
+  .inside-doodle {
+    position: absolute;
+    left: auto; right: 16px; top: -40px;
+    width: 110px; height: 110px;
+  }
+  /* Этим секциям нужен position для абсолютных детей (значок Степика, зубцы).
+     Базовое `.sheet > section { position: static }` выше по специфичности,
+     чем просто `.inside`, поэтому возвращаем через тот же `.sheet >`. */
+  .sheet > .inside,
+  .sheet > .tg { position: relative; left: auto; top: auto; }
+  .inside-notes {
+    position: static;
+    flex-direction: column; gap: 28px;
+    margin-top: 32px;
+    font-size: 18px;
+  }
+  .inside-note:first-child,
+  .inside-note:last-child { width: auto; }
+  .app { width: 24px; height: 24px; vertical-align: -5px; }
+  .inf { width: 36px; height: 24px; vertical-align: -5px; }
+
+  /* ===== Авторы ===== */
+  .authors { margin-top: 80px !important; }
+  .authors-row { flex-direction: column; gap: 32px; }
+  .author, .author-wide { width: auto; }
+  .author-pic { width: 100%; height: auto; aspect-ratio: 1; max-width: 288px; }
+  .author-pic > img { width: 100%; height: 100%; margin: 0; }
+  .author p { width: auto; margin-top: 16px; font-size: 16px; }
+  .video-circle { position: relative; left: 0; width: 100%; height: 100%; max-width: 288px; }
+  .video-circle .ring { width: 100%; height: 100%; }
+  .video-circle .icon-play {
+    left: 50%; top: 50%; right: auto; bottom: auto;
+    width: 60px; height: 60px;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ===== Телеграм ===== */
+  /* position нужен, иначе зубцы уедут к краю полотна */
+  .tg { position: relative; margin-top: 80px !important; padding: 32px 16px 0; }
+  .tg-title, .tg-text, .tg .btn { position: static; width: auto; }
+  .tg-title { font-size: 36px; letter-spacing: -0.72px; }
+  .tg-text { margin-top: 16px; max-width: 276px; font-size: 16px; line-height: 1.45; }
+  .tg .btn { display: flex; margin-top: 40px; }
+  /* фото упирается в нижний край карточки и обрезается зубцами;
+     aspect-ratio заодно срезает зубчатый край, впечатанный в саму картинку */
+  .tg-phone {
+    position: static;
+    width: 100%; height: auto;
+    aspect-ratio: 311 / 334;
+    object-fit: cover;
+    object-position: 50% 0;
+    margin-top: 0;
+  }
+
+  /* ===== Вопросы ===== */
+  .faq { margin-top: 80px !important; }
+  .faq-item p,
+  .faq-item:nth-of-type(1) p, .faq-item:nth-of-type(2) p,
+  .faq-item:nth-of-type(3) p, .faq-item:nth-of-type(4) p { width: auto; font-size: 16px; }
+
+  /* ===== Чёрная карточка ===== */
+  .buy { margin-top: 80px !important; }
+  .buy-card { width: auto; height: auto; padding: 32px 16px 0; display: flex; flex-direction: column; }
+  .buy-title, .buy-text, .buy-pay, .buy .btn, .buy-now { position: static; width: auto; }
+  .buy-title { font-size: 36px; letter-spacing: -0.72px; }
+  .buy-text { margin-top: 16px; max-width: 273px; font-size: 16px; line-height: 1.45; }
+  .buy-pay { margin-top: 24px; padding-left: 40px; position: relative; max-width: 275px; }
+  /* в макете порядок такой: текст, оплата, цена, кнопка, фото.
+     В разметке цена идёт после кнопки, поэтому переставляем флексом. */
+  .buy-old { position: relative; width: auto; order: 1; margin-top: 40px; }
+  .buy-now { order: 2; margin-top: -4px; }
+  .buy .btn { display: flex; order: 3; margin-top: 16px; }
+  .buy-photo {
+    position: static;
+    order: 9;
+    width: 100%; height: auto;
+    aspect-ratio: 311 / 360;
+    margin-top: 0;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
+  /* Таймлайн листается вбок, как в макете */
+  .when {
+    position: static;
+    width: auto; height: auto;
+    margin-top: 28px;
+    overflow-x: auto;
+  }
+  .when-inner { position: relative; width: 986px; height: 114px; }
+  .when-date, .when-what { font-size: 16px; }
+
+  /* ===== Если пока не определились ===== */
+  .undecided { margin-top: 80px !important; }
+  .undecided p { width: auto; font-size: 16px; }
+
+  /* ===== Подвал ===== */
+  .site-footer {
+    position: static;
+    width: auto;
+    margin: 0;
+    padding: 38px 16px 44px;
+    display: block;
+    font-size: 15px;
+  }
+  .foot-left { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .site-footer > p { margin-top: 32px; }
+}

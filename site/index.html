@@ -2,498 +2,334 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <!-- Холст свёрстан под 1440px: мобильный браузер сам вписывает его в экран целиком -->
-  <meta name="viewport" content="width=1440">
-  <title>Курс по допечатке — проблемы с допечаткой? Мы сделаем курс, который сильно всё упростит</title>
-  <meta name="description" content="Курс по допечатной подготовке для дизайнеров и менеджеров. 15 уроков в трёх частях, рабочий инструмент к каждому уроку. Сейчас — 4 500₽ по предзаказу.">
+  <!-- Холст свёрстан под 1440px; на телефоне отдаём отдельную мобильную раскладку -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Допечатная подготовка — онлайн-курс для дизайнеров и менеджеров</title>
+  <meta name="description" content="Онлайн-курс о работе с печатной продукцией: от постановки задания до приёмки тиража. Сейчас — 4 500 ₽ по предзаказу.">
 
   <!-- Превью при шеринге (Open Graph — соцсети, VK, Telegram) -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tuptop.github.io/dopechatka/">
-  <meta property="og:title" content="Курс по допечатке — проблемы с допечаткой?">
-  <meta property="og:description" content="Мы сделаем курс, который сильно всё упростит. 15 уроков в трёх частях, рабочий инструмент к каждому. Сейчас — 4 500₽ по предзаказу.">
+  <meta property="og:title" content="Допечатная подготовка">
+  <meta property="og:description" content="Онлайн-курс для дизайнеров и менеджеров по работе с печатной продукцией. Сейчас — 4 500 ₽ по предзаказу.">
   <meta property="og:image" content="https://tuptop.github.io/dopechatka/assets/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:site_name" content="Курс по допечатке">
+  <meta property="og:site_name" content="Допечатная подготовка">
 
   <!-- Превью в Twitter/X -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Курс по допечатке — проблемы с допечаткой?">
-  <meta name="twitter:description" content="Мы сделаем курс, который сильно всё упростит. Сейчас — 4 500₽ по предзаказу.">
+  <meta name="twitter:title" content="Допечатная подготовка">
+  <meta name="twitter:description" content="Онлайн-курс для дизайнеров и менеджеров по работе с печатной продукцией. Сейчас — 4 500 ₽ по предзаказу.">
   <meta name="twitter:image" content="https://tuptop.github.io/dopechatka/assets/og-image.png">
 
-  <link rel="stylesheet" href="style.css?v=25">
+  <link rel="stylesheet" href="style.css?v=71">
 </head>
 <body>
-<div id="viewport">
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=113259666', 'ym');
+
+      ym(113259666, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/113259666" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+
   <div id="page">
+    <div class="sheet">
 
-    <!-- ===== 1. Хиро: облако вопросов, клякса с ценой, заголовок ===== -->
-    <section class="canvas" style="height:1000px" aria-label="Реальные вопросы дизайнеров, менеджеров и печатников">
+      <!-- ===== Хиро: облако реплик, заголовок, фото с параллаксом, плашка цены ===== -->
+      <section class="hero" aria-label="Допечатная подготовка — онлайн-курс">
 
-      <div class="b" style="--x:59px; --y:37px; --r:0deg; --tw:360px">
-        <div class="bubble"><p>Если я сделал постер в 1080х1350 для Инстаграма и потом появилась потребность распечатать его — это будет проблемой?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>13:19</time></div></div>
-      </div>
+        <!-- реплики из чатов: наполняет и анимирует JS -->
+        <div class="bubbles" id="bubbles" aria-hidden="true"></div>
 
-      <div class="b" style="--x:-15px; --y:148px; --w:443px; --h:183px; --r:-4.36deg; --tw:400px">
-        <div class="bubble"><p>Ну вот у меня почему-то картинки некоторые в Illustratore не отображаются после сохранения из Фигмы, хотя в PDF есть</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>0:39</time></div></div>
-      </div>
+        <h1 class="h1">Допечатная<br>подготовка</h1>
+        <p class="hero-sub">Онлайн-курс для дизайнеров и&nbsp;менеджеров <br class="wide-only">по работе с&nbsp;печатной продукцией</p>
 
-      <div class="b" style="--x:238px; --y:128px; --w:413px; --h:222px; --r:-7.93deg; --tw:360px">
-        <div class="bubble"><p>Привет! Начала работать в иллюстраторе и делаю меню для печати. Можете пожалуйста подсказать, как выполнить все правильно</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>11:15</time></div></div>
-      </div>
-
-      <div class="b" style="--x:393px; --y:-53px; --w:318px; --h:125px; --r:2.5deg; --tw:280px">
-        <div class="bubble"><p>Вылеты вообще не понимаю, что это такое</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>10:07</time></div></div>
-      </div>
-
-      <div class="b" style="--x:321px; --y:76px; --w:321px; --h:135px; --r:-4.36deg; --tw:280px">
-        <div class="bubble"><p>Уже на монтаже увидели косяк с логотипом</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>22:38</time></div></div>
-      </div>
-
-      <div class="b" style="--x:466px; --y:30px; --w:463px; --h:184px; --r:-4.36deg; --tw:420px">
-        <div class="bubble"><p>Всем привет! Ребята, кто-то может схэлпить, пожалуйста, перевести корел в ai или пдф? Мне прислали допотопные файлы, а у меня корела нету.</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>0:44</time></div></div>
-      </div>
-
-      <div class="b" style="--x:681px; --y:-17px; --w:354px; --h:165px; --r:5.66deg; --tw:310px">
-        <div class="bubble"><p>Дизайнер просит какие-то ТТ от типографии. Что это вообще?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>10:55</time></div></div>
-      </div>
-
-      <div class="b" style="--x:704px; --y:117px; --w:382px; --h:159px; --r:4.26deg; --tw:340px">
-        <div class="bubble"><p>Проблема в том, что особо нигде не почитаешь об этом, никто тебе об этом не скажет</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>9:41</time></div></div>
-      </div>
-
-      <div class="b" style="--x:979px; --y:167px; --w:443px; --h:183px; --r:-4.36deg; --tw:400px">
-        <div class="bubble"><p>Нужно напечатать мерч — кружки, футболки, шоперы. Все говорят разное: сублимация, шелкография, DTF. Что выбрать?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>15:40</time></div></div>
-      </div>
-
-      <div class="b" style="--x:1251px; --y:201px; --w:314px; --h:207px; --r:-20.42deg; --tw:260px">
-        <div class="bubble"><p>Поняла, что с подготовкой замучаюсь</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>21:07</time></div></div>
-      </div>
-
-      <div class="b" style="--x:-13px; --y:310px; --w:335px; --h:135px; --r:-0.61deg; --tw:300px">
-        <div class="bubble"><p>Сидишь как дурак и пытаешься понять, какой синий тебе нужен</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>12:36</time></div></div>
-      </div>
-
-      <div class="b" style="--x:89px; --y:342px; --w:362px; --h:158px; --r:-4.36deg; --tw:320px">
-        <div class="bubble"><p>Заказал ламинацию, а клиент хотел soft-touch. В ТЗ не прописали</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>20:11</time></div></div>
-      </div>
-
-      <div class="b" style="--x:518px; --y:236px; --w:423px; --h:180px; --r:-4.21deg; --tw:380px">
-        <div class="bubble"><p>Ребят, подскажите в каком формате нужно сохранить изображение, чтобы напечатать наклейку? Я не помню</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>10:23</time></div></div>
-      </div>
-
-      <div class="b" style="--x:333px; --y:262px; --w:436px; --h:204px; --r:-4.8deg; --tw:390px">
-        <div class="bubble"><p>Всем привет, может кто-нибудь подскажет где можно изучить все нюансы при печати во время создания проектов? Может существует отдельная дисциплина на этот счет?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>12:02</time></div></div>
-      </div>
-
-      <div class="b" style="--x:727px; --y:322px; --w:446px; --h:194px; --r:5.89deg; --tw:400px">
-        <div class="bubble"><p>Заказчик очень просит поставить текстовый фрейм прямо к краю макета. Может есть способы, как обезопасить его при обрезке?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>11:48</time></div></div>
-      </div>
-
-      <div class="b" style="--x:1130px; --y:381px; --w:413px; --h:181px; --r:-4.36deg; --tw:370px">
-        <div class="bubble"><p>Всем шалом! Мне нужно подобрать цвет смук как на фото) есть какой-нибудь онлайн-определитель кодов по фото?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>14:41</time></div></div>
-      </div>
-
-      <div class="b" style="--x:-44px; --y:422px; --w:382px; --h:173px; --r:3.45deg; --tw:340px">
-        <div class="bubble"><p>Как правильно действовать с рисунками, которые вставила? И в каком формате сохранить лучше?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>14:08</time></div></div>
-      </div>
-
-      <div class="b" style="--x:365px; --y:389px; --w:373px; --h:177px; --r:4.2deg; --tw:330px">
-        <div class="bubble"><p>Всем привет! Подскажите, а как в индизайне сделать разные поля под обрез у разных страниц?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>13:54</time></div></div>
-      </div>
-
-      <div class="b" style="--x:413px; --y:486px; --w:354px; --h:176px; --r:-4.36deg; --tw:310px">
-        <div class="bubble"><p>И еще столкнулась с проблемой перевода ргб в цмик... при переводе получилось прямо фу бе</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>16:03</time></div></div>
-      </div>
-
-      <div class="b" style="--x:695px; --y:471px; --w:382px; --h:161px; --r:4.55deg; --tw:340px">
-        <div class="bubble"><p>Люди добрые, как подготовить к печати папку и визитки? Есть ли у кого-то готовый шаблон?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>15:26</time></div></div>
-      </div>
-
-      <div class="b" style="--x:910px; --y:451px; --w:443px; --h:183px; --r:-4.36deg; --tw:400px">
-        <div class="bubble"><p>Я вам хотела заплатить за допечатную подготовку, чтобы вы всё сделали нормально. Почему я должна сейчас всё это делать?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>17:12</time></div></div>
-      </div>
-
-      <div class="b" style="--x:999px; --y:554px; --w:369px; --h:184px; --r:8.85deg; --tw:320px">
-        <div class="bubble"><p>Насколько сюрпризом будет цветовая гамма для заказчика при печати в типографии?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>18:45</time></div></div>
-      </div>
-
-      <div class="b" style="--x:-33px; --y:526px; --w:467px; --h:164px; --r:1.66deg; --tw:430px">
-        <div class="bubble"><p>Ребята, подскажите, пожалуйста, баннер 1х10 метров в печать сдавать обязательно тиф, или пдф подойдет.? что-то у меня виснет иллюстратор при экспорте в тиф((</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>0:41</time></div></div>
-      </div>
-
-      <div class="b" style="--x:335px; --y:595px; --w:342px; --h:156px; --r:-4.36deg; --tw:300px">
-        <div class="bubble"><p>Не знаю чем отличается офсет от цифры. Кому заказать?</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>19:22</time></div></div>
-      </div>
-
-      <div class="b" style="--x:-38px; --y:583px; --w:393px; --h:179px; --r:-4.36deg; --tw:350px">
-        <div class="bubble"><p>Постоянно происходит какая-то хрень: промахиваюсь с размерами, по цветам не то, полей не того</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>16:37</time></div></div>
-      </div>
-
-      <div class="b" style="--x:661px; --y:577px; --w:442px; --h:179px; --r:3.79deg; --tw:400px">
-        <div class="bubble"><p>я думала пдф тоже можно отправлять на печать. А там уже технический дизайнер в типографии переводит в нужный им формат</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>0:40</time></div></div>
-      </div>
-
-      <div class="b" style="--x:1116px; --y:575px; --w:382px; --h:159px; --r:-4.36deg; --tw:340px">
-        <div class="bubble"><p>Клиент утвердил цвет на экране, а на печати вышло совсем другое. Клиент в ярости</p>
-        <div class="meta"><img src="assets/smiley.svg" alt=""><time>9:12</time></div></div>
-      </div>
-
-      <!-- Клякса с лого, ценой и кнопкой -->
-      <aside class="price">
-        <img class="frame" src="assets/price-frame.svg" alt="">
-        <img class="logo" src="assets/logo.svg" alt="Курс по допечатке">
-        <p class="label">Сейчас курс стоит</p>
-        <p class="sum">ТЫЩУ РУБЛЕЙ</p>
-        <a class="btn js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Оформить предзаказ</a>
-      </aside>
-
-      <h1 class="abs h-xl" style="left:118px; top:783px">Проблемы с допечаткой?</h1>
-      <p class="abs h-lg" style="left:118px; top:909px; width:749px">Мы сделаем курс, который сильно всё упростит</p>
-    </section>
-
-    <!-- ===== 2. Почему это сложно ===== -->
-    <section class="canvas" style="height:535px" aria-label="Почему допечатка — это сложно">
-      <div class="abs body" style="left:121px; top:66px; width:591px; display:flex; flex-direction:column; gap:20px">
-        <p>Когда делаешь интерфейс, под рукой документация, гайдлайны и юай-киты, а в крайнем случае можно спросить нейронку. Ошибку в коде можно исправить в тот же день, макет для экрана — пересобрать за час.</p>
-        <p>В печати всё иначе. Единой документации нет: у каждой типографии свои требования, а за ошибку платишь из своего кармана — напечатанную с ошибкой листовку не засунуть обратно в принтер.</p>
-      </div>
-      <div class="abs body-n" style="left:824px; top:66px; width:382px">
-        <p style="margin-bottom:11px">Курсы, которые есть дают общую теорию.</p>
-        <p style="margin-bottom:11px">Решений в них нет, только базовые заклинания: «готовьте в CMYK», «сделайте вылеты под обрез».</p>
-        <p>Мы все знаем что такое CMYK, а попасть в цвет на бумаге всё равно не можем.</p>
-      </div>
-
-      <!-- Скетч: монитор с человечком -->
-      <div class="abs" style="left:806px; top:329px; width:196.7px; height:144.8px; display:flex; align-items:center; justify-content:center">
-        <img src="assets/v181.svg" alt="" style="width:144.8px; height:196.7px; transform:rotate(-90deg); flex:none">
-      </div>
-      <img class="abs" src="assets/v182.svg" alt="" style="left:902.3px; top:430.7px; width:2px; height:36.9px">
-      <img class="abs" src="assets/v183.svg" alt="" style="left:892.7px; top:381.2px; width:18.6px; height:12.8px">
-      <img class="abs" src="assets/v184.svg" alt="" style="left:863.6px; top:367.5px; width:30.6px; height:21.3px">
-      <img class="abs" src="assets/v185.svg" alt="" style="left:871.9px; top:388.5px; width:24.6px; height:19.6px">
-      <img class="abs" src="assets/v186.svg" alt="" style="left:895.4px; top:354.1px; width:18px; height:27.2px">
-      <img class="abs" src="assets/v187.svg" alt="" style="left:905.5px; top:377.9px; width:38.9px; height:19.4px">
-      <img class="abs" src="assets/v188.svg" alt="" style="left:891.3px; top:393.1px; width:18.9px; height:36.7px">
-      <img class="abs" src="assets/v189.svg" alt="" style="left:878.5px; top:471.5px; width:2px; height:32.1px">
-      <img class="abs" src="assets/v190.svg" alt="" style="left:919.4px; top:474.1px; width:2px; height:29.4px">
-      <img class="abs" src="assets/v191.svg" alt="" style="left:856.4px; top:507px; width:74.9px; height:2px">
-      <img class="abs" src="assets/v192.svg" alt="" style="left:1097.1px; top:329.5px; width:1.6px; height:135.9px">
-      <img class="abs" src="assets/v193.svg" alt="" style="left:1097.4px; top:465.6px; width:109px; height:2.9px">
-      <img class="abs" src="assets/v194.svg" alt="" style="left:1099.4px; top:329.2px; width:97.1px; height:139.9px">
-      <img class="abs" src="assets/v195.svg" alt="" style="left:1012.8px; top:392.4px; width:57px; height:2px">
-      <img class="abs" src="assets/v196.svg" alt="" style="left:1060.6px; top:386.4px; width:22.1px; height:17.5px">
-      <img class="abs" src="assets/v197.svg" alt="" style="left:1121.1px; top:419.6px; width:60.6px; height:18.3px">
-      <img class="abs" src="assets/v198.svg" alt="" style="left:1115px; top:422.3px; width:15.8px; height:15.4px">
-      <img class="abs" src="assets/v199.svg" alt="" style="left:1115.9px; top:409.5px; width:24.1px; height:10.8px">
-      <img class="abs" src="assets/v200.svg" alt="" style="left:1157.2px; top:409.3px; width:20.6px; height:9.8px">
-      <img class="abs" src="assets/v201.svg" alt="" style="left:1122.5px; top:378px; width:28.2px; height:30.9px">
-      <img class="abs" src="assets/v202.svg" alt="" style="left:1150.4px; top:378.2px; width:14.6px; height:29.9px">
-      <img class="abs" src="assets/v203.svg" alt="" style="left:1120.4px; top:346.4px; width:17.1px; height:42.1px">
-      <img class="abs" src="assets/v204.svg" alt="" style="left:1158.9px; top:355.4px; width:18.9px; height:37.2px">
-      <img class="abs" src="assets/v205.svg" alt="" style="left:1146.9px; top:340.4px; width:7.7px; height:27.6px">
-    </section>
-
-    <!-- ===== 3. Эксперты ===== -->
-    <section class="canvas" style="height:1220px" aria-label="Команда курса">
-      <h2 class="abs h-lg" style="left:135px; top:56px; width:729px">Расскажем о работе с печатью от лица трёх экспертов</h2>
-
-      <img class="abs photo-circle" src="assets/pasha.png" alt="Паша" style="left:175.7px; top:241px; width:287px; height:287px">
-      <img class="abs photo-circle" src="assets/tonya.webp" alt="Тоня" style="left:568.7px; top:241px; width:287px; height:287px">
-
-      <!-- Кружок (видео Насти) — в правом слоте -->
-      <div class="abs video-circle paused" id="nastya-circle" style="left:974.7px; top:241px; width:287px; height:287px" title="Кружок от Насти — нажмите, чтобы посмотреть">
-        <video src="assets/nastya-circle.mp4" loop playsinline preload="auto"></video>
-        <img class="state-icon icon-play" src="assets/play-icon.svg" alt="">
-        <img class="state-icon icon-pause" src="assets/pause-icon.svg" alt="">
-        <svg class="ring" viewBox="0 0 293 291" aria-hidden="true"><path class="track" pathLength="100" d="M171.5 11.655C171.99 13.0666 208.5 11.291 259.096 58.8142C267.208 66.4339 270.046 71.6063 275.801 82.7082C278.485 87.8859 280.948 95.0448 284.473 112.495C287.02 125.105 289.515 145.63 291.008 159.365C294.252 189.206 288.033 200.763 284.007 207.549C279.773 214.687 270.841 222.96 262.459 231.154C250.985 242.37 236.165 253.853 224.28 261.799C216.501 267 198.5 271.695 170.308 277.103C156.861 279.682 144.705 279.184 132.262 278.005C107.178 275.627 87.6594 269.111 75.4022 264.335C58.5019 257.75 42.5859 242.994 31.5013 231.002C23.2754 222.103 18.1903 208.375 13.4303 195.087C3.64386 167.767 2.54951 153.351 1.44232 144.547C-0.50721 129.044 4.31305 119.353 9.40406 106.743C18.6623 83.8096 28.8308 65.5654 33.4916 58.6207C41.3814 46.8648 56.746 35.9494 71.5713 26.5296C81.1373 20.4513 99.1203 18.7417 125.521 13.1786C137.982 12.2672 143.769 11.8569 147.109 11.655C149.176 11.5864 151.999 11.5864 155.09 11.291"/><g class="knot"><path d="M146 8.64511C147.504 8.19987 153.91 8.55393 166.39 11.2583C169.704 11.9764 172.529 11.9101 174.196 11.383C175.863 10.8559 176.321 9.68456 176.253 8.5174C176.112 6.12887 173.777 4.35767 171.255 3.00833C165.888 0.136931 156.976 0.536832 150.227 2.99093C148.789 3.51394 148.229 5.39628 147.827 6.87744C147.425 8.35859 147.525 9.91821 148.244 11.2318C151.352 16.9122 160.429 18.461 167.108 20.2843C169.634 20.974 170.716 19.5861 171.118 18.3453C171.52 17.1045 171.287 15.644 170.753 14.3872C169.72 11.9538 166.935 10.299 163.227 9.03615C161.181 8.33964 158.556 8.40368 156.726 8.77746C154.896 9.15125 153.877 10.0562 153.339 11.2185C152.8 12.3808 152.773 13.7731 153.387 14.9176C154.683 17.3305 157.88 18.0359 160.52 18.2182C161.832 18.3088 163.096 17.8027 163.999 17.0337C165.82 15.481 166.042 12.4927 165.858 9.7015C165.764 8.28124 164.827 6.97206 163.402 5.95183C160.225 3.67811 155.913 3.58913 152.819 4.28771C151.382 4.61193 150.783 6.38346 150.427 7.76523C150.07 9.14701 150.119 10.4711 150.697 11.5195C151.879 13.6655 154.791 14.5429 156.35 14.7696C156.733 14.8253 155.895 13.4855 154.144 12.9444C152.393 12.4033 149.654 12.3757 148.676 12.8724C147.697 13.3691 148.563 14.391 150.248 15.4635"/></g></svg>
-      </div>
-
-      <img class="abs" src="assets/circle-sketch.svg" alt="" style="left:174.7px; top:248.3px; width:291px; height:268px">
-      <img class="abs" src="assets/circle-sketch.svg" alt="" style="left:564.4px; top:248.3px; width:291px; height:268px">
-      <img class="abs" src="assets/eyes.svg" alt="" style="left:388.4px; top:253.5px; width:30.3px; height:19.5px">
-      <img class="abs" src="assets/eyes.svg" alt="" style="left:778.1px; top:253.5px; width:30.3px; height:19.5px">
-
-      <p class="abs h-lg center-x" style="left:321.5px; top:542px; white-space:nowrap">Паша</p>
-      <p class="abs h-lg center-x" style="left:705.5px; top:542px; white-space:nowrap">Тоня</p>
-      <p class="abs h-lg center-x" style="left:1123.2px; top:541px; white-space:nowrap">Настя</p>
-      <p class="abs body center-x" style="left:322px; top:606px; width:320px">Дизайнер. Подготовил к печати очень много макетов и заработал на это много денег</p>
-      <p class="abs body center-x" style="left:713px; top:606px; width:372px">Менеджер с опытом ведения проектов<br>на 400+ миллионов рублей</p>
-      <p class="abs body center-x" style="left:1126px; top:606px; width:272px">Управляет своей типографией. С детства в печатном деле</p>
-
-      <!-- Рукописная пометка «это я» -->
-      <img class="abs" src="assets/v216.svg" alt="" style="left:55px; top:555px; width:24.7px; height:19.8px">
-      <img class="abs" src="assets/v217.svg" alt="" style="left:61.6px; top:568.2px; width:17px; height:2px">
-      <img class="abs" src="assets/v218.svg" alt="" style="left:90.7px; top:545.8px; width:5px; height:24.1px">
-      <img class="abs" src="assets/v219.svg" alt="" style="left:77.9px; top:545.9px; width:23.9px; height:3.4px">
-      <img class="abs" src="assets/v220.svg" alt="" style="left:113.1px; top:542.9px; width:19.8px; height:22.7px">
-      <img class="abs" src="assets/v221.svg" alt="" style="left:150px; top:541px; width:25.6px; height:36.1px">
-      <img class="abs" src="assets/v222.svg" alt="" style="left:162.4px; top:553.5px; width:2.8px; height:22.9px">
-      <img class="abs" src="assets/v223.svg" alt="" style="left:172px; top:508.3px; width:22px; height:21.6px">
-      <img class="abs" src="assets/v224.svg" alt="" style="left:192.2px; top:501.3px; width:11.5px; height:17px">
-
-      <h2 class="abs h-lg" style="left:122px; top:804px; width:524px">Команда курса</h2>
-
-      <div class="abs body" style="left:122px; top:873.4px; width:408px; display:flex; flex-direction:column; gap:20px">
-        <p style="width:403px">Реализовать курс будем командой из трёх человек: руководитель, дизайнер и редактор.</p>
-        <p style="width:403px">Будем делать курс не за гонорар, а за процент от продаж и предзаказов.</p>
-        <p style="width:403px">План такой: делаем три урока до защиты диплома, успешно защищаемся, продолжаем пилить курс дальше и зарабатывать на продажах.</p>
-      </div>
-
-      <!-- Дизайнер найден: Маша Вирко -->
-      <img class="abs" src="assets/masha.png" alt="Маша Вирко" style="left:652px; top:784px; width:233.8px; height:233.8px">
-      <div class="abs" style="left:723px; top:743px; width:170.5px; height:90px; display:flex; align-items:center; justify-content:center">
-        <div style="width:162px; height:59.1px; position:relative; transform:rotate(11.41deg); flex:none">
-          <img src="assets/label-frame-1.svg" alt="" style="position:absolute; inset:0; width:100%; height:100%">
-          <p class="label-hand" style="left:79px">дизайнер</p>
+        <div class="badge">
+          <img class="badge-bg" src="assets/badge-edge.svg" alt="">
+          <p class="badge-old">22 500</p>
+          <p class="badge-now">4500&nbsp;<span class="rub">₽</span></p>
+          <a class="btn btn-light js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Предзаказ</a>
         </div>
-      </div>
-      <div class="abs" style="left:606px; top:1017px; width:343px; display:flex; flex-direction:column; gap:7px; text-align:center">
-        <p class="h-lg">Маша Вирко</p>
-        <p class="body">Поможет сформировать визуал курса, сделать иллюстрации и задизайнить промостраницу</p>
-      </div>
+      </section>
 
-      <!-- Редактор найден: Оля Маркович -->
-      <img class="abs" src="assets/olya.png" alt="Оля Маркович" style="left:1027px; top:766px; width:233.8px; height:233.8px">
-      <div class="abs" style="left:1091px; top:953px; width:166.5px; height:72.9px; display:flex; align-items:center; justify-content:center">
-        <div style="width:162px; height:59.1px; position:relative; transform:rotate(-4.93deg); flex:none">
-          <img src="assets/label-frame-1.svg" alt="" style="position:absolute; inset:0; width:100%; height:100%">
-          <p class="label-hand" style="left:79px">редактор</p>
+      <!-- ===== Вступление с буквицей ===== -->
+      <section class="intro" aria-label="О чём курс">
+        <p class="intro-cap" aria-hidden="true">К</p>
+        <p class="intro-first">урс последовательно разбирает весь процесс</p>
+        <div class="intro-rest">
+          <p>работы с печатной продукцией: от постановки технического задания до проверки макета и приёмки тиража.</p>
+          <p>Наша задача — дать набор универсальных инструментов и приёмов, которые можно применять в любом проекте и под любые требования типографий.</p>
         </div>
-      </div>
-      <p class="abs h-lg center-x" style="left:1152.5px; top:1017px; width:423px; white-space:nowrap">Оля Маркович</p>
-      <p class="abs body center-x" style="left:1143.5px; top:1081px; width:343px">Поможет написать уроки, объяснить сложные термины простыми словами</p>
+      </section>
 
-      <!-- Стрелки -->
-      <img class="abs" src="assets/v234.svg" alt="" style="left:55.1px; top:618.1px; width:58.6px; height:324.4px">
-      <img class="abs" src="assets/v235.svg" alt="" style="left:106.9px; top:602px; width:18.1px; height:20.2px">
-    </section>
+      <!-- ===== Программа ===== -->
+      <section class="program" aria-label="Программа курса">
+        <h2 class="h2">Программа</h2>
 
-    <!-- ===== 4. Программа курса ===== -->
-    <section class="canvas" style="height:2300px" aria-label="Программа курса">
-      <div class="program">
-        <section>
-          <h3 class="norms-15">Бесплатный урок</h3>
-          <div class="lesson">
-            <p class="norms-32"><a class="lesson-link" href="urok/" target="_blank" rel="noopener">Сделайте нам в ЦМИК!</a></p>
-            <p class="body-n">Почему принтер не видит ваши яркие RGB-цвета и как перевести макет в CMYK вручную, чтобы тираж не потемнел.</p>
-          </div>
-        </section>
-        <section>
-          <h3 class="norms-15">Часть I. До проекта</h3>
-          <div class="lesson">
-            <p class="norms-32">1. Файлы, которые не теряются</p>
-            <p class="body-n">Как называть, хранить и передавать файлы, чтобы не искать «финал-финал-2», не терять линки и не отправить в типографию не ту версию.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">2. Типы печати</p>
-            <p class="body-n">Чем офсет отличается от цифры, шелкографии, УФ, сублимации и DTF — и какой способ уложится в ваш тираж, срок и бюджет.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">3. Бумага и материалы</p>
-            <p class="body-n">Почему один макет на мелованной и офсетной бумаге выглядит как два разных тиража — и как выбрать материал до печати, а не после.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">4. Техзадание, которое работает</p>
-            <p class="body-n">Какие вопросы задать клиенту и типографии до первого макета: размер в миллиметрах, цветность, вылеты, контур реза, формат файла.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">5. Форматы и конструкции</p>
-            <p class="body-n">Что скрывается за словами «буклет А4»: реальные размеры носителей, развёртки и конструкции, которые не придётся гуглить в моменте.</p>
-          </div>
-        </section>
-        <section>
-          <h3 class="norms-15">Часть II. Во время проекта</h3>
-          <div class="lesson">
-            <p class="norms-32">1. Почему красный стал коричневым</p>
-            <p class="body-n">Цветовые профили, сумма красок и оверпринт: откуда берётся «на превью ок — на печати косяк» и как этим управлять.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">2. Экспорт из Фигмы, Иллюстратора и Индизайна</p>
-            <p class="body-n">Как выгрузить PDF, который примет типография: с вылетами, в кривых и без вопроса «какая ещё фигма?».</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">3. Анатомия макета</p>
-            <p class="body-n">Вылеты, метки реза и обтравочные маски: из чего состоит печатный файл и почему без них тираж режут по живому.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">4. Предполётный чек-лист</p>
-            <p class="body-n">Что проверить в макете за десять минут до отправки, чтобы не платить за перепечатку из своего кармана.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">5. 300 бейджей за 30 минут</p>
-            <p class="body-n">Как собрать тираж с переменными данными — именами, должностями, номерами — без ручной вёрстки каждого макета.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">6. Подготовка фото</p>
-            <p class="body-n">Какое разрешение, цветовой режим и формат нужны фотографии, чтобы на печати она не превратилась в мыло.</p>
-          </div>
-        </section>
-        <section>
-          <h3 class="norms-15">Часть III. После проекта</h3>
-          <div class="lesson">
-            <p class="norms-32">1. Сигнальник, цветопроба и приёмка</p>
-            <p class="body-n">Как проверить тестовый образец до запуска тиража и на что смотреть при приёмке, чтобы брак остался в типографии.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">2. Тираж напечатан — работа не закончена</p>
-            <p class="body-n">Биговка, ламинация, тиснение и вырубка: как заложить постпечатку в макет и в сроки проекта.</p>
-          </div>
-          <div class="lesson">
-            <p class="norms-32">3. Монтаж без сюрпризов</p>
-            <p class="body-n">Как готовить макет крупной конструкции, чтобы на стойке не появился шов, которого не было в файле.</p>
-          </div>
-        </section>
-      </div>
-
-      <!-- Рукописная пометка у нулевого урока -->
-      <img class="abs" src="assets/v160.svg" alt="" style="left:579.8px; top:124.6px; width:2px; height:17.4px">
-      <img class="abs" src="assets/v161.svg" alt="" style="left:579px; top:126.8px; width:9.6px; height:2px">
-      <img class="abs" src="assets/v162.svg" alt="" style="left:580.5px; top:135.5px; width:5.8px; height:2px">
-      <img class="abs" src="assets/v163.svg" alt="" style="left:593.7px; top:127.3px; width:2px; height:15.4px">
-      <img class="abs" src="assets/v164.svg" alt="" style="left:594px; top:128.1px; width:11.1px; height:12.9px">
-      <img class="abs" src="assets/v165.svg" alt="" style="left:610.2px; top:128.5px; width:1.5px; height:9.3px">
-      <img class="abs" src="assets/v166.svg" alt="" style="left:610px; top:125px; width:8.8px; height:1.6px">
-      <img class="abs" src="assets/v167.svg" alt="" style="left:612.9px; top:131.8px; width:7.1px; height:2px">
-      <img class="abs" src="assets/v168.svg" alt="" style="left:612.8px; top:139.2px; width:6.6px; height:2px">
-      <img class="abs" src="assets/v169.svg" alt="" style="left:625px; top:124.3px; width:2px; height:14.7px">
-      <img class="abs" src="assets/v170.svg" alt="" style="left:626.7px; top:123px; width:5px; height:2px">
-      <img class="abs" src="assets/v171.svg" alt="" style="left:626.2px; top:131.7px; width:7.3px; height:2px">
-      <img class="abs" src="assets/v172.svg" alt="" style="left:625.9px; top:140.4px; width:5.5px; height:2px">
-
-      <!-- Аннотации справа с нарисованными обводками -->
-      <img class="abs" src="assets/v173.svg" alt="" style="left:844px; top:74px; width:462.4px; height:229.4px">
-      <div class="note" style="left:885px; top:127px">
-        <p class="norms-32" style="min-width:100%">Первый урок — бесплатно</p>
-        <p class="body-n">«Сделайте нам в ЦМИК». Откройте и посмотрите, как всё устроено, до того как платить.</p>
-      </div>
-
-      <img class="abs" src="assets/v175.svg" alt="" style="left:832.9px; top:318px; width:495.8px; height:208.2px">
-      <div class="note" style="left:885px; top:353px">
-        <p class="norms-32">Еще три урока до 12.12.26</p>
-        <p class="body-n">Напишем текст, сделаем иллюстрации и подготовим инструменты к защите диплома<br>в Школе Бюро</p>
-      </div>
-
-      <img class="abs" src="assets/v179.svg" alt="" style="left:844.7px; top:549px; width:423px; height:250.7px">
-      <div class="note" style="left:892px; top:586px">
-        <p class="norms-32" style="line-height:1">Остальные будем выпускать раз в месяц</p>
-        <p class="body-n"><span style="display:block; margin-bottom:11px">Станем на рельсы и будем релизить по одному уроку в месяц</span>Каждый урок +1500₽<br>к стоимости курса</p>
-      </div>
-
-      <div class="abs" style="left:801px; top:766px; width:510.5px; height:390.5px; display:flex; align-items:center; justify-content:center">
-        <img src="assets/v206.svg" alt="" style="width:462px; height:313px; transform:rotate(-169.72deg); flex:none">
-      </div>
-      <div class="note" style="left:885px; top:875px">
-        <p class="norms-32">Продвигать будем сами</p>
-        <p class="body-n"><span style="display:block; margin-bottom:11px">Посты в тематических чатах, продажи через личные сообщения, репосты друзей и знакомых.</span>А первые предзаказы уже есть!</p>
-      </div>
-    </section>
-
-    <!-- ===== 6. Вопросы ===== -->
-    <section class="canvas faq" aria-label="Вопросы и ответы">
-      <div class="faq-wrap">
-        <h2 class="h-lg">Вопросы</h2>
-        <div class="faq-grid">
-          <div class="faq-col">
-            <details class="faq-item"><summary>Для кого этот курс?</summary><div class="faq-a">Для дизайнеров и менеджеров, которые готовят макеты в печать и отвечают за результат — от файла до тиража.</div></details>
-            <details class="faq-item"><summary>Что входит в курс?</summary><div class="faq-a">15 уроков в трёх частях, рабочий инструмент к каждому уроку, доступ в закрытую группу навсегда, ответы автора и трёх экспертов и 50+ разобранных ситуаций из практики.</div></details>
-            <details class="faq-item"><summary>Сколько стоит и почему сейчас дешевле?</summary><div class="faq-a">Сейчас 4 500 ₽ — пока вышла первая часть. Когда выйдут все 15 уроков, цена станет 22 500 ₽: каждый новый урок добавляет 1 500 ₽. Кто взял раньше — платит меньше.</div></details>
-            <details class="faq-item"><summary>Когда выйдут остальные уроки?</summary><div class="faq-a">Ещё три урока выйдут до 12 декабря 2026 года. Дальше выпускаем по одному уроку в месяц.</div></details>
-          </div>
-          <div class="faq-col">
-            <details class="faq-item"><summary>Можно посмотреть до покупки?</summary><div class="faq-a">Да. Первый урок «Сделайте нам в ЦМИК» — бесплатный. Откройте и посмотрите, как всё устроено, прежде чем платить.</div></details>
-            <details class="faq-item"><summary>На каких программах это работает?</summary><div class="faq-a">На тех, в которых вы уже верстаете, — Figma, Illustrator, InDesign, Photoshop, CorelDraw. Показываем принципы и настройки, а не «одну кнопку».</div></details>
-            <details class="faq-item"><summary>Как оформить предзаказ?</summary><div class="faq-a">Нажмите «Оформить предзаказ» внизу страницы. Если что-то не получается — напишите в Телеграм, поможем.</div></details>
-            <details class="faq-item"><summary>Остались вопросы?</summary><div class="faq-a">Напишите автору <a class="faq-link" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">в Телеграм</a> — ответим и добавим частые вопросы сюда.</div></details>
+        <div class="sprint">
+          <h3 class="h3">Спринт I. До проекта</h3>
+          <div class="sprint-cols">
+            <div class="sprint-col">
+              <div class="grp">
+                <p class="grp-t">Гигиена файлов</p>
+                <p>Имена и версии: как не искать<br>«финал-финал-2»</p>
+                <p>Хранение и линки: чтобы ничего не терялось</p>
+                <p>Передача файлов и сопроводительное письмо</p>
+              </div>
+              <div class="grp">
+                <p class="grp-t">Бумага и материалы</p>
+                <p>Какие материалы бывают</p>
+                <p>Как выбрать материал<br>под свой проект</p>
+              </div>
+            </div>
+            <div class="sprint-col">
+              <div class="grp">
+                <p class="grp-t">Типы печати</p>
+                <p>Офсет и цифра: главная развилка по тиражу, сроку и цене</p>
+                <p>Шелкография, УФ, сублимация, DTF: когда нужны спецспособы</p>
+                <p>Как выбрать способ под свой проект</p>
+              </div>
+              <div class="grp">
+                <p class="grp-t">Форматы и конструкции</p>
+                <p>Стандартные и нестандартные размеры. Что такое формат?</p>
+                <p>Развёртки и конструкции</p>
+              </div>
+            </div>
+            <div class="sprint-col">
+              <div class="grp">
+                <p class="grp-t">Задача и её понимание</p>
+                <p>Вопросы клиенту до первого макета</p>
+                <p>Презентация макета и правки</p>
+                <p>Вопросы типографии: размер, цветность, вылеты, контур реза, формат файла</p>
+              </div>
+            </div>
           </div>
         </div>
-        <p class="faq-more body">Не нашли свой вопрос? Напишите <a class="faq-link" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">в Телеграм</a> — ответим.</p>
-      </div>
-    </section>
 
-    <!-- ===== 7. Условия и предзаказ ===== -->
-    <section class="canvas" style="height:620px" aria-label="Цена и предзаказ">
-      <div class="deal">
-        <h2>Курс по допечатке</h2>
-        <div class="prices">
-          <p>4 500 ₽ сейчас — пока вышла первая часть</p>
-          <p>22 500 ₽ — когда выйдут все 15 уроков</p>
+        <div class="sprint">
+          <h3 class="h3">Спринт II. Во время проекта</h3>
+          <div class="sprint-cols">
+            <div class="sprint-col">
+              <div class="grp">
+                <p class="grp-t">Цвет на экране и на печати</p>
+                <p>Цветовые профили</p>
+                <p>Сумма красок и глубокий чёрный</p>
+                <p>Оверпринт</p>
+              </div>
+              <div class="grp later">
+                <p class="grp-t">Анатомия макета</p>
+                <p>Размеры и вылеты</p>
+                <p>Метки и контур реза</p>
+                <p>Обтравочные маски и структура печатного файла</p>
+              </div>
+              <div class="grp later">
+                <p class="grp-t">Макеты с переменными данными</p>
+                <p>Макет в InDesign</p>
+                <p>Макет с помощью Клод</p>
+              </div>
+            </div>
+            <div class="sprint-col later">
+              <div class="grp">
+                <p class="grp-t">Экспорт</p>
+                <p>Из Фигмы в PDF, который примет типография</p>
+                <p>Экспорт из Иллюстратора и Индизайна</p>
+                <p>Финальная проверка PDF перед отправкой</p>
+              </div>
+              <div class="grp">
+                <p class="grp-t">Подготовка фото к печати</p>
+                <p>Разрешение: сколько DPI нужно на самом деле, чтобы не было мыла</p>
+                <p>Цветовой режим и формат файла для растра</p>
+              </div>
+            </div>
+            <div class="sprint-col later">
+              <div class="grp">
+                <p class="grp-t">Постпечатная обработка</p>
+                <p>Биговка, фальцовка, ламинация: как заложить в макет</p>
+                <p>Тиснение, вырубка, лак: спецотделка и её сроки</p>
+              </div>
+              <div class="grp">
+                <p class="grp-t">Предпечатный чек-лист</p>
+                <p>Проверка макета за десять минут: геометрия, вылеты, цвет</p>
+                <p>Проверка файла: шрифты, линки, формат, превью, отправка</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <p class="body-n features">15 уроков в трёх частях · рабочий инструмент к каждому · доступ в закрытую группу навсегда · ответы автора и трёх экспертов · 50+ разобранных ситуаций из практики</p>
-        <a class="btn-deal js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Оформить предзаказ</a>
-      </div>
-    </section>
 
-    <!-- ===== Подвал: реквизиты и тарифы ===== -->
+        <div class="sprint">
+          <h3 class="h3">Спринт III. После проекта</h3>
+          <div class="sprint-cols later">
+            <div class="sprint-col">
+              <div class="grp">
+                <p class="grp-t">Сигнальник, цветопроба и приёмка</p>
+                <p>Как организовать цветопробу</p>
+                <p>Сигнальник: проверка до запуска тиража</p>
+                <p>Приёмка тиража: как оставить брак в типографии</p>
+              </div>
+            </div>
+            <div class="sprint-col">
+              <div class="grp">
+                <p class="grp-t">Монтаж</p>
+                <p>Макет крупной конструкции: деление на панели, швы, запасы</p>
+                <p>Допуски, материалы и работа с монтажниками</p>
+              </div>
+              <p class="grp-t">Итоги проекта и обратная связь</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Что внутри ===== -->
+      <section class="inside" aria-label="Что внутри курса">
+        <h2 class="h2">Что внутри</h2>
+        <p class="inside-lead">Курс на Степике: уроки с матчастью, практическими примерами, полезными инструментами и заданиями.<br><a class="u" href="urok/" target="_blank">Урок «Цвет на экране и на печати»</a> открыт для всех.</p>
+        <img class="inside-shot" src="assets/inside-screen.jpg" alt="Урок курса на Степике: теория, примеры и задания" width="986" height="670">
+        <img class="inside-doodle" src="assets/stepik-badge.png" alt="Степик">
+
+        <div class="inside-notes">
+          <p class="inside-note">Для практики понадобятся<br>графические редакторы<br>Фотошоп&#8201;<img class="app" src="assets/app-ps.png" alt="Photoshop">, Иллюстратор&#8201;<img class="app" src="assets/app-ai.png" alt="Illustrator">,<br>Индизайн&#8201;<img class="app" src="assets/app-id.png" alt="InDesign"> и Фигма&#8201;<img class="app" src="assets/app-fig.png" alt="Figma">.</p>
+          <p class="inside-note">После покупки доступ<br>к курсу остаётся навсегда <img class="inf" src="assets/infinity.svg" alt="бессрочно">.<br>Новые уроки, которые выйдут<br>позже, включены в стоимость.</p>
+        </div>
+      </section>
+
+      <!-- ===== Авторы ===== -->
+      <section class="authors" aria-label="Авторы курса">
+        <h2 class="h2">Авторы</h2>
+        <div class="authors-row">
+          <div class="author">
+            <div class="author-pic"><img src="assets/pasha.png" alt="Паша Лемба" width="288" height="288"></div>
+            <p><b>Паша</b> — дизайнер. Подготовил к&nbsp;печати очень много макетов и&nbsp;заработал на&nbsp;этом много денег</p>
+          </div>
+          <div class="author">
+            <div class="author-pic"><img src="assets/tonya.webp" alt="Тоня Лемба" width="288" height="288"></div>
+            <p><b>Тоня</b> — менеджер.<br>Имеет опыт ведения проектов<br>на 400+ миллионов рублей</p>
+          </div>
+          <div class="author author-wide">
+            <div class="author-pic">
+              <div class="video-circle paused" id="nastya-circle" title="Кружок от Насти — нажмите, чтобы посмотреть">
+                <video src="assets/nastya-circle.mp4" loop playsinline preload="metadata"></video>
+                <svg class="ring" viewBox="0 0 288 288" aria-hidden="true">
+                  <circle class="ring-bg" cx="144" cy="144" r="134.62"></circle>
+                  <circle class="ring-bar" cx="144" cy="144" r="134.62" pathLength="100"></circle>
+                  <circle class="ring-knob" cx="144" cy="9.38" r="6"></circle>
+                </svg>
+                <svg class="icon-play" viewBox="0 0 60 60" aria-hidden="true"><path d="M45 28.268C46.3333 29.0378 46.3333 30.9623 45 31.7321L24 43.8564C22.6667 44.6262 21 43.664 21 42.1244L21 17.8756C21 16.336 22.6667 15.3738 24 16.1436L45 28.268Z" fill="#fff"/></svg>
+              </div>
+            </div>
+            <p><b>Настя</b> — владелица типографии. С&nbsp;детства в&nbsp;печатном деле</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Телеграм-канал ===== -->
+      <section class="tg zig" aria-label="Телеграм-канал курса">
+        <h2 class="tg-title">Подписывайтесь<br>на телеграм-канал</h2>
+        <p class="tg-text">Рассказываем о курсе, публикуем анонсы, <br class="wide-only">даём полезные советы по работе с печатью.</p>
+        <a class="btn btn-dark" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Заглянуть</a>
+        <img class="tg-phone" src="assets/tg-phone.jpg" alt="Телеграм-канал курса на экране телефона">
+      </section>
+
+      <!-- ===== Вопросы ===== -->
+      <section class="faq" aria-label="Вопросы и ответы">
+        <h2 class="h2">Вопросы</h2>
+        <div class="faq-item">
+          <h3 class="h3">Для кого этот курс?</h3>
+          <p>Для дизайнеров и менеджеров, которые готовят макеты в печать и отвечают за результат.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="h3">Почему сейчас курс стоит дешевле?</h3>
+          <p>Кто берёт курс раньше — платит меньше. По предзаказу курс стоит 4&#8201;500&#8201;₽. Когда выйдут все 15 уроков, цена станет 22&#8201;500&#8201;₽. Каждый новый урок добавляет к стоимости 1&#8201;500&#8201;₽</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="h3">Как оформить предзаказ?</h3>
+          <p>Нажмите «Оформить предзаказ» по кнопке ниже. Вас переведёт на страницу курса на Степик, где его можно приобрести по сниженной цене. Новые уроки будут появляться внутри курса автоматически.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="h3">Остались вопросы?</h3>
+          <p>Напишите <a class="u" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">автору в Телеграм</a> — ответим и добавим частые вопросы сюда.</p>
+        </div>
+      </section>
+
+      <!-- ===== Чёрная карточка с ценой ===== -->
+      <section class="buy" aria-label="Предзаказ курса">
+        <div class="buy-card zig zig-dark">
+          <img class="buy-photo" src="assets/bird.jpg" alt="">
+          <h2 class="buy-title">Курс «Допечатная<br>подготовка»</h2>
+          <p class="buy-text">Можно купить уже сейчас по самой низкой цене, <br class="wide-only">а 12 октября — начать обучение.</p>
+          <p class="buy-pay"><img src="assets/card-icon.svg" alt="">Оплата картой РФ, через СПБ,<br>ЮMoney, по куаркоду<br>или картой иностранного банка</p>
+          <a class="btn btn-light js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Предзаказ</a>
+          <p class="buy-old">22 500</p>
+          <p class="buy-now">4500&nbsp;<span class="rub">₽</span></p>
+        </div>
+
+        <!-- Таймлайн выхода уроков -->
+        <div class="when" aria-label="Когда выходят уроки">
+          <div class="when-inner">
+          <div class="when-line"></div>
+          <div class="when-col">
+            <p class="when-date">Уже доступны</p>
+            <p class="when-what">Бесплатный урок о цвете</p>
+            <p class="when-what">Предзаказ курса</p>
+          </div>
+          <div class="when-col">
+            <p class="when-date">12 октября</p>
+            <p class="when-what">Выход всех уроков<br>из I Спринта</p>
+          </div>
+          <div class="when-col">
+            <p class="when-date">12 января</p>
+            <p class="when-what">Выход всех уроков<br>из II Спринта</p>
+          </div>
+          <div class="when-col">
+            <p class="when-date">А дальше</p>
+            <p class="when-what">Остальные уроки будут<br>выходить раз в месяц</p>
+          </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Если пока не определились ===== -->
+      <section class="undecided" aria-label="Если пока не определились">
+        <h2 class="h2">Если пока<br>не определились</h2>
+        <p>Тогда почитайте <a class="u" href="urok/" target="_blank">открытый урок</a> или задайте вопрос<br>авторам в Телеграме: <a class="u" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">@tuptoppppp</a>.</p>
+      </section>
+
+    </div>
+
+    <!-- ===== Подвал ===== -->
     <footer class="site-footer">
-      <div class="foot-col">
-        <p class="foot-name">Лемба Павел Юрьевич</p>
-        <p>ИНН 614332719889</p>
-        <p>Связь: <a href="https://t.me/tuptoppppp" target="_blank" rel="noopener">@tuptoppppp</a></p>
+      <div class="foot-left">
+        <!-- оферта и оплата пока без страниц — намеренно неактивны -->
+        <span class="foot-off">Оферта</span>
+        <span class="foot-off">Оплата и возврат</span>
+        <span>ИП Лемба Павел Юрьевич</span>
+        <span>ИНН 614332719889</span>
       </div>
-      <div class="foot-col">
-        <p class="foot-name">Тарифы</p>
-        <p>Курс по допечатке — 4 500 ₽ (предзаказ, первая часть)</p>
-        <p>Полный доступ, 15 уроков — 22 500 ₽</p>
-      </div>
+      <p>Сделано в Школе Бюро Горбунова в 2026 году</p>
     </footer>
-
   </div>
-</div>
-
-<!-- Переключатель звука живой ленты -->
-<button id="sound-toggle" class="sound-toggle" type="button" aria-label="Выключить звук" title="Звук уведомлений">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path class="spk" d="M4 9v6h4l5 4V5L8 9H4z"/>
-    <path class="wave wave1" d="M15.5 9a4.2 4.2 0 0 1 0 6"/>
-    <path class="wave wave2" d="M18 6.5a7.5 7.5 0 0 1 0 11"/>
-    <line class="slash" x1="3.5" y1="3.5" x2="20.5" y2="20.5"/>
-  </svg>
-</button>
 
 <script>
   /* ============================================================
      ОПЛАТА (Продамус) — единственная точка настройки.
-     Чтобы включить оплату: впиши поддомен payform в PRODAMUS_SHOP.
-     Пока пусто — кнопки «Оформить предзаказ» ведут в Телеграм.
+     Чтобы включить оплату: впиши поддомен payform в PAY.shop.
+     Пока пусто — кнопки «Предзаказ» ведут в Телеграм.
      ============================================================ */
   (() => {
     const PAY = {
       shop: '',                 // ← поддомен payform, напр. 'dopechatka' → https://dopechatka.payform.ru
       price: '4500',            // цена предзаказа, ₽ (без пробелов)
-      product: 'Курс по допечатке — предзаказ',
+      product: 'Курс «Допечатная подготовка» — предзаказ',
       fallback: 'https://t.me/tuptoppppp' // запасной вариант, пока нет платёжной ссылки
     };
-    // база сайта, напр. https://tuptop.github.io/dopechatka/
     const base = location.origin + location.pathname.replace(/[^/]*$/, '');
     const checkoutUrl = () => {
       if (!PAY.shop) return PAY.fallback;
@@ -516,248 +352,261 @@
     });
   })();
 
-  // Плашки-вопросы: появление по одной, живая лента новых, перетаскивание мышкой
+  /* ============================================================
+     КЕРНИНГ ЗАГОЛОВКОВ
+     В кириллице Spectral кернинг есть не на все пары, а трекинг в
+     макете отрицательный — из-за этого просветы разъезжаются: в
+     «Что внутри» между Ч и т 15% кегля, а у и т вообще налезают друг
+     на друга. Ниже — поправки к трекингу для пар, которые выбиваются
+     из медианы больше чем на 5% кегля. Значения не на глаз: посчитаны
+     замером контуров шрифта — минимальный просвет между соседними
+     буквами построчно. Пар, которых тут нет, правка не касается,
+     так что поменять текст заголовка безопасно.
+     ============================================================ */
   (() => {
-    let z = 20; // поверх остальных плашек, но под кляксой с ценой (z-index: 100)
-    let drag = null;
-
-    // ===== Звук «пришло сообщение» (синтез через Web Audio, без внешних файлов) =====
-    let actx = null;
-    const audio = () => {
-      if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
-      return actx;
+    // track — трекинг, при котором считались поправки. Итоговый трекинг пары
+    // от него и считается, поэтому на мобильном (там трекинг другой) пары
+    // встают так же ровно, а не получают лишний зазор.
+    const KERN = {
+      400: { track: -0.04, pairs: { 'тн': 0.057, 'ая': 0.070 } },
+      500: { track: -0.02, pairs: { 'Пр': -0.055, 'Чт': -0.057, 'ну': 0.070, 'ут': 0.070 } },
+      700: { track: -0.02, pairs: { 'По': -0.070, 'м-': -0.057, '-к': -0.055, 'ал': 0.067, 'Ку': -0.070, 'До': -0.060 } }
     };
-    // браузеры блокируют звук до первого действия — будим контекст на любом жесте
-    const wake = () => { const c = audio(); if (c && c.state === 'suspended') c.resume(); };
-    ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(ev =>
-      window.addEventListener(ev, wake, { passive: true }));
-
-    let muted = localStorage.getItem('dp_muted') !== '0'; // по умолчанию звук выключен; помним, если посетитель включил
-
-    // Короткое тёплое «ди-динь» вверх с маримба-обертоном — в духе messenger-уведомления
-    const playPop = () => {
-      if (muted) return;
-      const c = audio();
-      if (!c || c.state !== 'running') return; // до жеста пользователя — тихо
-      const t0 = c.currentTime;
-      const master = c.createGain();
-      master.gain.value = 0.24;
-      master.connect(c.destination);
-      const note = (freq, delay, dur, peak) => {
-        const t = t0 + delay;
-        const g = c.createGain();
-        g.gain.setValueAtTime(0.0001, t);
-        g.gain.exponentialRampToValueAtTime(peak, t + 0.005);
-        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-        g.connect(master);
-        // основной тон
-        const o = c.createOscillator();
-        o.type = 'sine';
-        o.frequency.value = freq;
-        o.connect(g);
-        o.start(t); o.stop(t + dur + 0.02);
-        // неровный обертон — «деревянный» маримба/колокольчик тембр
-        const o2 = c.createOscillator();
-        o2.type = 'sine';
-        o2.frequency.value = freq * 2.76;
-        const g2 = c.createGain();
-        g2.gain.value = 0.16;
-        o2.connect(g2).connect(g);
-        o2.start(t); o2.stop(t + dur * 0.5 + 0.02);
-      };
-      note(784, 0, 0.16, 1);        // G5
-      note(1175, 0.075, 0.20, 0.9); // D6 — быстрый скачок вверх
-    };
-
-    const makeDraggable = b => {
-      b.addEventListener('pointerdown', e => {
-        if (e.pointerType !== 'mouse' || e.button !== 0) return;
-        e.preventDefault();
-        drag = { el: b, dx: e.clientX - b.offsetLeft, dy: e.clientY - b.offsetTop };
-        b.style.zIndex = ++z;
-        b.classList.add('dragging');
+    const kern = el => {
+      const k = KERN[getComputedStyle(el).fontWeight];
+      if (!k) return;
+      [...el.childNodes].forEach(node => {
+        if (node.nodeType !== 3) return;
+        const t = node.textContent;
+        const frag = document.createDocumentFragment();
+        let plain = '';
+        for (let i = 0; i < t.length; i++) {
+          const corr = k.pairs[t[i] + t[i + 1]];
+          if (corr === undefined) { plain += t[i]; continue; }
+          if (plain) { frag.appendChild(document.createTextNode(plain)); plain = ''; }
+          const span = document.createElement('span');
+          span.textContent = t[i];
+          span.style.letterSpacing = (k.track + corr).toFixed(4) + 'em';
+          frag.appendChild(span);
+        }
+        if (plain) frag.appendChild(document.createTextNode(plain));
+        node.replaceWith(frag);
       });
     };
+    document.querySelectorAll('.h1, .h2, .tg-title, .buy-title').forEach(kern);
+  })();
 
-    window.addEventListener('pointermove', e => {
-      if (!drag) return;
-      drag.el.style.left = (e.clientX - drag.dx) + 'px';
-      drag.el.style.top = (e.clientY - drag.dy) + 'px';
-    });
-
-    const drop = () => {
-      if (!drag) return;
-      drag.el.classList.remove('dragging');
-      drag = null;
-    };
-    window.addEventListener('pointerup', drop);
-    window.addEventListener('pointercancel', drop);
-
-    // ===== Появление плашек и живая лента =====
-    const hero = document.querySelector('.b').closest('section');
-    const existing = [...hero.querySelectorAll('.b')];
-    existing.forEach(makeDraggable);
+  /* ============================================================
+     РЕПЛИКИ В ХИРО
+     Как в первой версии сайта: плашки появляются по одной,
+     вырастая из собственного центра. Когда экран заполнен —
+     новая реплика раз в 3–4 секунды поверх остальных.
+     ============================================================ */
+  (() => {
+    const box = document.getElementById('bubbles');
+    if (!box) return;
 
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Свежие вопросы из исследования чатов «Чатич» (не дублируют стартовые)
-    const POOL = [
-      'Нужно ли переводить текст в кривые перед сдачей в типографию? Неужели книги так сдают?',
-      'Экспортирую pdf из фигмы — в браузере всё видно, а в иллюстраторе часть контента пропадает',
-      'Как подготовить тени, чтобы они нормально напечатались?',
-      'Типография требует избавиться от прозрачностей. Делаю flatten — плашка исчезает. Что не так?',
-      'В индизайне при выводе градиенты исчезают и становятся прозрачными. Как решить?',
-      'Сохраняю из индиза pdf для печати — появляются артефакты. Как исправить?',
-      'Типография пишет: линки потеряны, вылеты не стоят. А у меня всё стоит! Помогите',
-      'Откуда скачать свежие вееры Pantone?',
-      'В кореле CMYK выглядит как пережжённый RGB — на печати же так не будет?',
-      'Перевела RGB в CMYK — текст стал очень светлый. Подскажите',
-      'У клиентки серый на печати ушёл в грязно-зелёный. Что я могу исправить со своей стороны?',
-      'Как снизить сумму красок до 300% при экспорте pdf?',
-      'Референс — макет — печать: получилось очень тёмно. Всё в CMYK. Как исправить?',
-      'Как перекрасить растр в пантон? А на жести напечатается?',
-      'Есть способ проверить, что цвета будут сочными при печати?',
-      'Текст должен быть 100% black + overprint. Где включается overprint?',
-      'Сохраняю QR в SVG одним цветом — он всё равно в 4 краски. Как ни сохраняю',
-      'Подскажите сайт, который грамотно переводит CMYK в пантон',
-      'Как подготовить в печать макет с фиолетовым? На экране ок, но боюсь за результат',
-      'Кто дизайнил обклейку авто? Как делать допуски — плёнка же растягивается?',
-      'Плакат А0 — какое разрешение у растра? 300 dpi или можно меньше?',
-      'В фигме можно сделать баннер 9 × 1,3 м? В каком формате сохранять?',
-      'Когда вектор отправляешь в печать, там же пофиг, какой dpi?',
-      'Кто-нибудь делал пресс-воллы? Какие подводные камни печати?',
-      'Какого качества фото надо на баннеры 5×5 м? Сколько dpi?',
-      'Биллборд: типография просит свести слои и размер 1:1, а у меня 1:10. Что это значит?',
-      'Сделала выпуски 5 мм в индизайне, а в pdf их нет. Типография не видит',
-      'Делаю вылет за обрез, а он при экспорте рисует белую рамку. В чём ошибка?',
-      'Что за уголки могут отображаться в файле, готовом к печати?',
-      'Добавила бант на стикер, а он в RGB. Как перевести в CMYK?',
-      'Готовил кто-то наклейку к печати? Есть вопросы по контурам для резки',
-      'Делаю наклейки с градиентом — для печати обязательно разбирать?',
-      'Прилетела задача: подготовить промышленные этикетки. Какие подводные камни?',
-      'Нужно подготовить упаковку из фигмы. Отрисовать заново или перекинуть через pdf?',
-      'Как подготовить файл к флексопечати? Там плашечный цвет и куча непонятных слов',
-      'QR на визитке — какой минимальный размер, чтобы читался? 10×10 мм пойдёт?',
-      'Можно ли в иллюстраторе готовить макет так же подробно, как в индизайне?',
-      'Надо сверстать книгу в фигме, перевести в CMYK и так на печать. Прокатит?',
-      'Кто-нибудь печатал презентации из фигмы? Как сделать, чтобы шрифты не поехали?',
-      'Нужна футболка. С дизайном ок, а с предпечатной подготовкой беда. Как это делается?',
-      'Кто делал дизайн для печати по дереву? Есть особенности, кроме цветового режима?',
-      'Сколько стоит вёрстка и подготовка к печати книги на 300 страниц?',
-      'Композитные файлы, postscript level2, data format binary — это что вообще?',
-      'Заказчик печатает флаер на фотобумаге. RGB 300 dpi хватит, или конвертить в CMYK?',
-    ];
-    // перемешиваем пул, чтобы порядок ленты был разный
-    for (let i = POOL.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [POOL[i], POOL[j]] = [POOL[j], POOL[i]];
-    }
-    let poolIdx = 0;
-
     const rnd = (a, b) => a + Math.random() * (b - a);
     const pad = n => String(n).padStart(2, '0');
     const randTime = () => Math.floor(rnd(0, 24)) + ':' + pad(Math.floor(rnd(0, 60)));
 
-    const makeBubble = text => {
-      const tw = Math.round(rnd(280, 420));
-      const x = Math.round(rnd(-30, 1120));
-      const y = Math.round(rnd(-45, 590));
-      const r = rnd(-7, 7).toFixed(2);
-      const b = document.createElement('div');
-      b.className = 'b';
-      b.style.cssText = `--x:${x}px; --y:${y}px; --r:${r}deg; --tw:${tw}px`;
-      b.style.zIndex = ++z;
-      b.innerHTML =
-        '<div class="bubble"><p>' + text +
-        '</p><div class="meta"><img src="assets/smiley.svg" alt=""><time>' +
-        randTime() + '</time></div></div>';
-      hero.appendChild(b);
-      makeDraggable(b);
-      return b;
+    const POOL = [
+      'Не знаю чем отличается офсет от цифры. Кому заказать?',
+      'Клиент утвердил цвет на экране, а на печати вышло совсем другое. Клиент в ярости',
+      'Люди добрые, как подготовить к печати папку и визитки? Есть ли у кого-то готовый шаблон?',
+      'Нужно ли переводить текст в кривые перед сдачей в типографию?',
+      'Экспортирую pdf из фигмы: в браузере всё видно, а в иллюстраторе — нет',
+      'Как подготовить тени, чтобы они нормально напечатались?',
+      'Типография требует избавиться от прозрачностей. Делаю flatten — плашка исчезает. Что не так?',
+      'В индизайне при выводе градиенты исчезают и становятся прозрачными. Как решить?',
+      'Типография пишет: линки потеряны, вылеты не стоят. А у меня всё стоит! Помогите',
+      'В кореле CMYK выглядит как пережжённый RGB — на печати же так не будет?',
+      'Перевела RGB в CMYK — текст стал очень светлый. Подскажите',
+      'Как снизить сумму красок до 300% при экспорте pdf?',
+      'Как перекрасить растр в пантон? А на жести напечатается?',
+      'Текст должен быть 100% black + overprint. Где включается overprint?',
+      'Сохраняю QR в SVG одним цветом — он всё равно в 4 краски. Как ни сохраняю',
+      'Плакат А0 — какое разрешение у растра? 300 dpi или можно меньше?',
+      'В фигме можно сделать баннер 9 × 1,3 м? В каком формате сохранять?',
+      'Сделала выпуски 5 мм в индизайне, а в pdf их нет. Типография не видит',
+      'Делаю вылет за обрез, а он при экспорте рисует белую рамку. В чём ошибка?',
+      'Готовил кто-то наклейку к печати? Есть вопросы по контурам для резки',
+      'Нужно подготовить упаковку из фигмы. Отрисовать заново или перекинуть через pdf?',
+      'QR на визитке — какой минимальный размер, чтобы читался? 10×10 мм пойдёт?',
+      'Кто-нибудь печатал презентации из фигмы? Как сделать, чтобы шрифты не поехали?',
+      'Сколько стоит вёрстка и подготовка к печати книги на 300 страниц?',
+      'Заказчик печатает флаер на фотобумаге. RGB 300 dpi хватит, или конвертить в CMYK?'
+    ];
+    for (let i = POOL.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [POOL[i], POOL[j]] = [POOL[j], POOL[i]];
+    }
+    let idx = 0;
+    const nextText = () => {
+      if (idx >= POOL.length) idx = 0;
+      return POOL[idx++];
     };
 
-    // принудительный reflow вместо rAF — надёжнее (rAF троттлится в фоне)
-    const show = b => { void b.offsetWidth; b.classList.add('in'); };
+    // Облако реплик. Плашки падают вразнобой по всей площади, а не по
+    // заранее размеченным местам: площадь делится на ячейки, и в каждой
+    // плашка встаёт в случайную точку. Так заполняются и углы, включая
+    // правый верхний, который раньше пустовал.
+    const MOBILE = matchMedia('(max-width: 759px)').matches;
+    // x/y — левый верхний угол плашки (сама она 280×138,5). Минусовые
+    // значения и правый край за 1050 — это нормально: полотно обрезает
+    // плашку по краю, и она торчит частью, как в макете. Нижняя граница
+    // подобрана так, чтобы облако укладывалось в верхние 404px.
+    const AREA = MOBILE
+      ? { x0: -60, x1: 170, y0: -14, y1: 110, cols: 3, rows: 3, tilt: 9 }
+      : { x0: -112, x1: 856, y0: -44, y1: 236, cols: 7, rows: 4, tilt: 12.7 };
+    // наклон всегда против часовой; на мобильном он мельче, иначе повёрнутый
+    // габарит нижних плашек налезает на заголовок
+    const TILT = AREA.tilt;
+
+    const shuffle = a => {
+      for (let k = a.length - 1; k > 0; k--) {
+        const j = Math.floor(Math.random() * (k + 1));
+        [a[k], a[j]] = [a[j], a[k]];
+      }
+      return a;
+    };
+    // по одной случайной точке на ячейку: покрытие ровное, а на вид — хаос
+    const grid = () => {
+      const cw = (AREA.x1 - AREA.x0) / AREA.cols;
+      const ch = (AREA.y1 - AREA.y0) / AREA.rows;
+      const out = [];
+      for (let r = 0; r < AREA.rows; r++) {
+        for (let c = 0; c < AREA.cols; c++) {
+          out.push([AREA.x0 + c * cw + rnd(0, cw), AREA.y0 + r * ch + rnd(0, ch), -rnd(0, TILT)]);
+        }
+      }
+      return shuffle(out);
+    };
+    const anywhere = () => [rnd(AREA.x0, AREA.x1), rnd(AREA.y0, AREA.y1), -rnd(0, TILT)];
+
+    let z = 1;
+    const place = (x, y, rot, show) => {
+      const el = document.createElement('div');
+      el.className = 'bbl';
+      // форм в ките две — с хвостиком слева и справа, у каждой своя иконка
+      const v = Math.random() < 0.5 ? 1 : 2;
+      if (v === 2) el.classList.add('bbl-2');
+      el.style.cssText = 'left:' + Math.round(x) + 'px; top:' + Math.round(y) + 'px; z-index:' + (++z) + '; --rot:' + rot.toFixed(1) + 'deg';
+      el.innerHTML = '<p></p><div class="bbl-foot"><img src="assets/bbl-icon-' + v + '.svg" alt=""><time></time></div>';
+      el.querySelector('p').textContent = nextText();
+      el.querySelector('time').textContent = randTime();
+      box.appendChild(el);
+      if (show) requestAnimationFrame(() => el.classList.add('in'));
+      else el.classList.add('in');
+      return el;
+    };
+
+    /* Перетаскивание. Плашку берут левой кнопкой и кладут куда хотят;
+       по нажатию она сразу выходит на передний план. Координаты внутри
+       полотна, а полотно отмасштабировано зумом — поэтому сдвиг курсора
+       делим на масштаб, который берём из самого контейнера. На тач-экранах
+       не вмешиваемся: там жест нужен скроллу. */
+    let held = null;
+    box.addEventListener('pointerdown', e => {
+      const el = e.target.closest('.bbl');
+      if (!el || e.button !== 0 || e.pointerType !== 'mouse') return;
+      const r = box.getBoundingClientRect();
+      held = {
+        el,
+        scale: r.width / box.offsetWidth || 1,
+        px: e.clientX, py: e.clientY,
+        left: parseFloat(el.style.left) || 0,
+        top: parseFloat(el.style.top) || 0
+      };
+      el.style.zIndex = ++z;
+      el.classList.add('held');
+      el.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    box.addEventListener('pointermove', e => {
+      if (!held) return;
+      held.el.style.left = Math.round(held.left + (e.clientX - held.px) / held.scale) + 'px';
+      held.el.style.top = Math.round(held.top + (e.clientY - held.py) / held.scale) + 'px';
+    });
+    const drop = () => { if (held) { held.el.classList.remove('held'); held = null; } };
+    box.addEventListener('pointerup', drop);
+    box.addEventListener('pointercancel', drop);
 
     if (reduce) {
-      existing.forEach(b => b.classList.add('in'));
-      return; // без анимации и без ленты
+      grid().forEach(([x, y, rot]) => place(x, y, rot, false));
+      return;
     }
 
-    // 1) стартовые плашки влетают по одной в случайном порядке
-    const order = existing.slice();
-    for (let i = order.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [order[i], order[j]] = [order[j], order[i]];
-    }
-    order.forEach((b, i) => setTimeout(() => b.classList.add('in'), 120 + i * 65));
-    const introDone = 120 + order.length * 65;
+    // 1) заполняем облако: плашки идут одна за другой, каждая вырастает
+    //    из собственного центра. Шаг подобран так, чтобы вся верхняя часть
+    //    полотна закрылась за две с половиной секунды.
+    const spots = grid();
+    let i = 0;
+    const fill = setInterval(() => {
+      place(spots[i][0], spots[i][1], spots[i][2], true);
+      if (++i >= spots.length) {
+        clearInterval(fill);
+        feed();
+      }
+    }, 90);
 
-    // 2) дальше — живая лента: новая плашка раз в 2–5 секунд, без лимита
-    const spawn = () => {
-      if (poolIdx >= POOL.length) poolIdx = 0; // пул кончился — идём по кругу
-      show(makeBubble(POOL[poolIdx++]));
-      playPop(); // «пришло сообщение»
-      setTimeout(spawn, rnd(2000, 5000));
+    // 2) дальше — новая реплика раз в 3–4 секунды в случайную точку облака
+    const live = [];
+    const feed = () => setTimeout(() => {
+      const [x, y, rot] = anywhere();
+      live.push(place(x, y, rot, true));
+      if (live.length > 14) {                        // не растим DOM бесконечно
+        const old = live.shift();
+        if (held && held.el === old) live.push(old);  // ту, что держат мышью, не трогаем
+        else old.remove();
+      }
+      feed();
+    }, rnd(3000, 4000));
+  })();
+
+  /* ============================================================
+     АВТОСКЕЙЛ ХОЛСТА
+     Вёрстка в натуральную величину макета (полотно 1050px), на экран
+     её кладём зумом. Потолок 1200/1050: при широком окне полотно
+     занимает ровно 1200px. Координаты внутри не трогаем — масштабируется
+     всё целиком, поэтому содержимое не разъезжается. Когда окно уже
+     1200, зум падает, тёмные поля съедаются, полотно остаётся по центру.
+     ============================================================ */
+  (() => {
+    const SHEET = 1050;        // ширина белого полотна в вёрстке
+    const MAX = 1200 / SHEET;  // ≈1.1429 — на экране полотно шириной 1200
+    const page = document.getElementById('page');
+    const fit = () => {
+      if (matchMedia('(max-width: 759px)').matches) {
+        document.documentElement.style.removeProperty('--zoom');
+        return;
+      }
+      const z = Math.min(MAX, document.documentElement.clientWidth / SHEET);
+      document.documentElement.style.setProperty('--zoom', z.toFixed(4));
     };
-    setTimeout(spawn, introDone + rnd(600, 1500));
+    void page;
+    fit();
+    window.addEventListener('resize', fit, { passive: true });
+  })();
 
-    // Кнопка вкл/выкл звука (выбор запоминается)
-    const soundBtn = document.getElementById('sound-toggle');
-    const applyMuted = () => {
-      soundBtn.classList.toggle('muted', muted);
-      soundBtn.setAttribute('aria-label', muted ? 'Включить звук' : 'Выключить звук');
-    };
-    applyMuted();
-    soundBtn.addEventListener('click', () => {
-      muted = !muted;
-      localStorage.setItem('dp_muted', muted ? '1' : '0');
-      applyMuted();
-      if (!muted) { wake(); playPop(); } // включили — сразу коротко подтверждаем звуком
-    });
-
-    // Кляксу с ценой можно двигать по горизонтали
-    const price = document.querySelector('.price');
-    let priceDrag = null;
-    price.addEventListener('dragstart', e => e.preventDefault());
-    price.addEventListener('pointerdown', e => {
-      if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      if (e.target.closest('a')) return; // кнопка внутри остаётся кликабельной
-      e.preventDefault();
-      priceDrag = { dx: e.clientX - price.getBoundingClientRect().left };
-      price.classList.add('dragging');
-    });
-    window.addEventListener('pointermove', e => {
-      if (!priceDrag) return;
-      const left = e.clientX - priceDrag.dx;
-      // не даём утащить кляксу совсем за экран
-      const min = -price.offsetWidth + 80;
-      const max = window.innerWidth - 80;
-      price.style.left = Math.min(max, Math.max(min, left)) + 'px';
-    });
-    const priceDrop = () => { priceDrag = null; price.classList.remove('dragging'); };
-    window.addEventListener('pointerup', priceDrop);
-    window.addEventListener('pointercancel', priceDrop);
-
-    // Кружок от Насти: default (плей) → play (звук) → hover (пауза), таймбар по рисованной линии
+  /* ============================================================
+     КРУЖОК НАСТИ: плей по клику, таймбар по окружности
+     ============================================================ */
+  (() => {
     const circle = document.getElementById('nastya-circle');
+    if (!circle) return;
     const video = circle.querySelector('video');
-    const track = circle.querySelector('.ring .track');
-    const knot = circle.querySelector('.ring .knot');
-    let trackLen = 0, startPt = null;
-    const initTrack = () => { trackLen = track.getTotalLength(); startPt = track.getPointAtLength(0); };
+    const bar = circle.querySelector('.ring-bar');
+    const knob = circle.querySelector('.ring-knob');
     const setProgress = () => {
       if (!video.duration) return;
-      if (!trackLen) initTrack();
-      const frac = video.currentTime / video.duration;
-      // линия позади узелка стирается (dash 100 / gap 100, смещение назад по ходу пути)
-      track.style.strokeDashoffset = -frac * 100;
-      // узелок едет в точку стыка стёртого и оставшегося
-      const p = track.getPointAtLength(frac * trackLen);
-      knot.setAttribute('transform', `translate(${(p.x - startPt.x).toFixed(2)}, ${(p.y - startPt.y).toFixed(2)})`);
+      const p = video.currentTime / video.duration;
+      bar.style.strokeDashoffset = 100 - p * 100;       // дуга пройденного
+      knob.style.setProperty('--p', (p * 360).toFixed(2) + 'deg');   // узелок на её конце
     };
     video.addEventListener('timeupdate', setProgress);
-    video.addEventListener('loadedmetadata', () => { initTrack(); setProgress(); });
+    video.addEventListener('loadedmetadata', setProgress);
     const state = () => {
       circle.classList.toggle('paused', video.paused);
       circle.classList.toggle('playing', !video.paused);
