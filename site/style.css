@@ -498,9 +498,11 @@ img { display: block; }
 }
 .buy-pay img { position: absolute; left: 0; top: 0; width: 34px; height: 34px; }
 .buy .btn { position: absolute; left: 33px; top: 375px; width: 265px; }
+/* Контейнер цены в макете стоит на 310, текст внутри него на +1.12.
+   Кнопка кончается на 298, то есть зазор до цены 13, а не 44. */
 .buy-old {
   position: absolute;
-  left: 342px; top: 371px;
+  left: 311px; top: 371px;
   font: 400 18px/1 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -0.36px;
   color: #fff;
@@ -513,7 +515,7 @@ img { display: block; }
 }
 .buy-now {
   position: absolute;
-  left: 342px; top: 385px;
+  left: 311px; top: 385px;
   font: 400 54.97px/1 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -1.65px;
   color: #fff;
