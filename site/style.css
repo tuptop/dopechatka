@@ -110,8 +110,21 @@ img { display: block; }
 .h3 {
   font: 600 28px/1 'Graphik', sans-serif;
 }
-.u { color: inherit; text-decoration: underline; }
-.u:hover { text-decoration: none; }
+/* Ссылки. Подчёркивание в макете тонкое — 2,5% кегля (`decoration-[2.5%]`),
+   это и есть 0.025em. Сплошное: skip-ink выключен, иначе линия рвётся
+   о хвосты «р», «у» и собачку в «@tuptoppppp».
+   По умолчанию ссылка приглушена до 60%, под курсором проявляется
+   до 100% — подчёркивание при этом остаётся на месте. */
+.u {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.025em;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 0.26em;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+.u:hover { opacity: 1; }
 
 /* ===== Кнопки ===== */
 /* Кнопка из кита: высота задана явно (56), отбивки внутри асимметричные —
@@ -592,7 +605,16 @@ img { display: block; }
 }
 .foot-left { display: flex; gap: 20px; align-items: center; }
 /* страниц под оферту и оплату пока нет — подчёркнуто, но не кликается */
-.foot-off { text-decoration: underline; opacity: 0.85; cursor: default; }
+/* Подчёркивание той же толщины, что у ссылок. Непрозрачность тут своя:
+   подвал и так набран серым, 60% сделали бы его нечитаемым. */
+.foot-off {
+  text-decoration: underline;
+  text-decoration-thickness: 0.025em;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 0.26em;
+  opacity: 0.85;
+  cursor: default;
+}
 
 /* ============================================================
    МОБИЛЬНАЯ РАСКЛАДКА (макет 375px)
