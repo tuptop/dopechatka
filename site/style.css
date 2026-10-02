@@ -113,18 +113,19 @@ img { display: block; }
 /* Ссылки. Подчёркивание в макете тонкое — 2,5% кегля (`decoration-[2.5%]`),
    это и есть 0.025em. Сплошное: skip-ink выключен, иначе линия рвётся
    о хвосты «р», «у» и собачку в «@tuptoppppp».
-   По умолчанию ссылка приглушена до 60%, под курсором проявляется
-   до 100% — подчёркивание при этом остаётся на месте. */
+   Приглушена до 60% только сама линия, текст всегда чёрный: поэтому тут
+   `text-decoration-color` с альфой, а не `opacity` — та красит элемент целиком,
+   вместе с буквами. Под курсором линия доходит до цвета текста. */
 .u {
   color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 0.025em;
   text-decoration-skip-ink: none;
   text-underline-offset: 0.26em;
-  opacity: 0.6;
-  transition: opacity 0.15s ease;
+  text-decoration-color: rgba(0, 0, 0, 0.6);
+  transition: text-decoration-color 0.15s ease;
 }
-.u:hover { opacity: 1; }
+.u:hover { text-decoration-color: currentColor; }
 
 /* ===== Кнопки ===== */
 /* Кнопка из кита: высота задана явно (56), отбивки внутри асимметричные —
