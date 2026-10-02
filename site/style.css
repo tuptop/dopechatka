@@ -318,15 +318,20 @@ img { display: block; }
 }
 .inside-note:first-child { width: 456px; }
 .inside-note:last-child { width: 477px; }
+/* В макете верх иконки совпадает с верхом строки (ряд с items-start),
+   а строка — это кегль × 1.02. Отсюда и сдвиг: базовая линия Graphik лежит
+   на 28,9px ниже верха такой строки, иконка 32px → её низ на 3,1px ниже
+   базовой линии. Подбирать на глаз не нужно, всё считается из метрик шрифта:
+   восходящая 0.981 em, сумма восходящей и нисходящей 1.176 em. */
 .app {
   display: inline-block;
   width: 32px; height: 32px;
-  vertical-align: -13px;
+  vertical-align: -3.1px;
   border-radius: 5px;
   /* зазоры из автолейаута: 6 до иконки, 3 после */
   margin: 0 3px 0 6px;
 }
-.inf { display: inline-block; width: 49px; height: 33px; vertical-align: -12px; margin-right: 3px; }
+.inf { display: inline-block; width: 49px; height: 33px; vertical-align: -4.1px; margin-right: 3px; }
 
 /* ===== Авторы ===== */
 .authors { top: 3674px; left: 32px; width: 986px; height: 527px; }
@@ -698,8 +703,8 @@ img { display: block; }
   }
   .inside-note:first-child,
   .inside-note:last-child { width: auto; }
-  .app { width: 22px; height: 22px; vertical-align: -9px; margin: 0 2px 0 4px; }
-  .inf { width: 34px; height: 22px; vertical-align: -8px; }
+  .app { width: 22px; height: 22px; vertical-align: -2.1px; margin: 0 2px 0 4px; }
+  .inf { width: 34px; height: 22px; vertical-align: -2.1px; }
 
   /* ===== Авторы ===== */
   .authors { margin-top: 80px !important; }
@@ -753,9 +758,12 @@ img { display: block; }
   .buy-pay { margin-top: 24px; padding-left: 40px; position: relative; max-width: 275px; }
   /* в макете порядок такой: текст, оплата, цена, кнопка, фото.
      В разметке цена идёт после кнопки, поэтому переставляем флексом. */
-  .buy-old { position: relative; width: auto; order: 1; margin-top: 40px; }
+  /* В макете от базовой линии цены до кнопки 16px. Бокс .buy-now выше
+     базовой линии на 11,1px (нисходящая Spectral), поэтому margin кнопки
+     и получается 5, а не 16 — иначе ценник отрывается от кнопки. */
+  .buy-old { position: relative; width: auto; order: 1; margin-top: 46px; }
   .buy-now { order: 2; margin-top: -4px; }
-  .buy .btn { display: flex; order: 3; margin-top: 16px; }
+  .buy .btn { display: flex; order: 3; margin-top: 5px; }
   /* то же самое с птицей: раньше тут стояло 311/360, и cover срезал
      её крылья по бокам */
   .buy-photo {
