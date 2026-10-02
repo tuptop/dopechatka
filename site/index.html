@@ -24,7 +24,7 @@
   <meta name="twitter:description" content="Онлайн-курс для дизайнеров и менеджеров по работе с печатной продукцией. Сейчас — 4 500 ₽ по предзаказу.">
   <meta name="twitter:image" content="https://tuptop.github.io/dopechatka/assets/og-image.png">
 
-  <link rel="stylesheet" href="style.css?v=76">
+  <link rel="stylesheet" href="style.css?v=78">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -216,7 +216,7 @@
           <div class="author author-wide">
             <div class="author-pic">
               <div class="video-circle paused" id="nastya-circle" title="Кружок от Насти — нажмите, чтобы посмотреть">
-                <video src="assets/nastya-circle.mp4" loop playsinline preload="metadata"></video>
+                <video src="assets/nastya-circle.mp4" poster="assets/nastya-poster.jpg" loop playsinline preload="metadata"></video>
                 <svg class="ring" viewBox="0 0 288 288" aria-hidden="true">
                   <circle class="ring-bg" cx="144" cy="144" r="134.62"></circle>
                   <circle class="ring-bar" cx="144" cy="144" r="134.62" pathLength="100"></circle>
@@ -235,7 +235,10 @@
         <h2 class="tg-title">Подписывайтесь<br>на телеграм-канал</h2>
         <p class="tg-text">Рассказываем о курсе, публикуем анонсы, <br class="wide-only">даём полезные советы по работе с печатью.</p>
         <a class="btn btn-dark" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Заглянуть</a>
-        <img class="tg-phone" src="assets/tg-phone.jpg" alt="Телеграм-канал курса на экране телефона">
+        <picture class="tg-pic">
+          <source media="(max-width: 759px)" srcset="assets/tg-phone-mobile.jpg">
+          <img class="tg-phone" src="assets/tg-phone.jpg" alt="Телеграм-канал курса на экране телефона">
+        </picture>
       </section>
 
       <!-- ===== Вопросы ===== -->
@@ -497,7 +500,11 @@
       el.querySelector('p').textContent = nextText();
       el.querySelector('time').textContent = randTime();
       box.appendChild(el);
-      if (show) requestAnimationFrame(() => el.classList.add('in'));
+      // Одного requestAnimationFrame мало: он срабатывает до того, как браузер
+      // посчитает стартовый стиль новой плашки, и перехода не выходит — она
+      // просто возникает. Чтение offsetWidth заставляет стиль примениться,
+      // и смена класса уже даёт анимацию.
+      if (show) { void el.offsetWidth; el.classList.add('in'); }
       else el.classList.add('in');
       return el;
     };
