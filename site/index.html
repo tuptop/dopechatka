@@ -24,7 +24,7 @@
   <meta name="twitter:description" content="Онлайн-курс для дизайнеров и менеджеров по работе с печатной продукцией. Сейчас — 4 500 ₽ по предзаказу.">
   <meta name="twitter:image" content="https://tuptop.github.io/dopechatka/assets/og-image.png">
 
-  <link rel="stylesheet" href="style.css?v=73">
+  <link rel="stylesheet" href="style.css?v=74">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -613,7 +613,41 @@
     };
     video.addEventListener('play', state);
     video.addEventListener('pause', state);
+
+    /* Перемотка: узелок можно схватить и вести по окружности. Угол считаем
+       от центра кружка — 0° это двенадцать часов, дальше по часовой, то есть
+       та же система, в которой узелок и дуга рисуются. */
+    let scrub = false, lastScrub = 0;
+    const fracAt = e => {
+      const r = circle.getBoundingClientRect();
+      const a = Math.atan2(e.clientX - (r.left + r.width / 2), (r.top + r.height / 2) - e.clientY);
+      return ((a * 180 / Math.PI + 360) % 360) / 360;
+    };
+    knob.addEventListener('pointerdown', e => {
+      if (!video.duration) return;
+      scrub = true;
+      circle.classList.add('scrubbing');
+      e.preventDefault();
+    });
+    // Слушаем окно, а не сам узелок: он маленький и под курсором не удержится,
+    // да и отпустить кнопку могут где угодно за пределами кружка.
+    addEventListener('pointermove', e => {
+      if (!scrub) return;
+      lastScrub = Date.now();
+      video.currentTime = fracAt(e) * video.duration;
+      setProgress();
+    });
+    const endScrub = () => {
+      if (!scrub) return;
+      scrub = false;
+      circle.classList.remove('scrubbing');
+    };
+    addEventListener('pointerup', endScrub);
+    addEventListener('pointercancel', endScrub);
+
     circle.addEventListener('click', () => {
+      // клик сразу после перемотки — это её хвост, а не намерение переключить
+      if (Date.now() - lastScrub < 300) return;
       if (!video.paused) { video.pause(); return; }
       // На телефоне воспроизведение со звуком могут не разрешить — тогда
       // play() молча отвалится промисом. Пробуем ещё раз без звука, чтобы

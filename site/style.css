@@ -383,15 +383,33 @@ img { display: block; }
   transform-origin: 144px 144px;
   transition: stroke-dashoffset 0.28s linear;
 }
-/* узелок едет по окружности поворотом вокруг центра: 0° — двенадцать часов */
+/* Узелок едет по окружности поворотом вокруг центра: 0° — двенадцать часов.
+   Прозрачная обводка 16px — это зона захвата: сам узелок 12px, в такой
+   курсором ещё попадёшь, а пальцем уже нет. pointer-events: all нужен
+   потому, что обводка прозрачная, иначе события по ней не ловятся. */
 .video-circle .ring .ring-knob {
   fill: #fff;
-  stroke: none;
+  stroke: transparent;
+  stroke-width: 16;
+  pointer-events: all;
+  touch-action: none;
+  cursor: grab;
   transform: rotate(var(--p, 0deg));
   transform-origin: 144px 144px;
-  transition: transform 0.28s linear;
+  transition: transform 0.28s linear, opacity 0.2s ease;
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
 }
+/* Где есть курсор — узелок показываем только при наведении на кружок
+   и пока его тащат. На тач-экранах наведения нет, там он виден всегда. */
+@media (hover: hover) {
+  .video-circle .ring .ring-knob { opacity: 0; }
+  .video-circle:hover .ring .ring-knob,
+  .video-circle.scrubbing .ring .ring-knob { opacity: 1; }
+}
+/* на перемотке плавность только мешает — узелок должен идти за курсором */
+.video-circle.scrubbing .ring .ring-bar,
+.video-circle.scrubbing .ring .ring-knob { transition: opacity 0.2s ease; }
+.video-circle.scrubbing .ring .ring-knob { cursor: grabbing; }
 .video-circle .icon-play {
   position: absolute;
   left: 114px; top: 114px;
