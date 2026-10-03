@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=91">
+  <link rel="stylesheet" href="style.css?v=92">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -526,9 +526,8 @@
     const place = (x, y, rot, show) => {
       const el = document.createElement('div');
       el.className = 'bbl';
-      // форм в ките две — с хвостиком слева и справа, у каждой своя иконка
+      // форма в ките одна, а иконки две — выбираем монеткой только её
       const v = Math.random() < 0.5 ? 1 : 2;
-      if (v === 2) el.classList.add('bbl-2');
       el.style.cssText = 'left:' + Math.round(x) + 'px; top:' + Math.round(y) + 'px; z-index:' + (++z) + '; --rot:' + rot.toFixed(1) + 'deg';
       el.innerHTML = '<p></p><div class="bbl-foot"><img src="assets/bbl-icon-' + v + '.svg" alt=""><time></time></div>';
       el.querySelector('p').textContent = nextText();

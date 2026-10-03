@@ -194,24 +194,21 @@ img {
 
 /* Реплики из чатов.
    Плашка — ровно 280×138,5, и рисуется она одной картинкой: контур целиком
-   это один путь, взятый из кита (`spch bbl 1` и `spch bbl 2`, узлы 1558:3650
-   и 1558:3651). Раньше контур собирался из border плюс треугольник на
-   ::after, и в месте стыка рамка рвалась. Форм в ките две — с хвостиком
-   слева и справа, каждой своя иконка; вторая вешается классом .bbl-2.
+   это один путь из кита (`Rectangle 240668104`, узел 1558:3642). Раньше
+   контур собирался из border плюс треугольник на ::after, и в месте стыка
+   рамка рвалась. Форма в ките теперь **одна** — хвостик снизу справа,
+   скругление 8; вариант с хвостиком слева оттуда убрали.
    Размер фиксированный, потому что картинка не тянется. */
 .bubbles { position: absolute; left: 0; top: 0; width: 1050px; height: 404px; }
 .bbl {
   position: absolute;
   width: 280px; height: 138.5px;
   color: #000;
-  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280.6' height='139.285' viewBox='0 0 280.6 139.285' fill='none'%3E%3Cpath d='M0.3 9.9C0.3 6.53969 0.3 4.85953 0.953961 3.57606C1.5292 2.44708 2.44708 1.5292 3.57606 0.953961C4.85953 0.3 6.53969 0.3 9.9 0.3H270.7C274.06 0.3 275.74 0.3 277.024 0.953961C278.153 1.5292 279.071 2.44708 279.646 3.57606C280.3 4.85953 280.3 6.53969 280.3 9.9V111.7C280.3 115.06 280.3 116.74 279.646 118.024C279.071 119.153 278.153 120.071 277.024 120.646C275.74 121.3 274.06 121.3 270.7 121.3H71.1777C71.0368 121.3 70.9664 121.3 70.8974 121.31C70.8362 121.318 70.7758 121.332 70.7172 121.352C70.6512 121.374 70.5882 121.406 70.4622 121.469L35.8 138.8V121.3H9.9C6.53968 121.3 4.85953 121.3 3.57606 120.646C2.44708 120.071 1.5292 119.153 0.953961 118.024C0.3 116.74 0.3 115.06 0.3 111.7V9.9Z' fill='white' stroke='black' stroke-width='0.6'/%3E%3C/svg%3E") no-repeat -0.3px -0.3px;
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280.6' height='139.285' viewBox='0 0 280.6 139.285' fill='none'%3E%3Cpath d='M0.3 8.3C0.3 5.49974 0.3 4.09961 0.844967 3.03005C1.32433 2.08924 2.08924 1.32433 3.03005 0.844967C4.09961 0.3 5.49974 0.3 8.3 0.3H272.3C275.1 0.3 276.5 0.3 277.57 0.844967C278.511 1.32433 279.276 2.08924 279.755 3.03005C280.3 4.09961 280.3 5.49974 280.3 8.3V113.3C280.3 116.1 280.3 117.5 279.755 118.57C279.276 119.511 278.511 120.276 277.57 120.755C276.5 121.3 275.1 121.3 272.3 121.3H244.8V138.8L209.8 121.3H8.29999C5.49974 121.3 4.09961 121.3 3.03005 120.755C2.08924 120.276 1.32433 119.511 0.844967 118.57C0.3 117.5 0.3 116.1 0.3 113.3V8.3Z' fill='white' stroke='black' stroke-width='0.6'/%3E%3C/svg%3E") no-repeat -0.3px -0.3px;
   background-size: 280.6px 139.285px;
   opacity: 0;
   transform: rotate(var(--rot, 0deg)) scale(0.6);
   transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
-}
-.bbl-2 {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280.6' height='139.285' viewBox='0 0 280.6 139.285' fill='none'%3E%3Cpath d='M0.3 8.3C0.3 5.49974 0.3 4.09961 0.844967 3.03005C1.32433 2.08924 2.08924 1.32433 3.03005 0.844967C4.09961 0.3 5.49974 0.3 8.3 0.3H272.3C275.1 0.3 276.5 0.3 277.57 0.844967C278.511 1.32433 279.276 2.08924 279.755 3.03005C280.3 4.09961 280.3 5.49974 280.3 8.3V113.3C280.3 116.1 280.3 117.5 279.755 118.57C279.276 119.511 278.511 120.276 277.57 120.755C276.5 121.3 275.1 121.3 272.3 121.3H244.8V138.8L209.8 121.3H8.29999C5.49974 121.3 4.09961 121.3 3.03005 120.755C2.08924 120.276 1.32433 119.511 0.844967 118.57C0.3 117.5 0.3 116.1 0.3 113.3V8.3Z' fill='white' stroke='black' stroke-width='0.6'/%3E%3C/svg%3E");
 }
 .bbl.in { opacity: 1; transform: rotate(var(--rot, 0deg)) scale(1); }
 /* плашку можно взять мышью и переложить */
@@ -277,7 +274,7 @@ img {
    середина 7,9, и линия встаёт на 1px выше неё, как в макете. */
 .badge-old::after {
   content: '';
-  position: absolute; left: 50%; top: 9.1px;
+  position: absolute; left: 50%; top: 7.25px;
   width: 57px; height: 2px; margin-left: -28.5px;
   background: #bd0600;
 }
@@ -654,7 +651,7 @@ img {
 }
 .buy-old::after {
   content: '';
-  position: absolute; left: 50%; top: 11px;
+  position: absolute; left: 50%; top: 13.8px;
   width: 91.78px; height: 2px; margin-left: -45.89px;
   background: #bd0600;
 }
@@ -1052,7 +1049,7 @@ img {
   .buy-title { font-size: 36px; line-height: 0.92; letter-spacing: -0.72px; }
   .buy-text { margin: 16px auto 0; max-width: 273px; font-size: 16px; line-height: 1.45; }
   .buy-old { position: relative; margin-top: 32px; font-size: 24px; letter-spacing: -0.48px; }
-  .buy-old::after { top: 8px; width: 68px; margin-left: -34px; }
+  .buy-old::after { top: 10.2px; width: 68px; margin-left: -34px; }
   .buy-now { margin-top: 2px; font-size: 64px; letter-spacing: -1.92px; }
   .buy-now .rub { font-size: 42px; letter-spacing: -0.84px; }
   /* На мобильном у строчки про оплату остаётся иконка карты и свой кегль */
