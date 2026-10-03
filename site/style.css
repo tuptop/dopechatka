@@ -127,9 +127,11 @@ img { display: block; }
   text-decoration-skip-ink: none;
   text-underline-offset: 0.26em;
   text-decoration-color: rgba(0, 0, 0, 0.6);
-  transition: text-decoration-color 0.15s ease;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
-.u:hover { text-decoration-color: currentColor; }
+/* Под курсором — тот же красный, что у перечёркнутых ценников. Линия идёт
+   за текстом через currentColor, поэтому краснеет вместе с ним. */
+.u:hover { color: #bd0600; text-decoration-color: currentColor; }
 
 /* ===== Кнопки ===== */
 /* Кнопка из кита: высота задана явно (56), отбивки внутри асимметричные —
