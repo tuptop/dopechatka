@@ -72,7 +72,7 @@ html, body {
   position: relative;
   width: 1050px;
   margin: 0 auto;
-  min-height: 6725px;
+  min-height: 7330px;
   padding-top: 24px;
   zoom: var(--zoom, 1.1429);
 }
@@ -82,7 +82,7 @@ img { display: block; }
 .sheet {
   position: relative;
   width: 1050px;
-  height: 6592px;
+  height: 7197px;
   margin: 0;
   background: #fff;
   border-radius: 4px;
@@ -149,6 +149,8 @@ img { display: block; }
 .btn-light:hover { background: #ececec; }
 .btn-dark { background: #000; color: #fff; }
 .btn-dark:hover { background: #2b2b2b; }
+.btn-red { background: #bd0600; color: #fff; }
+.btn-red:hover { background: #9c0500; }
 
 /* ===== Зубчатый край, как у оторванного билета (шаг 10px, высота 4px — снято с макета) ===== */
 .zig {
@@ -169,18 +171,8 @@ img { display: block; }
 }
 .zig::before { top: 0; }
 .zig::after { bottom: 0; transform: scaleY(-1); }
-/* Чёрная карточка: зубцы выедают заливку сверху и снизу */
-.zig-dark {
-  background: #000;
-  border-color: transparent;
-}
-.zig-dark::before, .zig-dark::after {
-  height: 5px;
-  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5'%3E%3Cpath d='M0 0L5 4.4L10 0Z' fill='%23fff'/%3E%3C/svg%3E") repeat-x;
-}
-
 /* ===== Хиро ===== */
-.hero { top: -40px; left: 0; width: 1050px; height: 859px; }
+.hero { top: -40px; left: 0; width: 1050px; height: 914px; }
 .hero .h1 { position: absolute; left: 32px; top: 380px; }
 .hero-sub {
   position: absolute;
@@ -241,13 +233,29 @@ img { display: block; }
 }
 
 /* Плашка с ценой */
-.badge { position: absolute; left: 712px; top: 584px; width: 305px; height: 201px; }
-.badge-bg { position: absolute; inset: 0; width: 305px; height: 201px; }
-.badge-old {
-  position: absolute; left: 18px; top: 30px;
-  font: 400 18px/1 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -0.36px;
+/* Билет с зубцами и перфорацией посередине — одна картинка из макета
+   (`Subtract`, узел 1712:465): в контур зашиты и зубцы, и круглые вырезы
+   по бокам. Она на 11,66 выше карточки и на 11,66 ниже — отсюда 291,62. */
+.badge { position: absolute; left: 712px; top: 584px; width: 305px; height: 280px; }
+.badge-bg { position: absolute; left: 0; top: -11.66px; width: 305px; height: 291.62px; }
+/* Всё внутри выключено по центру карточки. Вертикали сняты с рендера макета
+   по краске, а не по боксам: у Фигмы тут `leading-0` со спанами, и её
+   собственные координаты в CSS не переводятся один к одному. */
+.badge-lead, .badge-old, .badge-now, .badge-note {
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  text-align: center;
   color: #fff;
+}
+.badge-lead {
+  top: 10px; width: 223px;
+  font: 500 20px/21.6px 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -0.6px;
+}
+.badge-old {
+  top: 32.4px; width: 223px;
+  font: 500 20px/21.6px 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -0.16px;
 }
 /* Линия перечёркивания. В ките она 2px (контур обводкой), а не волосяная,
    и проходит по середине цифр. Координату из макета сюда брать нельзя: там
@@ -257,47 +265,93 @@ img { display: block; }
    середина 7,9, и линия встаёт на 1px выше неё, как в макете. */
 .badge-old::after {
   content: '';
-  position: absolute; left: -1px; top: 5.9px;
-  width: 51px; height: 2px;
+  position: absolute; left: 50%; top: 9.1px;
+  width: 57px; height: 2px; margin-left: -28.5px;
   background: #bd0600;
 }
 .badge-now {
-  position: absolute; left: 18px; top: 44px;
-  font: 400 54.97px/1 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -1.65px;
-  color: #fff;
+  top: 54px; width: 223px;
+  font: 400 60.83px/1 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -1.82px;
 }
-.badge-now .rub { font-size: 36px; letter-spacing: -0.72px; }
-.badge .btn { position: absolute; left: 20px; top: 106px; width: 265px; }
+.badge-now .rub { font-size: 39.84px; letter-spacing: -0.8px; }
+.badge-note {
+  top: 120px; width: 215px;
+  font: 400 13px/1.15 'Graphik', sans-serif;
+}
+/* Пунктир по линии отрыва. Штрих 8 через 8 — из макета; браузерный
+   `dashed` рисует свою длину штриха, поэтому градиентом. */
+.badge-perf {
+  display: block;
+  position: absolute;
+  left: 15px; top: 182px;
+  width: 274px; height: 1px;
+  background: repeating-linear-gradient(to right, #fff 0 8px, transparent 8px 16px);
+}
+.badge .btn { position: absolute; left: 50%; margin-left: -132.5px; top: 202px; width: 265px; }
 
 /* ===== Вступление с буквицей =====
-   Все три куска стоят по координатам из Фигмы относительно секции:
-   буквица −17/36, первая строка 70/104, остальной текст 0/131.
-   Раньше секция была сдвинута на 2px, а буквица ещё на 8 — из-за этого
-   «К» не попадала под строку «урс последовательно…». */
-.intro { top: 819px; left: 32px; width: 986px; height: 277px; }
+   Теперь это чёрная карточка, которая вылезает за полотно влево, с красным
+   загнутым уголком снизу и скрепкой на верхнем левом крае. Секция во всю
+   ширину полотна, карточка внутри — по макетным координатам. */
+.intro { top: 874px; left: 0; width: 1050px; height: 362.21px; }
+.intro-card {
+  position: absolute;
+  left: -28.35px; top: 0;
+  width: 788.1px; height: 333.6px;
+  background: #000;
+  color: #fff;
+  box-shadow: 5px 4px 12.5px rgba(0, 0, 0, 0.13);
+}
+/* Загнутый уголок: прямоугольный треугольник 28,35 × 28,6 под левым нижним
+   углом. Рисуется бордюрами — левый прозрачный, верхний красный. */
+.intro-card::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 100%;
+  width: 0; height: 0;
+  border-left: 28.35px solid transparent;
+  border-top: 28.6px solid #bd0600;
+}
 .intro-cap {
   position: absolute;
-  left: -17px; top: 36px;
-  font: 400 124px/105.4px 'Spectral', Cambria, Georgia, serif;
+  left: 43.35px; top: 28px;
+  font: 300 124px/96.72px 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -4.96px;
 }
 .intro-first {
   position: absolute;
-  left: 70px; top: 104px;
+  left: 130.35px; top: 91.15px;
   width: 487px;
   font: 500 20px/1.35 'Graphik', sans-serif;
 }
 .intro-rest {
   position: absolute;
-  left: 0; top: 131px;
+  left: 60.35px; top: 118.15px;
   width: 620px;
   font: 500 20px/1.35 'Graphik', sans-serif;
 }
 .intro-rest p + p { margin-top: 8px; }
 
+/* ===== Скрепки =====
+   Скрепка должна держать карточку за край: половина уходит под неё,
+   половина лежит сверху. Поэтому картинка кладётся дважды — один слой
+   под карточкой, второй поверх, обрезанный по её краю. Картинка одна
+   и та же и стоит в обоих слоях на одном месте, поэтому стык незаметен.
+   Числа — из рендера макета: у `paperclip.png` краска идёт с 29 по 100
+   по горизонтали, по ней и отмерено положение. */
+.clip { position: absolute; width: 140px; height: 144px; }
+.clip-intro { left: -89px; top: 29px; }
+.clip-intro.clip-front { clip-path: inset(0 0 0 60.65px); }
+.clip-practice { left: 991px; top: 57px; transform: scaleX(-1); }
+/* Зеркальная скрепка: clip-path считается в системе до трансформации,
+   поэтому `scaleX(-1)` переворачивает и его. Карточка слева от скрепки,
+   значит поверх неё нужна правая половина картинки — то есть левая
+   в исходной системе, отсюда отступ слева, а не справа. */
+.clip-practice.clip-front { clip-path: inset(0 0 0 60px); }
+
 /* ===== Программа ===== */
-.program { top: 1186px; left: 32px; width: 986px; height: 1223px; }
+.program { top: 1271px; left: 32px; width: 986px; height: 1220px; }
 .program .h2 { margin-bottom: 40px; }
 .sprint { position: absolute; left: 0; width: 986px; }
 .sprint:nth-of-type(1) { top: 106px; }
@@ -326,7 +380,7 @@ img { display: block; }
 .later { opacity: 0.5; }
 
 /* ===== Что внутри ===== */
-.inside { top: 2499px; left: 32px; width: 986px; height: 1085px; }
+.inside { top: 2584px; left: 32px; width: 986px; height: 878px; }
 .inside .h2 { margin-bottom: 24px; }
 .inside-lead {
   width: 571px;
@@ -343,17 +397,39 @@ img { display: block; }
    Габарит 174,6 — это сторона 156 со скруглением 55,5, повёрнутая на 47,73°. */
 .inside-doodle {
   position: absolute;
-  left: 748.5px; top: 112.6px;
+  left: 748.5px; top: 106.85px;
   width: 174.6px; height: 174.6px;
 }
+/* ===== Для практики понадобятся =====
+   Та же чёрная карточка, что у вступления, только во всю ширину и с двумя
+   красными уголками — по одному в каждом нижнем углу. Вылезает за полотно
+   на 21 с каждой стороны. */
+.practice { top: 3552px; left: 0; width: 1050px; height: 236px; }
+.practice-card {
+  position: absolute;
+  left: -21px; top: 0;
+  width: 1092px; height: 215px;
+  background: #000;
+  box-shadow: 0 4px 12.5px rgba(0, 0, 0, 0.13);
+}
+.practice-card::before, .practice-card::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  width: 0; height: 0;
+  border-top: 21px solid #bd0600;
+}
+.practice-card::before { left: 0; border-left: 21px solid transparent; }
+.practice-card::after { right: 0; border-right: 21px solid transparent; }
 /* Стиль «soft&availability» из макета: Graphik Regular 32, интерлиньяж 1.02.
    Строки в Фигме разложены по 33px с зазором 5, поэтому тут шаг 38. */
 .inside-notes {
   position: absolute;
-  left: 0; top: 936px;
+  left: 32px; top: 28px;
   display: flex; gap: 53px;
   font: 400 32px/38px 'Graphik', sans-serif;
   letter-spacing: -0.32px;
+  color: #fff;
 }
 .inside-note:first-child { width: 456px; }
 .inside-note:last-child { width: 477px; }
@@ -370,10 +446,18 @@ img { display: block; }
   /* зазоры из автолейаута: 6 до иконки, 3 после */
   margin: 0 3px 0 6px;
 }
-.inf { display: inline-block; width: 49px; height: 33px; vertical-align: -4.1px; margin-right: 3px; }
+/* Бесконечность нарисована чёрным контуром, а полоса теперь чёрная —
+   выворачиваем её в белый. */
+.inf {
+  display: inline-block;
+  width: 49px; height: 33px;
+  vertical-align: -4.1px;
+  margin-right: 3px;
+  filter: invert(1);
+}
 
 /* ===== Авторы ===== */
-.authors { top: 3674px; left: 32px; width: 986px; height: 527px; }
+.authors { top: 3857px; left: 32px; width: 986px; height: 527px; }
 .authors .h2 { margin-bottom: 40px; }
 .authors-row { display: flex; gap: 44px; }
 .author { width: 292px; }
@@ -467,7 +551,7 @@ img { display: block; }
 .video-circle.paused .icon-play { visibility: visible; }
 
 /* ===== Телеграм-канал ===== */
-.tg { top: 4291px; left: 32px; width: 986px; height: 440px; background: #fff; }
+.tg { top: 4474px; left: 32px; width: 986px; height: 440px; background: #fff; }
 .tg-title {
   position: absolute;
   left: 32px; top: 46px;
@@ -491,7 +575,7 @@ img { display: block; }
 }
 
 /* ===== Вопросы ===== */
-.faq { top: 4821px; left: 32px; width: 986px; height: 640px; }
+.faq { top: 5004px; left: 32px; width: 986px; height: 640px; }
 .faq .h2 { margin-bottom: 40px; }
 .faq-item { margin-bottom: 32px; }
 .faq-item .h3 { margin-bottom: 8px; }
@@ -507,70 +591,92 @@ img { display: block; }
 .faq-item:nth-of-type(4) p { width: 397px; }
 
 /* ===== Чёрная карточка с ценой ===== */
-.buy { top: 5551px; left: 32px; width: 986px; height: 645px; }
-.buy-card { position: relative; width: 986px; height: 491px; overflow: hidden; }
-/* Фото на всю высоту карточки — верх и низ уходят под зубцы */
-.buy-photo {
+/* ===== Финальный блок: письмо в конверте =====
+   Конверт собран из двух картинок — задняя часть (дно и клапан) лежит под
+   письмом, передняя (боковые клапаны и дно) поверх него, поэтому письмо
+   из конверта торчит. Само письмо — чёрный прямоугольник с зубцами сверху,
+   тоже картинкой: в контуре зубцы и скругления, повторять их CSS'ом смысла
+   нет. Поверх всего — красная печать с кнопкой. */
+.buy { top: 5734px; left: 32px; width: 986px; height: 1057.5px; }
+.letter { position: relative; width: 986px; height: 903px; }
+.env-back { position: absolute; left: -8px; top: -8px; width: 1002px; height: 919px; }
+.env-front { position: absolute; left: 0; top: 0; width: 986px; height: 903px; }
+.letter-card {
   position: absolute;
-  right: 0; bottom: 0;
-  width: 440px; height: 491px;
+  left: 58px; top: 32px;
+  width: 869px; height: 560px;
+  background: url('assets/letter-card.svg') no-repeat 0 0;
+  background-size: 869px 560px;
+  color: #fff;
+  text-align: center;
 }
-/* Course Info в макете стоит на 32/53,58, внутри отбивка 24 между
-   заголовком (два ряда по 60) и текстом: 53,6 + 120 + 24 = 197,6. */
+/* Всё в письме выключено по центру: Course Info 635 в 869, текст 485, цена 234. */
 .buy-title {
   position: absolute;
-  left: 32px; top: 53.6px;
+  left: 117px; top: 53.6px;
   width: 635px;
-  font: 700 60px/1 'Spectral', Cambria, Georgia, serif;
+  font: 500 60px/1 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -1.2px;
-  color: #fff;
 }
 .buy-text {
   position: absolute;
-  left: 32px; top: 197.6px;
+  left: 192px; top: 192px;
   width: 485px;
-  font: 500 20px/1.35 'Graphik', sans-serif;
-  color: #fff;
+  font: 400 20px/1.35 'Graphik', sans-serif;
 }
-/* Текст об оплате переехал под кнопку: в макете это один столбик
-   (кнопка + ценник в ряд, под ними строчка про оплату с отбивкой 8).
-   Кегль там 13/1.2 по ширине 286, иконки пластиковой карты больше нет —
-   на мобильном она осталась, поэтому прячем, а не выкидываем из разметки. */
-.buy-pay {
-  position: absolute;
-  left: 32px; top: 419px;
-  width: 286px;
-  font: 400 13px/1.2 'Graphik', sans-serif;
-  color: #fff;
-}
-.buy-pay img { display: none; }
-/* Ряд «кнопка + цена» выровнен по нижнему краю и стоит на 353.
-   Кнопка внутри ряда опущена на 2 (56 против 58), цена — слева на 279. */
-.buy .btn { position: absolute; left: 32px; top: 355px; width: 265px; }
 .buy-old {
   position: absolute;
-  left: 311px; top: 351px;
-  font: 400 18px/1 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -0.36px;
-  color: #fff;
+  left: 50%; top: 283.5px;
+  transform: translateX(-50%);
+  width: 234.17px;
+  font: 400 32.39px/1 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -0.65px;
 }
 .buy-old::after {
   content: '';
-  position: absolute; left: -1px; top: 5.9px;
-  width: 51px; height: 2px;
+  position: absolute; left: 50%; top: 11px;
+  width: 91.78px; height: 2px; margin-left: -45.89px;
   background: #bd0600;
 }
 .buy-now {
   position: absolute;
-  left: 311px; top: 365px;
-  font: 400 54.97px/1 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -1.65px;
+  left: 50%; top: 307.4px;
+  transform: translateX(-50%);
+  width: 400px;
+  font: 400 98.92px/1 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -2.97px;
+}
+.buy-now .rub { font-size: 64.79px; letter-spacing: -1.3px; }
+.buy-pay {
+  position: absolute;
+  left: 50%; top: 403.8px;
+  transform: translateX(-50%);
+  width: 286px;
+  font: 400 13px/1.2 'Graphik', sans-serif;
+  opacity: 0.6;
+}
+.buy-pay img { display: none; }
+/* Печать: красный многоугольник из макета, текст по центру. */
+.seal {
+  position: absolute;
+  left: 392px; top: 486px;
+  width: 202px; height: 202px;
+  background: url('assets/seal.svg') no-repeat 50% 50%;
+  background-size: 200.9px 199.8px;
+  text-decoration: none;
+}
+.seal span {
+  position: absolute;
+  left: 0; top: 86.46px;
+  width: 100%;
+  text-align: center;
+  font: 600 24px/normal 'Graphik', sans-serif;
   color: #fff;
 }
-.buy-now .rub { font-size: 36px; letter-spacing: -0.72px; }
+.seal:hover { filter: brightness(0.88); }
 
 /* Таймлайн */
-.when { position: absolute; left: 0; top: 531px; width: 986px; height: 114px; }
+.when { position: absolute; left: 0; top: 941px; width: 986px; height: 116.5px; }
 /* Линия со стрелкой и засечками — одной картинкой из макета (Footer Line).
    Засечки там торчат по 10px вверх и вниз от линии, поэтому картинка
    начинается на 3px выше верха блока. */
@@ -592,7 +698,7 @@ img { display: block; }
 }
 
 /* ===== Если пока не определились ===== */
-.undecided { top: 6286px; left: 32px; width: 986px; height: 204px; }
+.undecided { top: 6881.5px; left: 32px; width: 986px; height: 204px; }
 .undecided .h2 { margin-bottom: 24px; }
 .undecided p {
   width: 571px;
@@ -602,7 +708,7 @@ img { display: block; }
 /* ===== Подвал ===== */
 .site-footer {
   position: absolute;
-  left: 0; top: 6648px;
+  left: 0; top: 7253px;
   width: 1050px;
   display: flex; align-items: center; justify-content: space-between;
   font: 400 15px/1.25 'Graphik', sans-serif;
@@ -654,13 +760,18 @@ img { display: block; }
 
   /* Сбрасываем десктопные координаты: на мобильном всё в потоке.
      Таймлайн (.when-col) не трогаем — он и на мобильном живёт по своей сетке. */
-  .intro-cap, .intro-first, .intro-rest,
+  .intro-cap, .intro-first, .intro-rest, .intro-card,
   .inside-shot, .inside-notes,
   .tg-title, .tg-text, .tg .btn, .tg-phone,
-  .buy-title, .buy-text, .buy-pay, .buy .btn, .buy-old, .buy-now, .buy-photo,
+  .buy-title, .buy-text, .buy-pay, .buy-old, .buy-now, .letter-card, .seal,
+  .badge-lead, .badge-old, .badge-now, .badge-note, .badge-perf,
   .when, .sprint, .video-circle, .bubbles, .site-footer {
     left: auto; top: auto; right: auto; bottom: auto;
   }
+
+  /* Скрепки держат край карточки, которого на мобильном нет: там карточки
+     во всю ширину экрана, и держаться не за что. */
+  .clip { display: none; }
 
   /* перенос строки, который нужен только широкому экрану */
   .wide-only { display: none; }
@@ -694,10 +805,11 @@ img { display: block; }
   .badge {
     position: relative;
     left: auto; top: auto;
-    width: auto; height: 201px;
+    width: auto; height: auto;
     margin: 40px 16px 0;
-    padding: 0;
+    padding: 24px 16px 28px;
     background: #000;
+    text-align: center;
   }
   /* на мобильной плашке зубцы рисуем теми же, что у чёрной карточки */
   .badge::before, .badge::after {
@@ -710,12 +822,26 @@ img { display: block; }
   .badge::before { top: 0; }
   .badge::after { bottom: 0; transform: scaleY(-1); }
   .badge-bg { display: none; }
-  .badge-old { left: 16px; top: 30px; }
-  .badge-now { left: 16px; top: 44px; }
-  .badge .btn { left: 16px; right: 16px; top: 106px; width: auto; }
+  .badge-lead, .badge-old, .badge-now, .badge-note, .badge-perf, .badge .btn {
+    position: static;
+    transform: none;
+    width: auto; margin-left: 0;
+  }
+  .badge-old { position: relative; }
+  .badge-note { margin-top: 12px; }
+  /* Линия отрыва на мобильном — просто разделитель во всю ширину карточки */
+  .badge-perf { margin: 22px 0 0; }
+  .badge .btn { display: flex; margin-top: 22px; }
 
   /* ===== Вступление ===== */
   .intro { position: static; width: auto; height: auto; margin-top: 80px !important; }
+  .intro-card {
+    position: static;
+    width: calc(100% + 32px); height: auto;
+    margin: 0 -16px;
+    padding: 24px 16px 28px;
+    box-shadow: none;
+  }
   .intro-cap {
     position: static;
     float: left;
@@ -755,11 +881,23 @@ img { display: block; }
      Базовое `.sheet > section { position: static }` выше по специфичности,
      чем просто `.inside`, поэтому возвращаем через тот же `.sheet >`. */
   .sheet > .inside,
-  .sheet > .tg { position: relative; left: auto; top: auto; }
+  .sheet > .tg,
+  .sheet > .practice { position: relative; left: auto; top: auto; }
+  .practice {
+    width: auto; height: auto;
+    margin-top: 80px !important;
+    padding: 28px 0;
+  }
+  .practice-card {
+    position: absolute;
+    left: -16px; right: -16px; top: 0; bottom: 0;
+    width: auto; height: auto;
+    box-shadow: none;
+  }
   .inside-notes {
-    position: static;
+    position: relative;
     flex-direction: column; gap: 28px;
-    margin-top: 32px;
+    margin-top: 0;
     font-size: 22px;
     line-height: 27px;
     letter-spacing: -0.22px;
@@ -819,42 +957,57 @@ img { display: block; }
   .faq-item:nth-of-type(1) p, .faq-item:nth-of-type(2) p,
   .faq-item:nth-of-type(3) p, .faq-item:nth-of-type(4) p { width: auto; font-size: 16px; }
 
-  /* ===== Чёрная карточка ===== */
+  /* ===== Финальный блок =====
+     Конверт — вещь широкая: при 343 от него остались бы миллиметровые клапаны,
+     а текст письма ужался бы до нечитаемого. Поэтому на мобильном конверт
+     прячем и оставляем само письмо — чёрную карточку во всю ширину экрана,
+     с зубцами сверху и печатью под ней. Мобильный макет под этот редизайн
+     ещё не обновлён, так что раскладка тут своя. */
   .buy { margin-top: 80px !important; }
-  .buy-card { width: auto; height: auto; padding: 32px 16px 0; display: flex; flex-direction: column; }
-  .buy-title, .buy-text, .buy-pay, .buy .btn, .buy-now { position: static; width: auto; }
-  .buy-title { font-size: 36px; letter-spacing: -0.72px; }
-  .buy-text { margin-top: 16px; max-width: 273px; font-size: 16px; line-height: 1.45; }
-  /* На мобильном макет прежний: строчка про оплату идёт сразу под текстом,
-     с иконкой карты и своим кеглем. */
-  .buy-pay {
-    margin-top: 24px;
-    padding-left: 40px;
+  .letter {
+    width: auto; height: auto;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .env-back, .env-front { display: none; }
+  .letter-card {
     position: relative;
+    width: calc(100% + 32px); height: auto;
+    margin: 0 -16px;
+    padding: 34px 16px 125px;
+    background: #000;
+  }
+  /* зубцы те же, что у плашки цены */
+  .letter-card::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 5px;
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5'%3E%3Cpath d='M0 0L5 4.4L10 0Z' fill='%23fff'/%3E%3C/svg%3E") repeat-x;
+  }
+  .buy-title, .buy-text, .buy-pay, .buy-old, .buy-now {
+    position: static;
+    width: auto; max-width: none;
+    transform: none;
+  }
+  .buy-title { font-size: 36px; letter-spacing: -0.72px; }
+  .buy-text { margin: 16px auto 0; max-width: 273px; font-size: 16px; line-height: 1.45; }
+  .buy-old { position: relative; margin-top: 32px; font-size: 24px; letter-spacing: -0.48px; }
+  .buy-old::after { top: 8px; width: 68px; margin-left: -34px; }
+  .buy-now { margin-top: 2px; font-size: 64px; letter-spacing: -1.92px; }
+  .buy-now .rub { font-size: 42px; letter-spacing: -0.84px; }
+  /* На мобильном у строчки про оплату остаётся иконка карты и свой кегль */
+  .buy-pay {
+    position: relative;
+    margin: 20px auto 0;
+    padding-left: 40px;
     max-width: 275px;
+    text-align: left;
     font-size: 15px; line-height: 1.25;
+    opacity: 1;
   }
   .buy-pay img { display: block; position: absolute; left: 0; top: 0; width: 34px; height: 34px; }
-  /* в макете порядок такой: текст, оплата, цена, кнопка, фото.
-     В разметке цена идёт после кнопки, поэтому переставляем флексом. */
-  /* В макете от базовой линии цены до кнопки 16px. Бокс .buy-now выше
-     базовой линии на 11,1px (нисходящая Spectral), поэтому margin кнопки
-     и получается 5, а не 16 — иначе ценник отрывается от кнопки. */
-  .buy-old { position: relative; width: auto; order: 1; margin-top: 46px; }
-  .buy-now { order: 2; margin-top: -4px; }
-  .buy .btn { display: flex; order: 3; margin-top: 5px; }
-  /* то же самое с птицей: раньше тут стояло 311/360, и cover срезал
-     её крылья по бокам */
-  .buy-photo {
-    position: static;
-    order: 9;
-    width: calc(100% + 32px);
-    margin: 0 -16px;
-    height: auto;
-    aspect-ratio: 440 / 483;
-    object-fit: cover;
-    object-position: 50% 50%;
-  }
+  /* печать наезжает на нижний край письма, как в макете */
+  .seal { position: relative; margin-top: -101px; }
 
   /* Таймлайн листается вбок, как в макете */
   .when {
