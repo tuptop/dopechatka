@@ -606,7 +606,7 @@ img { display: block; }
 .env-front { position: absolute; left: 0; top: 0; width: 986px; height: 903px; }
 .letter-card {
   position: absolute;
-  left: 58px; top: 32px;
+  left: 58px; top: 52px;
   width: 869px; height: 560px;
   background: url('assets/letter-card.svg') no-repeat 0 0;
   background-size: 869px 560px;
@@ -616,20 +616,20 @@ img { display: block; }
 /* Всё в письме выключено по центру: Course Info 635 в 869, текст 485, цена 234. */
 .buy-title {
   position: absolute;
-  left: 117px; top: 53.6px;
+  left: 117px; top: 51.1px;
   width: 635px;
-  font: 500 60px/1 'Spectral', Cambria, Georgia, serif;
+  font: 500 60px/55.2px 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -1.2px;
 }
 .buy-text {
   position: absolute;
-  left: 192px; top: 192px;
+  left: 192px; top: 181px;
   width: 485px;
   font: 400 20px/1.35 'Graphik', sans-serif;
 }
 .buy-old {
   position: absolute;
-  left: 50%; top: 283.5px;
+  left: 50%; top: 266.5px;
   transform: translateX(-50%);
   width: 234.17px;
   font: 400 32.39px/1 'Spectral', Cambria, Georgia, serif;
@@ -643,7 +643,7 @@ img { display: block; }
 }
 .buy-now {
   position: absolute;
-  left: 50%; top: 307.4px;
+  left: 50%; top: 290.6px;
   transform: translateX(-50%);
   width: 400px;
   font: 400 98.92px/1 'Spectral', Cambria, Georgia, serif;
@@ -652,25 +652,63 @@ img { display: block; }
 .buy-now .rub { font-size: 64.79px; letter-spacing: -1.3px; }
 .buy-pay {
   position: absolute;
-  left: 50%; top: 403.8px;
+  left: calc(50% - 4px); top: 381.4px;
   transform: translateX(-50%);
-  width: 286px;
+  width: 243px;
   font: 400 13px/1.2 'Graphik', sans-serif;
   opacity: 0.6;
 }
 .buy-pay img { display: none; }
 /* Печать: красный многоугольник из макета, текст по центру. */
+/* ===== Образцы печати =====
+   Три «контрольки» — белые карточки с тремя цветными квадратами — и два
+   образца с текстурой. Текстуры в макете нарисованы шейдерами Фигмы,
+   в CSS их не повторить, поэтому они выгружены картинками уже повёрнутыми:
+   ставятся по габаритам, без `transform`. Карточки же рисуются CSS'ом —
+   так они не мылятся при зуме холста.
+   Координаты — левый верхний угол неповёрнутой карточки: из макета берётся
+   центр габарита, из него вычитается половина размера, дальше `rotate`
+   вокруг центра. */
+.strip {
+  position: absolute;
+  width: 136.745px; height: 413.06px;
+  background: #fff;
+  border-radius: 5.658px;
+  overflow: hidden;
+  box-shadow: 0 0 11.191px rgba(0, 0, 0, 0.12);
+}
+.strip i { position: absolute; left: 11.79px; width: 113.168px; height: 113.168px; }
+.strip i:nth-child(1) { top: 11.79px; }
+.strip i:nth-child(2) { top: 134.39px; }
+.strip i:nth-child(3) { top: 256.99px; }
+.strip-green { left: 736.06px; top: 198.09px; transform: rotate(10.67deg); }
+.strip-green i:nth-child(1) { background: #86c671; }
+.strip-green i:nth-child(2) { background: #63a84d; }
+.strip-green i:nth-child(3) { background: #4088d6; }
+.strip-blue { left: 40.07px; top: 239.84px; transform: rotate(-15.93deg); }
+.strip-blue i:nth-child(1) { background: #86adce; }
+.strip-blue i:nth-child(2) { background: #508ed0; }
+.strip-blue i:nth-child(3) { background: #4088d6; }
+.strip-warm { left: 112px; top: 259.51px; transform: rotate(-2.24deg); }
+.strip-warm i:nth-child(1) { background: #f8d601; }
+.strip-warm i:nth-child(2) { background: #fa5126; }
+.strip-warm i:nth-child(3) { background: #ff4246; }
+.swatch { position: absolute; }
+.swatch-chrome { left: 607px; top: 288px; width: 235.24px; height: 268.14px; }
+.swatch-dots { left: 52px; top: 279px; width: 241.22px; height: 277.15px; }
+
+/* Печать */
 .seal {
   position: absolute;
-  left: 392px; top: 486px;
-  width: 202px; height: 202px;
+  left: 403px; top: 497px;
+  width: 180px; height: 180px;
   background: url('assets/seal.svg') no-repeat 50% 50%;
-  background-size: 200.9px 199.8px;
+  background-size: 178.9px 177.9px;
   text-decoration: none;
 }
 .seal span {
   position: absolute;
-  left: 0; top: 86.46px;
+  left: 0; top: 75.46px;
   width: 100%;
   text-align: center;
   font: 600 24px/normal 'Graphik', sans-serif;
@@ -971,7 +1009,8 @@ img { display: block; }
     width: auto; height: auto;
     display: flex; flex-direction: column; align-items: center;
   }
-  .env-back, .env-front { display: none; }
+  /* Конверта на мобильном нет, значит и торчать из него нечему */
+  .env-back, .env-front, .strip, .swatch { display: none; }
   .letter-card {
     position: relative;
     width: calc(100% + 32px); height: auto;
@@ -992,7 +1031,8 @@ img { display: block; }
     width: auto; max-width: none;
     transform: none;
   }
-  .buy-title { font-size: 36px; letter-spacing: -0.72px; }
+  /* интерлиньяж в базовом правиле задан в пикселях под кегль 60 — тут свой */
+  .buy-title { font-size: 36px; line-height: 0.92; letter-spacing: -0.72px; }
   .buy-text { margin: 16px auto 0; max-width: 273px; font-size: 16px; line-height: 1.45; }
   .buy-old { position: relative; margin-top: 32px; font-size: 24px; letter-spacing: -0.48px; }
   .buy-old::after { top: 8px; width: 68px; margin-left: -34px; }

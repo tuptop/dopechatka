@@ -1,14 +1,22 @@
-<!-- Передняя часть конверта: два боковых клапана и дно. Лежит поверх письма,
-     поэтому письмо из конверта как бы торчит. Узлы макета
-     Rectangle 240668117, Rectangle 240668115 (зеркальный) и Vector 234263986. -->
+<!-- Передняя часть конверта: два боковых клапана и дно. Лежит поверх письма
+     и поверх вылезающих из него образцов, поэтому они из конверта торчат.
+     Узлы макета Rectangle 240668117 (и его зеркало) и Vector 234263986. -->
 <svg width="986" height="903" viewBox="0 0 986 903" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g transform="translate(0,366.54)">
-    <path d="M0 0L170.15 49.4575C234.641 68.2032 279 127.291 279 194.452V536H0V0Z" fill="#EBEBEB"/>
+  <g transform="translate(0,344)" filter="url(#flapEdge)">
+    <path d="M0 22.5359L170.15 71.9934C234.641 90.7391 279 149.827 279 216.988V558.536H0V22.5359Z" fill="#EBEBEB"/>
   </g>
-  <g transform="translate(986.04,366.54) scale(-1,1)">
-    <path d="M0 0L170.15 49.4575C234.641 68.2032 279 127.291 279 194.452V536H0V0Z" fill="#EBEBEB"/>
+  <g transform="translate(986,344) scale(-1,1)" filter="url(#flapEdge)">
+    <path d="M0 22.5359L170.15 71.9934C234.641 90.7391 279 149.827 279 216.988V558.536H0V22.5359Z" fill="#EBEBEB"/>
   </g>
-  <g transform="translate(0,586.65)">
-    <path d="M184.445 0H493H801.555C856.694 0 905.188 36.4608 920.501 89.4303L986 316H493H0L65.4989 89.4303C80.8118 36.4608 129.306 0 184.445 0Z" fill="#CFCFCF"/>
+  <g transform="translate(0,566)">
+    <path d="M186.074 0H493H799.926C855.832 0 904.803 37.4634 919.43 91.4219L986 337H493H0L66.5701 91.4219C81.1968 37.4634 130.168 0 186.074 0Z" fill="#D9D9D9"/>
   </g>
+  <defs>
+    <filter id="flapEdge" x="-40" y="-40" width="1066" height="680" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feOffset dy="-3" in="SourceAlpha" result="off"/>
+      <feGaussianBlur stdDeviation="5.9606" result="blur"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0" result="shadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="shadow"/>
+    </filter>
+  </defs>
 </svg>
