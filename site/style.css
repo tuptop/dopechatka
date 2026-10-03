@@ -454,12 +454,18 @@ img {
   display: inline-block;
   width: 32px; height: 32px;
   vertical-align: -3.1px;
-  /* Скругление у картинки своё (≈3 при кегле 32) — ровно такое же в рендере
-     макета. CSS-радиус тут не нужен: он округлял угол второй раз и срезал
-     цветной квадрат сильнее, чем в макете. */
+  /* Подложка — CSS, в картинке только сам знак. Так скруглённый квадрат
+     остаётся ровным при любом масштабе холста, и у него нет ни кромки,
+     ни ореола — всё, что раньше лезло на тёмном фоне. Цвета подложек
+     сняты пипеткой с рендера макета. */
+  border-radius: 3px;
   /* зазоры из автолейаута: 6 до иконки, 3 после */
   margin: 0 3px 0 6px;
 }
+.app-ps  { background: #001e36; }
+.app-ai  { background: #320000; }
+.app-id  { background: #49021f; }
+.app-fig { background: #1e1e1e; }
 /* Бесконечность нарисована чёрным контуром, а полоса теперь чёрная —
    выворачиваем её в белый. */
 .inf {
@@ -956,7 +962,7 @@ img {
   }
   .inside-note:first-child,
   .inside-note:last-child { width: auto; }
-  .app { width: 22px; height: 22px; vertical-align: -2.1px; margin: 0 2px 0 4px; }
+  .app { width: 22px; height: 22px; vertical-align: -2.1px; margin: 0 2px 0 4px; border-radius: 2px; }
   .inf { width: 34px; height: 22px; vertical-align: -2.1px; }
 
   /* ===== Авторы ===== */
