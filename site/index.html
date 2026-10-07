@@ -382,6 +382,36 @@
   })();
 
   /* ============================================================
+     АВТОСКЕЙЛ ХОЛСТА
+     Вёрстка в натуральную величину макета (полотно 1050px), на экран
+     её кладём зумом. Потолок 1200/1050: при широком окне полотно
+     занимает ровно 1200px. Координаты внутри не трогаем — масштабируется
+     всё целиком, поэтому содержимое не разъезжается. Когда окно уже
+     1200, зум падает, тёмные поля съедаются, полотно остаётся по центру.
+
+     Блок идёт первым не случайно: облако реплик ниже мерит живую геометрию
+     своего контейнера, а она зависит от зума. Если считать её до того, как
+     зум выставлен, в окне уже 1200 выйдет чепуха — там CSS-дефолт 1.1429
+     больше настоящего масштаба.
+     ============================================================ */
+  (() => {
+    const SHEET = 1050;        // ширина белого полотна в вёрстке
+    const MAX = 1200 / SHEET;  // ≈1.1429 — на экране полотно шириной 1200
+    const page = document.getElementById('page');
+    const fit = () => {
+      if (matchMedia('(max-width: 759px)').matches) {
+        document.documentElement.style.removeProperty('--zoom');
+        return;
+      }
+      const z = Math.min(MAX, document.documentElement.clientWidth / SHEET);
+      document.documentElement.style.setProperty('--zoom', z.toFixed(4));
+    };
+    void page;
+    fit();
+    window.addEventListener('resize', fit, { passive: true });
+  })();
+
+  /* ============================================================
      КЕРНИНГ ЗАГОЛОВКОВ
      В кириллице Spectral кернинг есть не на все пары, а трекинг в
      макете отрицательный — из-за этого просветы разъезжаются: в
@@ -491,18 +521,45 @@
     // плашка встаёт в случайную точку. Так заполняются и углы, включая
     // правый верхний, который раньше пустовал.
     const MOBILE = matchMedia('(max-width: 759px)').matches;
-    // x/y — левый верхний угол плашки (сама она 280×138,5), считаются от
-    // контейнера шириной 1050. Облако нарочно шире: от −195 до 1245 — это
-    // ровно 1440 макетного фрейма, то есть полотно с серыми полями по бокам.
-    // Вверх плашки уходят за край полотна на 84 (−40 у хиро плюс −44 тут);
-    // ничего из этого не режется — у полотна `overflow: visible'.
-    // Нижняя граница подобрана так, чтобы облако укладывалось в верхние 404px.
+    const BBL_W = 280;                   // плашка 280×138,5
+    const BLEED = MOBILE ? 60 : 140;     // насколько облако свисает за края окна
+    const CELL = MOBILE ? 77 : 145;      // шаг сетки: столько площади на одну плашку
+    // x/y — левый верхний угол плашки, считаются от контейнера. По вертикали
+    // числа из макета: вверх плашки уходят за край полотна на 84 (−40 у хиро
+    // плюс −44 тут), и это не режется — у полотна `overflow: visible`. Нижняя
+    // граница подобрана так, чтобы облако укладывалось в верхние 404px.
+    // По горизонтали границы считает measure() — облако идёт во всю ширину окна.
     const AREA = MOBILE
-      ? { x0: -60, x1: 170, y0: -14, y1: 110, cols: 3, rows: 3, tilt: 9 }
-      : { x0: -195, x1: 965, y0: -44, y1: 236, cols: 8, rows: 4, tilt: 12.7 };
+      ? { x0: 0, x1: 0, y0: -14, y1: 110, cols: 3, rows: 3, tilt: 9 }
+      : { x0: 0, x1: 0, y0: -44, y1: 236, cols: 8, rows: 4, tilt: 12.7 };
     // наклон всегда против часовой; на мобильном он мельче, иначе повёрнутый
     // габарит нижних плашек налезает на заголовок
     const TILT = AREA.tilt;
+
+    /* Облако занимает всю ширину окна, какой бы она ни была: на ноутбуке
+       это полотно с узкими серыми полями, на широком мониторе — поля вдвое
+       шире полотна, и раньше они пустовали, потому что границы были зашиты
+       под 1440 макетного фрейма.
+
+       Контейнер свёрстан в натуральную величину (1050), а на экран его кладёт
+       зум — поэтому границы окна переводим в систему контейнера через его же
+       габарит: масштаб это `rect.width / offsetWidth`, а `rect.left` говорит,
+       где относительно контейнера левый край окна. Так одна формула работает
+       и на десктопе, и на мобильном, где зум равен 1, а контейнер во всю ширину.
+
+       Свис на пол-плашки с каждой стороны обязателен: плашка в крайней ячейке
+       встаёт в случайную точку, и без свиса у кромки остаётся щель.
+       Число столбцов растёт вместе с шириной, иначе облако редеет. */
+    const measure = () => {
+      const r = box.getBoundingClientRect();
+      const scale = r.width / box.offsetWidth || 1;
+      const left = -r.left / scale;
+      const vw = document.documentElement.clientWidth / scale;
+      AREA.x0 = left - BLEED;
+      AREA.x1 = left + vw + BLEED - BBL_W;
+      AREA.cols = Math.max(MOBILE ? 2 : 4, Math.round((AREA.x1 - AREA.x0) / CELL));
+    };
+    measure();
 
     const shuffle = a => {
       for (let k = a.length - 1; k > 0; k--) {
@@ -511,18 +568,22 @@
       }
       return a;
     };
-    // по одной случайной точке на ячейку: покрытие ровное, а на вид — хаос
-    const grid = () => {
-      const cw = (AREA.x1 - AREA.x0) / AREA.cols;
+    // по одной случайной точке на ячейку: покрытие ровное, а на вид — хаос.
+    // Полосу задаём явно, чтобы той же сеткой досыпать края, когда окно
+    // развернули: столбцов там столько, сколько влезает по шагу CELL.
+    const gridIn = (x0, x1) => {
+      const cols = Math.max(1, Math.round((x1 - x0) / CELL));
+      const cw = (x1 - x0) / cols;
       const ch = (AREA.y1 - AREA.y0) / AREA.rows;
       const out = [];
       for (let r = 0; r < AREA.rows; r++) {
-        for (let c = 0; c < AREA.cols; c++) {
-          out.push([AREA.x0 + c * cw + rnd(0, cw), AREA.y0 + r * ch + rnd(0, ch), -rnd(0, TILT)]);
+        for (let c = 0; c < cols; c++) {
+          out.push([x0 + c * cw + rnd(0, cw), AREA.y0 + r * ch + rnd(0, ch), -rnd(0, TILT)]);
         }
       }
       return shuffle(out);
     };
+    const grid = () => gridIn(AREA.x0, AREA.x1);
     const anywhere = () => [rnd(AREA.x0, AREA.x1), rnd(AREA.y0, AREA.y1), -rnd(0, TILT)];
 
     let z = 1;
@@ -577,25 +638,16 @@
     box.addEventListener('pointerup', drop);
     box.addEventListener('pointercancel', drop);
 
-    if (reduce) {
-      grid().forEach(([x, y, rot]) => place(x, y, rot, false));
-      return;
-    }
+    // плашки идут одна за другой, каждая вырастает из собственного центра
+    const drip = (spots, step) => {
+      let i = 0;
+      const t = setInterval(() => {
+        place(spots[i][0], spots[i][1], spots[i][2], true);
+        if (++i >= spots.length) clearInterval(t);
+      }, step);
+    };
 
-    // 1) заполняем облако: плашки идут одна за другой, каждая вырастает
-    //    из собственного центра. Шаг подобран так, чтобы вся верхняя часть
-    //    полотна закрылась примерно за три секунды (32 плашки по 90мс).
-    const spots = grid();
-    let i = 0;
-    const fill = setInterval(() => {
-      place(spots[i][0], spots[i][1], spots[i][2], true);
-      if (++i >= spots.length) {
-        clearInterval(fill);
-        feed();
-      }
-    }, 90);
-
-    // 2) дальше — новая реплика раз в 3–4 секунды в случайную точку облака
+    // дальше — новая реплика раз в 3–4 секунды в случайную точку облака
     const live = [];
     const feed = () => setTimeout(() => {
       const [x, y, rot] = anywhere();
@@ -607,31 +659,43 @@
       }
       feed();
     }, rnd(3000, 4000));
-  })();
 
-  /* ============================================================
-     АВТОСКЕЙЛ ХОЛСТА
-     Вёрстка в натуральную величину макета (полотно 1050px), на экран
-     её кладём зумом. Потолок 1200/1050: при широком окне полотно
-     занимает ровно 1200px. Координаты внутри не трогаем — масштабируется
-     всё целиком, поэтому содержимое не разъезжается. Когда окно уже
-     1200, зум падает, тёмные поля съедаются, полотно остаётся по центру.
-     ============================================================ */
-  (() => {
-    const SHEET = 1050;        // ширина белого полотна в вёрстке
-    const MAX = 1200 / SHEET;  // ≈1.1429 — на экране полотно шириной 1200
-    const page = document.getElementById('page');
-    const fit = () => {
-      if (matchMedia('(max-width: 759px)').matches) {
-        document.documentElement.style.removeProperty('--zoom');
-        return;
-      }
-      const z = Math.min(MAX, document.documentElement.clientWidth / SHEET);
-      document.documentElement.style.setProperty('--zoom', z.toFixed(4));
-    };
-    void page;
-    fit();
-    window.addEventListener('resize', fit, { passive: true });
+    // 1) заполняем облако. Общее время держим около трёх секунд, поэтому шаг
+    //    зависит от числа мест: на широком мониторе их вдвое больше, и прежние
+    //    фиксированные 90мс растянули бы заполнение секунд на восемь.
+    const spots = grid();
+    const covered = { x0: AREA.x0, x1: AREA.x1 };
+    if (reduce) {
+      spots.forEach(([x, y, rot]) => place(x, y, rot, false));
+    } else {
+      let i = 0;
+      const fill = setInterval(() => {
+        place(spots[i][0], spots[i][1], spots[i][2], true);
+        if (++i >= spots.length) {
+          clearInterval(fill);
+          feed();
+        }
+      }, Math.max(35, Math.round(2880 / spots.length)));
+    }
+
+    /* 2) Окно могли развернуть — тогда облако должно дотянуться до новых краёв.
+          Пересчитываем область и досыпаем плашки только в полосы, которых
+          раньше не было: уже лежащие не двигаем, чтобы облако не прыгало под
+          рукой, а `covered` держит самую широкую засыпанную область — поэтому
+          от болтанки окна туда-сюда DOM не растёт. */
+    let resizeT = 0;
+    addEventListener('resize', () => {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(() => {
+        measure();
+        const add = [];
+        if (AREA.x0 < covered.x0 - CELL / 2) { add.push(...gridIn(AREA.x0, covered.x0)); covered.x0 = AREA.x0; }
+        if (AREA.x1 > covered.x1 + CELL / 2) { add.push(...gridIn(covered.x1, AREA.x1)); covered.x1 = AREA.x1; }
+        if (!add.length) return;
+        if (reduce) add.forEach(([x, y, rot]) => place(x, y, rot, false));
+        else drip(shuffle(add), 60);
+      }, 250);
+    }, { passive: true });
   })();
 
   /* ============================================================
