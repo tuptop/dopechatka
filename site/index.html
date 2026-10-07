@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=96">
+  <link rel="stylesheet" href="style.css?v=97">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -58,30 +58,25 @@
         <p class="hero-sub">Онлайн-курс для&nbsp;дизайнеров и&nbsp;менеджеров <br class="wide-only">по&nbsp;работе с&nbsp;печатной продукцией</p>
 
         <div class="badge">
-          <img class="badge-bg" src="assets/badge-ticket.svg" alt="">
-          <p class="badge-lead">Ранний доступ к&nbsp;курсу</p>
+          <img class="badge-bg" src="assets/plate-badge.jpg" alt="">
+          <div class="badge-head">
+            <p class="badge-lead">Ранний доступ к&nbsp;курсу</p>
+            <p class="badge-note">Включает доступ ко&nbsp;всем урокам, которые выйдут позже</p>
+          </div>
           <p class="badge-old">22 500</p>
           <p class="badge-now">4500&nbsp;<span class="rub">₽</span></p>
-          <p class="badge-note">Включает доступ ко&nbsp;всем урокам,<br>которые выйдут позже</p>
-          <span class="badge-perf" aria-hidden="true"></span>
-          <a class="btn btn-red js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Предзаказ</a>
+          <a class="btn btn-yellow js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Предзаказ</a>
         </div>
       </section>
 
       <!-- ===== Вступление с буквицей ===== -->
       <section class="intro" aria-label="О чём курс">
-        <!-- скрепка кладётся дважды: нижний слой уходит под карточку,
-             верхний обрезан по её краю — так она держит карточку за край -->
-        <img class="clip clip-intro clip-back" src="assets/paperclip.png" alt="" aria-hidden="true">
-        <div class="intro-card">
         <p class="intro-cap" aria-hidden="true">К</p>
         <p class="intro-first">урс последовательно разбирает весь процесс</p>
         <div class="intro-rest">
           <p>работы с&nbsp;печатной продукцией: от&nbsp;постановки технического задания до&nbsp;проверки макета и&nbsp;приёмки тиража.</p>
           <p>Наша задача — дать набор универсальных инструментов и&nbsp;приёмов, которые можно применять в&nbsp;любом проекте и&nbsp;под&nbsp;любые требования типографий.</p>
         </div>
-        </div>
-        <img class="clip clip-intro clip-front" src="assets/paperclip-front.png" alt="" aria-hidden="true">
       </section>
 
       <!-- ===== Программа ===== -->
@@ -212,13 +207,10 @@
 
       <!-- ===== Для практики понадобятся ===== -->
       <section class="practice" aria-label="Что понадобится для практики">
-        <img class="clip clip-practice clip-back" src="assets/paperclip.png" alt="" aria-hidden="true">
-        <div class="practice-card"></div>
         <div class="inside-notes">
           <p class="inside-note">Для&nbsp;практики понадобятся<br>графические редакторы<br>Фотошоп<img class="app" src="assets/app-ps.png" alt="Photoshop">, Иллюстратор<img class="app" src="assets/app-ai.png" alt="Illustrator">,<br>Индизайн<img class="app" src="assets/app-id.png" alt="InDesign"> и&nbsp;Фигма<img class="app" src="assets/app-fig.png" alt="Figma">.</p>
           <p class="inside-note">После покупки доступ<br>к&nbsp;курсу остаётся навсегда <img class="inf" src="assets/infinity.svg" alt="бессрочно">.<br>Новые уроки, которые выйдут<br>позже, включены в&nbsp;стоимость.</p>
         </div>
-        <img class="clip clip-practice clip-front" src="assets/paperclip-front.png" alt="" aria-hidden="true">
       </section>
 
       <!-- ===== Авторы ===== -->
@@ -261,6 +253,16 @@
         <img class="tg-phone" src="assets/tg-phone-mobile.jpg" alt="">
       </section>
 
+      <!-- ===== Галерея ===== -->
+      <!-- Четыре фотографии из макета. В Фигме каждая лежит в своей рамке
+           с обрезкой, поэтому и тут картинка больше рамки и сдвинута внутри. -->
+      <section class="gallery" aria-label="Как это выглядит в печати">
+        <div class="gal gal-tall"><img src="assets/gallery-tall.jpg" alt="Печатный цех: тираж плакатов на выходе из машины"></div>
+        <div class="gal gal-wide"><img src="assets/gallery-wide.jpg" alt="Книга с чёрной суперобложкой"></div>
+        <div class="gal gal-mid"><img src="assets/gallery-mid.jpg" alt="Разворот зина с рисованной типографикой"></div>
+        <img class="gal-round" src="assets/gallery-round.jpg" alt="Коробка с расписанными сувенирами">
+      </section>
+
       <!-- ===== Вопросы ===== -->
       <section class="faq" aria-label="Вопросы и ответы">
         <h2 class="h2">Вопросы</h2>
@@ -282,25 +284,20 @@
         </div>
       </section>
 
-      <!-- ===== Чёрная карточка с ценой ===== -->
+      <!-- ===== Плашка с ценой ===== -->
       <section class="buy" aria-label="Предзаказ курса">
-        <div class="letter">
-          <img class="env-back" src="assets/envelope-back.svg" alt="" aria-hidden="true">
-          <div class="letter-card">
-            <h2 class="buy-title">Курс «Допечатная<br>подготовка»</h2>
-            <p class="buy-text">Можно купить уже сейчас по&nbsp;самой низкой цене, <br class="wide-only">а&nbsp;12 октября — начать обучение.</p>
-            <p class="buy-old">22 500</p>
-            <p class="buy-now">4500&nbsp;<span class="rub">₽</span></p>
-            <p class="buy-pay"><img src="assets/card-icon.svg" alt="">Оплата картой РФ, через СПБ, ЮMoney, по&nbsp;куаркоду или картой иностранного банка</p>
-            <!-- образцы печати, торчащие из конверта -->
-            <img class="swatch swatch-chrome" src="assets/swatch-chrome.png" alt="" aria-hidden="true">
-            <img class="swatch swatch-dots" src="assets/swatch-dots.png" alt="" aria-hidden="true">
-            <div class="strip strip-green" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="buy-card">
+          <img class="buy-bg" src="assets/plate-buy.jpg" alt="" aria-hidden="true">
+          <p class="buy-kicker">Курс</p>
+          <h2 class="buy-title">Допечатная подготовка</h2>
+          <p class="buy-text">Включает доступ ко&nbsp;всем урокам, которые выйдут позже</p>
+          <div class="buy-head">
+            <p class="buy-lead">Ранний доступ</p>
+            <p class="buy-note">Включает доступ ко&nbsp;всем урокам, которые выйдут позже</p>
           </div>
-          <div class="strip strip-blue" aria-hidden="true"><i></i><i></i><i></i></div>
-          <div class="strip strip-warm" aria-hidden="true"><i></i><i></i><i></i></div>
-          <img class="env-front" src="assets/envelope-front.svg" alt="" aria-hidden="true">
-          <a class="seal js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener"><span>Предзаказ</span></a>
+          <p class="buy-old">22 500</p>
+          <p class="buy-now">4500&nbsp;<span class="rub">₽</span></p>
+          <a class="btn btn-yellow js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Предзаказ</a>
         </div>
 
         <!-- Таймлайн выхода уроков -->
@@ -396,9 +393,12 @@
      так что поменять текст заголовка безопасно.
      ============================================================ */
   (() => {
-    // track — трекинг, при котором считались поправки. Итоговый трекинг пары
-    // от него и считается, поэтому на мобильном (там трекинг другой) пары
-    // встают так же ровно, а не получают лишний зазор.
+    // track — трекинг, при котором замерялись просветы; он тут только как
+    // пометка, откуда взялись числа. Итоговый трекинг пары считается
+    // от **собственного** трекинга элемента: поправка тянет пару к медиане
+    // просветов, а медиана вместе с трекингом и съезжает. Раньше бралось
+    // значение из таблицы, и на заголовке письма (трекинг −0,02 против
+    // −0,04 в ряду 400) пара «ая» расходилась на 1,8px — видно на глаз.
     const KERN = {
       // 300 — десктопный H1: в макете он набран Spectral Light. Пары те же,
       // что у Regular — у светлого начертания боковые полуапроши почти такие же.
@@ -408,8 +408,11 @@
       700: { track: -0.02, pairs: { 'По': -0.070, 'м-': -0.057, '-к': -0.055, 'ал': 0.067, 'Ку': -0.070, 'До': -0.060 } }
     };
     const kern = el => {
-      const k = KERN[getComputedStyle(el).fontWeight];
+      const cs = getComputedStyle(el);
+      const k = KERN[cs.fontWeight];
       if (!k) return;
+      // трекинг элемента в em: computed даёт пиксели, «normal» — это ноль
+      const track = (parseFloat(cs.letterSpacing) || 0) / parseFloat(cs.fontSize);
       [...el.childNodes].forEach(node => {
         if (node.nodeType !== 3) return;
         const t = node.textContent;
@@ -421,14 +424,14 @@
           if (plain) { frag.appendChild(document.createTextNode(plain)); plain = ''; }
           const span = document.createElement('span');
           span.textContent = t[i];
-          span.style.letterSpacing = (k.track + corr).toFixed(4) + 'em';
+          span.style.letterSpacing = (track + corr).toFixed(4) + 'em';
           frag.appendChild(span);
         }
         if (plain) frag.appendChild(document.createTextNode(plain));
         node.replaceWith(frag);
       });
     };
-    document.querySelectorAll('.h1, .h2, .tg-title, .buy-title').forEach(kern);
+    document.querySelectorAll('.h1, .h2, .tg-title, .buy-title, .buy-kicker').forEach(kern);
   })();
 
   /* ============================================================
