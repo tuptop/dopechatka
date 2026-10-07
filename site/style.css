@@ -259,7 +259,43 @@ img {
 /* z-index обязателен: вступление стоит на той же высоте, и его прозрачный бокс
    во всю колонку лежит поверх плашки — без подъёма кнопка не нажимается. */
 .badge { position: absolute; z-index: 2; left: 704px; top: 747px; width: 308px; height: 292px; }
-.badge-bg { position: absolute; left: 0; top: 0; width: 308px; height: 292px; }
+
+/* ===== Текстура с параллаксом =====
+   Внутри обеих плашек фон едет при скролле. Для этого текстура выгружена
+   удлинённой (узлы 1964:820 и 1966:867: 308×340 и 986×468 против 308×292
+   и 986×406), лежит в контейнере с `overflow: hidden` и двигается
+   трансформом — запас по высоте и есть ход параллакса.
+
+   Зубцы по краям раньше были зашиты в саму картинку; теперь картинка
+   прямоугольная и ездит, поэтому контур задан **маской** — это альфа той же
+   векторной выгрузки, что рисовала зубцы, белым по прозрачному. Маска
+   тянется на весь контейнер (`100% 100%`), так что зубцы не плывут.
+
+   Трансформ по умолчанию ставит текстуру серединой хода: так плашка выглядит
+   верно и до того, как отработает скрипт, и при `prefers-reduced-motion`. */
+.badge-bg, .buy-bg {
+  position: absolute;
+  left: 0; top: 0;
+  overflow: hidden;
+}
+.badge-bg > i, .buy-bg > i {
+  display: block;
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  background: no-repeat 0 0 / 100% 100%;
+  will-change: transform;
+}
+.badge-bg {
+  width: 308px; height: 292px;
+  -webkit-mask: url('assets/plate-badge-mask.png') 0 0 / 100% 100% no-repeat;
+          mask: url('assets/plate-badge-mask.png') 0 0 / 100% 100% no-repeat;
+}
+.badge-bg > i {
+  height: 340px;
+  background-image: url('assets/plate-badge.jpg');
+  transform: translate3d(0, -24px, 0);
+}
 /* Текст выключен влево по колонке 268 с отбивкой 20 от края карточки. */
 .badge-head {
   position: absolute;
@@ -603,7 +639,16 @@ img {
    потому что внутри него плашка сдвинута на −18. */
 .buy { top: 6213px; left: 32px; width: 986px; height: 578px; }
 .buy-card { position: relative; width: 986px; height: 406px; color: #fff; }
-.buy-bg { position: absolute; left: 0; top: 0; width: 986px; height: 406px; }
+.buy-bg {
+  width: 986px; height: 406px;
+  -webkit-mask: url('assets/plate-buy-mask.png') 0 0 / 100% 100% no-repeat;
+          mask: url('assets/plate-buy-mask.png') 0 0 / 100% 100% no-repeat;
+}
+.buy-bg > i {
+  height: 468px;
+  background-image: url('assets/plate-buy.jpg');
+  transform: translate3d(0, -31px, 0);
+}
 .buy-kicker, .buy-title, .buy-text, .buy-head, .buy-old, .buy-now { position: absolute; }
 .buy-kicker {
   left: 53px; top: 52px;

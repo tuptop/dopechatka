@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=99">
+  <link rel="stylesheet" href="style.css?v=100">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -58,7 +58,7 @@
         <p class="hero-sub">Онлайн-курс для&nbsp;дизайнеров и&nbsp;менеджеров <br class="wide-only">по&nbsp;работе с&nbsp;печатной продукцией</p>
 
         <div class="badge">
-          <img class="badge-bg" src="assets/plate-badge.jpg" alt="">
+          <div class="badge-bg" aria-hidden="true"><i></i></div>
           <div class="badge-head">
             <p class="badge-lead">Ранний доступ к&nbsp;курсу</p>
             <p class="badge-note">Включает доступ ко&nbsp;всем урокам, которые выйдут позже</p>
@@ -287,7 +287,7 @@
       <!-- ===== Плашка с ценой ===== -->
       <section class="buy" aria-label="Предзаказ курса">
         <div class="buy-card">
-          <img class="buy-bg" src="assets/plate-buy.jpg" alt="" aria-hidden="true">
+          <div class="buy-bg" aria-hidden="true"><i></i></div>
           <p class="buy-kicker">Курс</p>
           <h2 class="buy-title">Допечатная подготовка</h2>
           <p class="buy-text">Включает доступ ко&nbsp;всем урокам, которые выйдут позже</p>
@@ -697,6 +697,49 @@
         else drip(shuffle(add), 60);
       }, 250);
     }, { passive: true });
+  })();
+
+  /* ============================================================
+     ПАРАЛЛАКС ТЕКСТУР
+     Фон внутри обеих плашек едет при скролле. Текстура выгружена выше
+     самой плашки (запас 48 и 62 пикселя), лежит под маской с зубцами
+     и двигается трансформом — запас по высоте и есть весь ход.
+
+     Считаем долю пути плашки по экрану: 0 — она только показалась снизу,
+     1 — ушла за верх. Фон отстаёт от страницы, как при неподвижной
+     подложке: внизу видно его нижний край, вверху — верхний.
+
+     Ход берём в вёрсточных пикселях (offsetHeight), а долю пути — в
+     экранных (getBoundingClientRect): холст отмасштабирован зумом,
+     и смешивать эти системы нельзя.
+     ============================================================ */
+  (() => {
+    const boxes = [...document.querySelectorAll('.badge-bg, .buy-bg')]
+      .map(box => ({ box, tex: box.firstElementChild }))
+      .filter(o => o.tex);
+    if (!boxes.length) return;
+    // при reduce оставляем середину хода, которую задал CSS
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let queued = false;
+    const draw = () => {
+      queued = false;
+      const vh = innerHeight;
+      for (const o of boxes) {
+        const h = o.box.offsetHeight;
+        if (!h) continue;                       // на мобильном подложка скрыта
+        const travel = o.tex.offsetHeight - h;
+        if (travel <= 0) continue;
+        const r = o.box.getBoundingClientRect();
+        let p = (vh - r.top) / (vh + r.height);
+        p = p < 0 ? 0 : p > 1 ? 1 : p;
+        o.tex.style.transform = 'translate3d(0,' + (-(1 - p) * travel).toFixed(1) + 'px,0)';
+      }
+    };
+    const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(draw); } };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
+    draw();
   })();
 
   /* ============================================================
