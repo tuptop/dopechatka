@@ -358,11 +358,14 @@ img {
 .sprint-cols { display: flex; gap: 20px; padding-left: 4px; }
 .sprint-col { width: 312px; display: flex; flex-direction: column; gap: 20px; }
 .grp { display: flex; flex-direction: column; gap: 6px; }
-/* .grp p бьёт .grp-t по специфичности (0,1,1 против 0,1,0), поэтому
-   заголовок группы задаём через .grp .grp-t — иначе он теряет Semibold
-   и выглядит так же, как пункты внутри. */
+/* .grp p бьёт .grp-t по специфичности (0,1,1 против 0,1,0), поэтому заголовок
+   группы задаём селектором из двух классов — иначе он теряет Semibold и
+   выглядит так же, как пункты внутри. Опорный класс тут .sprint-col, а не .grp:
+   последний заголовок в третьем спринте («Итоги проекта и обратная связь»)
+   в макете лежит прямо в колонке, без группы, и под .grp .grp-t не попадал —
+   оставался браузерным сериф-дефолтом, потому что font-family на body не задан. */
 .grp p { font: 400 18px/1.2 'Graphik', sans-serif; }
-.grp .grp-t { font: 600 18px/1.15 'Graphik', sans-serif; }
+.sprint-col .grp-t { font: 600 18px/1.15 'Graphik', sans-serif; }
 /* то, что ещё не вышло */
 .later { opacity: 0.5; }
 
@@ -825,7 +828,9 @@ img {
   .sprint .h3 { padding-bottom: 20px; }
   .sprint-cols { flex-direction: column; gap: 20px; padding-left: 0; }
   .sprint-col { width: auto; }
-  .grp-t, .grp p { font-size: 16px; }
+  /* специфичность должна быть не ниже базовой (0,2,0), иначе кегль
+     заголовка группы тут не переопределится и останется десктопным */
+  .sprint-col .grp-t, .grp p { font-size: 16px; }
 
   /* ===== Что внутри ===== */
   .inside { margin-top: 80px !important; }

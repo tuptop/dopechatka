@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=98">
+  <link rel="stylesheet" href="style.css?v=99">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -660,9 +660,10 @@
       feed();
     }, rnd(3000, 4000));
 
-    // 1) заполняем облако. Общее время держим около трёх секунд, поэтому шаг
-    //    зависит от числа мест: на широком мониторе их вдвое больше, и прежние
-    //    фиксированные 90мс растянули бы заполнение секунд на восемь.
+    // 1) заполняем облако. Общее время держим около полутора секунд (автор
+    //    попросила ускорить первичное появление в 2,5 раза), поэтому шаг
+    //    зависит от числа мест: на широком мониторе их вдвое больше, и шаг
+    //    фиксированным числом растянул бы заполнение на много секунд.
     const spots = grid();
     const covered = { x0: AREA.x0, x1: AREA.x1 };
     if (reduce) {
@@ -675,7 +676,7 @@
           clearInterval(fill);
           feed();
         }
-      }, Math.max(35, Math.round(2880 / spots.length)));
+      }, Math.max(14, Math.round(1152 / spots.length)));
     }
 
     /* 2) Окно могли развернуть — тогда облако должно дотянуться до новых краёв.
