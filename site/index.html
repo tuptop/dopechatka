@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=100">
+  <link rel="stylesheet" href="style.css?v=101">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -243,14 +243,17 @@
       </section>
 
       <!-- ===== Телеграм-канал ===== -->
-      <section class="tg zig" aria-label="Телеграм-канал курса">
-        <!-- на десктопе карточка целиком одна картинка из макета, на мобильном
-             от неё остаётся только полоса с телефоном -->
-        <img class="tg-card" src="assets/tg-card.jpg" alt="Телеграм-канал курса на экране телефона">
+      <section class="tg" aria-label="Телеграм-канал курса">
+        <!-- Карточка целиком одна картинка из макета, у мобильного своя:
+             она уже, выше и телефон в ней стоит иначе. Текст и кнопка лежат
+             поверх, поэтому картинка идёт первой. -->
+        <picture>
+          <source media="(max-width: 759px)" srcset="assets/tg-card-mobile.jpg">
+          <img class="tg-card" src="assets/tg-card.jpg" alt="Телеграм-канал курса на экране телефона">
+        </picture>
         <h2 class="tg-title">Подписывайтесь<br>на&nbsp;телеграм-канал</h2>
         <p class="tg-text">Рассказываем о&nbsp;курсе, публикуем анонсы, <br class="wide-only">даём полезные советы по&nbsp;работе с&nbsp;печатью.</p>
         <a class="btn btn-dark" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Заглянуть</a>
-        <img class="tg-phone" src="assets/tg-phone-mobile.jpg" alt="">
       </section>
 
       <!-- ===== Галерея ===== -->

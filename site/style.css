@@ -168,25 +168,6 @@ img {
 .btn-yellow { background: #fedd2d; color: #000; }
 .btn-yellow:hover { background: #f2cf12; }
 
-/* ===== Зубчатый край, как у оторванного билета (шаг 10px, высота 4px — снято с макета) ===== */
-.zig {
-  position: relative;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-}
-/* Зубцы лежат поверх фотографии в карточке и закрашены цветом полотна:
-   фото доходит до самого края карточки, а всё, что выше оторванной линии,
-   съедает этот слой — так картинка обрезается по контуру, а не прямоугольником. */
-.zig::before, .zig::after {
-  content: '';
-  position: absolute;
-  left: -1px; right: -1px;
-  height: 4px;
-  z-index: 2;
-  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280.6' height='139.285' viewBox='0 0 280.6 139.285' fill='none'%3E%3Cpath d='M0.3 9.9C0.3 6.53969 0.3 4.85953 0.953961 3.57606C1.5292 2.44708 2.44708 1.5292 3.57606 0.953961C4.85953 0.3 6.53969 0.3 9.9 0.3H270.7C274.06 0.3 275.74 0.3 277.024 0.953961C278.153 1.5292 279.071 2.44708 279.646 3.57606C280.3 4.85953 280.3 6.53969 280.3 9.9V111.7C280.3 115.06 280.3 116.74 279.646 118.024C279.071 119.153 278.153 120.071 277.024 120.646C275.74 121.3 274.06 121.3 270.7 121.3H71.1777C71.0368 121.3 70.9664 121.3 70.8974 121.31C70.8362 121.318 70.7758 121.332 70.7172 121.352C70.6512 121.374 70.5882 121.406 70.4622 121.469L35.8 138.8V121.3H9.9C6.53968 121.3 4.85953 121.3 3.57606 120.646C2.44708 120.071 1.5292 119.153 0.953961 118.024C0.3 116.74 0.3 115.06 0.3 111.7V9.9Z' fill='white' stroke='black' stroke-width='0.6'/%3E%3C/svg%3E") repeat-x;
-}
-.zig::before { top: 0; }
-.zig::after { bottom: 0; transform: scaleY(-1); }
 /* ===== Хиро ===== */
 .hero { top: -40px; left: 0; width: 1050px; height: 1039px; }
 .hero .h1 { position: absolute; left: 32px; top: 399px; }
@@ -292,9 +273,9 @@ img {
           mask: url('assets/plate-badge-mask.png') 0 0 / 100% 100% no-repeat;
 }
 .badge-bg > i {
-  height: 340px;
+  height: 530px;
   background-image: url('assets/plate-badge.jpg');
-  transform: translate3d(0, -24px, 0);
+  transform: translate3d(0, -119px, 0);
 }
 /* Текст выключен влево по колонке 268 с отбивкой 20 от края карточки. */
 .badge-head {
@@ -566,17 +547,16 @@ img {
 .video-circle.paused .icon-play { visibility: visible; }
 
 /* ===== Телеграм-канал ===== */
-/* Карточка целиком — одна картинка из макета (узел 1774:539): в ней и рамка
-   с зубцами, и телефон. Раньше рамка рисовалась CSS'ом, а фото накладывалось
-   отдельно, и после правок макета фото перестало совпадать с рамкой.
-   Картинка 2× в JPEG — 145 КБ, столько же, сколько PNG 1×, но вдвое чётче;
-   прозрачность не нужна, потому что полотно под карточкой белое. */
+/* Карточка целиком — одна картинка из макета: в ней и рамка с зубцами,
+   и телефон. Раньше рамка рисовалась CSS'ом, а фото накладывалось отдельно,
+   и после правок макета фото перестало совпадать с рамкой. Прозрачность
+   не нужна, потому что полотно под карточкой белое. У мобильного своя
+   картинка — она уже, выше и телефон в ней стоит иначе; выбирает `<picture>`. */
 .tg { top: 4161px; left: 32px; width: 986px; height: 440px; background: #fff; }
+/* обёртка picture ничего не рисует, но инлайновый бокс добавил бы строку —
+   делаем её блочной, а картинка внутри всё равно позиционирована */
+.tg picture { display: block; }
 .tg-card { position: absolute; left: 0; top: 0; width: 986px; height: 440px; }
-/* рамка теперь внутри картинки — свои зубцы и бордюры на десктопе не нужны */
-.tg { border-color: transparent; }
-.tg::before, .tg::after { content: none; }
-.tg-phone { display: none; }
 .tg-title {
   position: absolute;
   left: 32px; top: 46px;
@@ -645,9 +625,9 @@ img {
           mask: url('assets/plate-buy-mask.png') 0 0 / 100% 100% no-repeat;
 }
 .buy-bg > i {
-  height: 468px;
+  height: 654px;
   background-image: url('assets/plate-buy.jpg');
-  transform: translate3d(0, -31px, 0);
+  transform: translate3d(0, -124px, 0);
 }
 .buy-kicker, .buy-title, .buy-text, .buy-head, .buy-old, .buy-now { position: absolute; }
 .buy-kicker {
@@ -781,7 +761,7 @@ img {
      Таймлайн (.when-col) не трогаем — он и на мобильном живёт по своей сетке. */
   .intro-cap, .intro-first, .intro-rest,
   .inside-shot, .inside-notes,
-  .tg-title, .tg-text, .tg .btn, .tg-phone,
+  .tg-title, .tg-text, .tg .btn,
   .buy-kicker, .buy-title, .buy-text, .buy-head, .buy-old, .buy-now,
   .badge-head, .badge-old, .badge-now,
   .when, .sprint, .video-circle, .bubbles, .site-footer {
@@ -890,7 +870,8 @@ img {
     left: auto; right: 16px; top: -40px;
     width: 110px; height: 110px;
   }
-  /* Этим секциям нужен position для абсолютных детей (значок Степика, зубцы).
+  /* Этим секциям нужен position для абсолютных детей (значок Степика,
+     карточка телеграма).
      Базовое `.sheet > section { position: static }` выше по специфичности,
      чем просто `.inside`, поэтому возвращаем через тот же `.sheet >`. */
   .sheet > .inside,
@@ -932,32 +913,24 @@ img {
     transform: translate(-50%, -50%);
   }
 
-  /* ===== Телеграм ===== */
-  /* position нужен, иначе зубцы уедут к краю полотна */
-  .tg { position: relative; margin-top: 80px !important; padding: 32px 16px 0; }
-  .tg-title, .tg-text, .tg .btn { position: static; width: auto; }
+  /* ===== Телеграм =====
+     У мобильного своя карточка-картинка (узел 2001:4361, 343×619): рамка
+     с зубцами и телефон в ней уже есть, рисовать их CSS'ом не нужно.
+     Высоту секции держит `aspect-ratio` — картинка лежит абсолютно
+     и в поток не считается. */
+  .tg {
+    position: relative;
+    margin-top: 80px !important;
+    padding: 32px 16px 0;
+    aspect-ratio: 343 / 619;
+  }
+  .tg-card { width: 100%; height: auto; }
+  /* текст и кнопка в потоке, а картинка позиционирована — без `relative`
+     они оказались бы под ней */
+  .tg-title, .tg-text, .tg .btn { position: relative; width: auto; }
   .tg-title { font-size: 36px; letter-spacing: -0.72px; }
   .tg-text { margin-top: 16px; max-width: 276px; font-size: 16px; line-height: 1.45; }
   .tg .btn { display: flex; margin-top: 40px; }
-  /* фото упирается в нижний край карточки и обрезается зубцами;
-     aspect-ratio заодно срезает зубчатый край, впечатанный в саму картинку */
-  /* На мобильном кадр с телефоном свой (`tg-phone-mobile.jpg`): это полоса
-     из присланного шейпа, в ней телефон уже стоит там, где нужно, и сверху
-     есть воздух — поэтому он не упирается в кнопку. Полоса кладётся во всю
-     ширину карточки и начинается на 15px ниже кнопки, чтобы попасть
-     в макетные 300px от верха карточки. */
-  /* на мобильном карточка-картинка не годится — слишком широкая, поэтому
-     возвращаем рамку с зубцами на CSS и полосу с телефоном */
-  .tg-card { display: none; }
-  .tg { border-color: #000; }
-  .tg::before, .tg::after { content: ""; }
-  .tg-phone {
-    display: block;
-    position: static;
-    width: calc(100% + 32px);
-    margin: 15px -16px 0;
-    height: auto;
-  }
 
   /* ===== Вопросы ===== */
   .faq { margin-top: 80px !important; }
