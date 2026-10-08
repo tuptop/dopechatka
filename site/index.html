@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=102">
+  <link rel="stylesheet" href="style.css?v=103">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -736,6 +736,11 @@
     if (!boxes.length) return;
     // при reduce оставляем середину хода, которую задал CSS
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Где есть таймлайны прокрутки, ход считает CSS — и считает лучше:
+    // такая анимация живёт в компоновщике и идёт кадр в кадр с прокруткой,
+    // а этот скрипт двигает трансформ из главного потока и потому
+    // то отстаёт, то догоняет. Остаётся он только для Firefox.
+    if (window.CSS && CSS.supports('animation-timeline', 'view()')) return;
 
     let queued = false;
     const draw = () => {
