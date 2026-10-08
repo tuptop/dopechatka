@@ -80,7 +80,7 @@ html, body {
   position: relative;
   width: 1050px;
   margin: 0 auto;
-  min-height: 7436px;
+  min-height: 6800px;
   padding-top: 24px;
   zoom: var(--zoom, 1.1429);
 }
@@ -99,7 +99,7 @@ img {
 .sheet {
   position: relative;
   width: 1050px;
-  height: 7353px;
+  height: 6717px;
   margin: 0;
   background: #fff;
   border-radius: 4px;
@@ -404,25 +404,41 @@ img {
 .intro-rest p + p { margin-top: 8px; }
 
 /* ===== Программа ===== */
-.program { top: 1088px; left: 32px; width: 986px; height: 1219px; }
+.program { top: 1088px; left: 32px; width: 986px; height: 1525px; }
 .program .h2 { margin-bottom: 40px; }
 .sprint { position: absolute; left: 0; width: 986px; }
 .sprint:nth-of-type(1) { top: 103px; }
-.sprint:nth-of-type(2) { top: 511px; }
-.sprint:nth-of-type(3) { top: 977px; }
+.sprint:nth-of-type(2) { top: 625px; }
+.sprint:nth-of-type(3) { top: 1283px; }
 .sprint .h3 {
   margin-top: 12px;
   padding-bottom: 32px;
   border-top: 0;
 }
+/* Разделитель во всю колонку 986 (раньше был 980) и волосяной: в макете это
+   обводка 0,6, а не линия в пиксель. Хром рисует её как один ряд с альфой. */
 .sprint::before {
   content: '';
   display: block;
-  width: 980px; height: 1px;
+  width: 986px; height: 0.6px;
   background: #000;
 }
-.sprint-cols { display: flex; gap: 20px; padding-left: 4px; }
+/* Третья колонка в каждом спринте — фотография, поэтому колонки разводит
+   `space-between` по всей ширине 986, а не фиксированный зазор: у текстовых
+   колонок он выходит 23, у картинки свой остаток. */
+.sprint-cols {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-left: 4px;
+}
 .sprint-col { width: 312px; display: flex; flex-direction: column; gap: 20px; }
+/* В третьем спринте текстовые колонки сгруппированы и стоят в 20 друг от друга */
+.sprint-pair { display: flex; gap: 20px; }
+.sprint-pic { width: 312px; }
+.sprint-pic-1 { height: 404px; }
+.sprint-pic-2 { height: 540px; }
+.sprint-pic-3 { height: 170px; }
 .grp { display: flex; flex-direction: column; gap: 6px; }
 /* .grp p бьёт .grp-t по специфичности (0,1,1 против 0,1,0), поэтому заголовок
    группы задаём селектором из двух классов — иначе он теряет Semibold и
@@ -436,7 +452,7 @@ img {
 .later { opacity: 0.5; }
 
 /* ===== Что внутри ===== */
-.inside { top: 2397px; left: 32px; width: 986px; height: 878px; }
+.inside { top: 2703px; left: 32px; width: 986px; height: 878px; }
 .inside .h2 { margin-bottom: 24px; }
 .inside-lead {
   width: 571px;
@@ -461,7 +477,7 @@ img {
    текста на белом, 456 и 477 в колонке 986, зазор 53.
    Стиль «soft&availability» из макета: Graphik Regular 32, интерлиньяж 1.02.
    Строки в Фигме разложены по 33px с зазором 5, поэтому тут шаг 38. */
-.practice { top: 3335px; left: 32px; width: 986px; height: 147px; }
+.practice { top: 3641px; left: 32px; width: 986px; height: 147px; }
 .inside-notes {
   position: absolute;
     /* Фигма стопит строки боксами по 32,64 с зазором 5,36, а у нас шаг задан
@@ -498,7 +514,7 @@ img {
 }
 
 /* ===== Авторы ===== */
-.authors { top: 3572px; left: 32px; width: 986px; height: 527px; }
+.authors { top: 3878px; left: 32px; width: 986px; height: 527px; }
 .authors .h2 { margin-bottom: 40px; }
 .authors-row { display: flex; gap: 44px; }
 .author { width: 292px; }
@@ -599,7 +615,7 @@ img {
    и после правок макета фото перестало совпадать с рамкой. Прозрачность
    не нужна, потому что полотно под карточкой белое. У мобильного своя
    картинка — она уже, выше и телефон в ней стоит иначе; выбирает `<picture>`. */
-.tg { top: 4189px; left: 32px; width: 986px; height: 440px; background: #fff; }
+.tg { top: 4495px; left: 32px; width: 986px; height: 440px; background: #fff; }
 /* обёртка picture ничего не рисует, но инлайновый бокс добавил бы строку —
    делаем её блочной, а картинка внутри всё равно позиционирована */
 .tg picture { display: block; }
@@ -619,31 +635,8 @@ img {
 }
 .tg .btn { position: absolute; left: 32px; top: 324px; }
 
-/* ===== Галерея =====
-   Четыре снимка из макета (узел 1838:1174). В Фигме каждый лежит в рамке
-   с обрезкой, поэтому и тут картинка больше рамки и сдвинута внутри: проценты
-   из макета пересчитаны в пиксели. Кружок — просто картинка со скруглением
-   50%, прозрачные углы нужны, потому что он наезжает на нижний снимок.
-   Координаты — от верхнего края снимков: бокс секции в Фигме стоит на 18
-   ниже них (все четыре рамки сдвинуты на −18 внутри него). */
-.gallery { top: 4869px; left: 32px; width: 986px; height: 702px; }
-.gal { position: absolute; overflow: hidden; background: #d9d9d9; }
-.gal > img { position: absolute; }
-.gal-tall { left: 0; top: 0; width: 431px; height: 702px; }
-.gal-tall > img { left: -61.2px; top: -49px; width: 600.8px; height: 751px; }
-.gal-wide { left: 447px; top: 0; width: 539px; height: 389px; }
-.gal-wide > img { left: 0; top: -219.24px; width: 545px; height: 681.2px; }
-.gal-mid { left: 447px; top: 405px; width: 440px; height: 297px; }
-.gal-mid > img { left: 0; top: -113px; width: 446.6px; height: 499px; }
-.gal-round {
-  position: absolute;
-  left: 806.08px; top: 422.29px;
-  width: 179.92px; height: 179.92px;
-  border-radius: 50%;
-}
-
 /* ===== Вопросы ===== */
-.faq { top: 5661px; left: 32px; width: 986px; height: 640px; }
+.faq { top: 5025px; left: 32px; width: 986px; height: 640px; }
 .faq .h2 { margin-bottom: 40px; }
 .faq-item { margin-bottom: 32px; }
 .faq-item .h3 { margin-bottom: 8px; }
@@ -664,7 +657,7 @@ img {
    зашитыми в саму картинку, и жёлтой кнопкой. Под ней таймлайн.
    `top` секции — это верх плашки: бокс `1850:2979` в Фигме стоит на 18 ниже,
    потому что внутри него плашка сдвинута на −18. */
-.buy { top: 6391px; left: 32px; width: 986px; height: 578px; }
+.buy { top: 5755px; left: 32px; width: 986px; height: 560px; }
 .buy-card { position: relative; width: 986px; height: 406px; color: #fff; }
 .buy-bg {
   width: 986px; height: 406px;
@@ -725,17 +718,17 @@ img {
 .buy-card .btn { position: absolute; left: 637px; top: 262px; width: 265px; }
 
 /* Таймлайн */
-.when { position: absolute; left: 0; top: 464px; width: 986px; height: 114px; }
+.when { position: absolute; left: 0; top: 446px; width: 986px; height: 114px; }
 /* Линия со стрелкой и засечками — одной картинкой из макета (Footer Line).
    Засечки там торчат по 10px вверх и вниз от линии, поэтому картинка
    начинается на 20,4 выше верха блока. */
 .when-line {
   position: absolute;
-  left: 0; top: -20.45px;
+  left: 0; top: -2.45px;
   width: 988px; height: 27px;
   background: url('assets/timeline-line.svg') no-repeat;
 }
-.when-col { position: absolute; top: 17px; width: 230px; }
+.when-col { position: absolute; top: 35px; width: 230px; }
 .when-col:nth-of-type(2) { left: 0; }
 .when-col:nth-of-type(3) { left: 254px; }
 .when-col:nth-of-type(4) { left: 508px; }
@@ -745,7 +738,7 @@ img {
 .when-date + .when-what { margin-top: 6px; }
 
 /* ===== Если пока не определились ===== */
-.undecided { top: 7041px; left: 32px; width: 986px; height: 204px; }
+.undecided { top: 6405px; left: 32px; width: 986px; height: 204px; }
 .undecided .h2 { margin-bottom: 24px; }
 .undecided p {
   width: 571px;
@@ -755,7 +748,7 @@ img {
 /* ===== Подвал ===== */
 .site-footer {
   position: absolute;
-  left: 0; top: 7385px;
+  left: 0; top: 6749px;
   width: 1050px;
   display: flex; align-items: center; justify-content: space-between;
   font: 400 15px/1.25 'Graphik', sans-serif;
@@ -905,8 +898,13 @@ img {
   .sprint { position: static; width: auto; margin-bottom: 40px; }
   .sprint::before { width: 100%; }
   .sprint .h3 { padding-bottom: 20px; }
-  .sprint-cols { flex-direction: column; gap: 20px; padding-left: 0; }
+  .sprint-cols, .sprint-pair { flex-direction: column; gap: 20px; padding-left: 0; }
   .sprint-col { width: auto; }
+  /* фотография спринта тянется во всю колонку, пропорции держит aspect-ratio */
+  .sprint-pic { width: 100%; height: auto; }
+  .sprint-pic-1 { aspect-ratio: 312 / 404; }
+  .sprint-pic-2 { aspect-ratio: 312 / 540; }
+  .sprint-pic-3 { aspect-ratio: 312 / 170; }
   /* специфичность должна быть не ниже базовой (0,2,0), иначе кегль
      заголовка группы тут не переопределится и останется десктопным */
   .sprint-col .grp-t, .grp p { font-size: 16px; }
@@ -929,8 +927,7 @@ img {
      Базовое `.sheet > section { position: static }` выше по специфичности,
      чем просто `.inside`, поэтому возвращаем через тот же `.sheet >`. */
   .sheet > .inside,
-  .sheet > .tg,
-  .sheet > .gallery { position: relative; left: auto; top: auto; }
+  .sheet > .tg { position: relative; left: auto; top: auto; }
   .practice { width: auto; height: auto; margin-top: 80px !important; }
   .inside-notes {
     position: relative;
@@ -991,31 +988,6 @@ img {
   .faq-item p,
   .faq-item:nth-of-type(1) p, .faq-item:nth-of-type(2) p,
   .faq-item:nth-of-type(3) p, .faq-item:nth-of-type(4) p { width: auto; font-size: 16px; }
-
-  /* ===== Галерея =====
-     На мобильном рамки с обрезкой не нужны: снимки идут в столбик во всю
-     ширину колонки, пропорции сохраняются `aspect-ratio` из макета.
-     Кружок ложится последним и остаётся кружком. */
-  .gallery { width: auto; height: auto; margin-top: 80px !important; }
-  .gal {
-    position: static;
-    width: auto; height: auto;
-    aspect-ratio: 431 / 540;
-    margin-top: 16px;
-  }
-  .gal:first-child { margin-top: 0; }
-  .gal-wide { aspect-ratio: 539 / 389; }
-  .gal-mid { aspect-ratio: 440 / 297; }
-  .gal > img {
-    position: static;
-    width: 100%; height: 100%;
-    object-fit: cover;
-  }
-  .gal-round {
-    position: static;
-    width: 180px; height: 180px;
-    margin: 16px auto 0;
-  }
 
   /* ===== Финальный блок =====
      Плашка 986 в ширину на мобильном не живёт: текст ужался бы до
