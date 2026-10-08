@@ -80,7 +80,7 @@ html, body {
   position: relative;
   width: 1050px;
   margin: 0 auto;
-  min-height: 7296px;
+  min-height: 7436px;
   padding-top: 24px;
   zoom: var(--zoom, 1.1429);
 }
@@ -99,7 +99,7 @@ img {
 .sheet {
   position: relative;
   width: 1050px;
-  height: 7189px;
+  height: 7353px;
   margin: 0;
   background: #fff;
   border-radius: 4px;
@@ -123,8 +123,11 @@ img {
   font: 300 124px/96.72px 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -4.96px;
 }
+/* H2 — Regular, не Medium: в макете его начертание сменили. Заодно он уехал
+   из ряда 500 таблицы кернинга в ряд 400, поэтому пары «Пр», «Чт», «ну», «ут»
+   продублированы и там — иначе правка молча отключилась бы. */
 .h2 {
-  font: 500 72px/62.64px 'Spectral', Cambria, Georgia, serif;
+  font: 400 72px/62.64px 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -1.44px;
 }
 /* H3 в макете набран наборным, не серифом */
@@ -241,7 +244,7 @@ img {
    поэтому второй раз вычитать не надо. */
 /* z-index обязателен: вступление стоит на той же высоте, и его прозрачный бокс
    во всю колонку лежит поверх плашки — без подъёма кнопка не нажимается. */
-.badge { position: absolute; z-index: 2; left: 704px; top: 747px; width: 308px; height: 292px; }
+.badge { position: absolute; z-index: 2; left: 710px; top: 747px; width: 308px; height: 292px; }
 
 /* ===== Текстура с параллаксом =====
    Внутри обеих плашек фон едет при скролле. Для этого текстура выгружена
@@ -377,10 +380,10 @@ img {
    у буквицы это 85,31 (Spectral 124/96,72), у первой строки 21,36
    (Graphik 20/27) от её верха на 86,15, то есть базовая на 107,51.
    Разница и даёт 22,2 — в Фигме у этого блока ровно 22. */
-.intro { top: 707px; left: 32px; width: 986px; height: 277px; }
+.intro { top: 707px; left: 32px; width: 986px; height: 291px; }
 .intro-cap {
   position: absolute;
-  left: -17px; top: 22.2px;
+  left: -7px; top: 22.2px;
   font: 300 124px/96.72px 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -4.96px;
 }
@@ -388,7 +391,7 @@ img {
    Шаг между ними ровно одна строка (27), поэтому абзац читается слитно. */
 .intro-first {
   position: absolute;
-  left: 70px; top: 86.15px;
+  left: 79px; top: 86.15px;
   width: 487px;
   font: 500 20px/1.35 'Graphik', sans-serif;
 }
@@ -401,7 +404,7 @@ img {
 .intro-rest p + p { margin-top: 8px; }
 
 /* ===== Программа ===== */
-.program { top: 1056px; left: 32px; width: 986px; height: 1241px; }
+.program { top: 1088px; left: 32px; width: 986px; height: 1219px; }
 .program .h2 { margin-bottom: 40px; }
 .sprint { position: absolute; left: 0; width: 986px; }
 .sprint:nth-of-type(1) { top: 103px; }
@@ -433,7 +436,7 @@ img {
 .later { opacity: 0.5; }
 
 /* ===== Что внутри ===== */
-.inside { top: 2387px; left: 32px; width: 986px; height: 878px; }
+.inside { top: 2397px; left: 32px; width: 986px; height: 878px; }
 .inside .h2 { margin-bottom: 24px; }
 .inside-lead {
   width: 571px;
@@ -441,7 +444,7 @@ img {
 }
 .inside-shot {
   position: absolute;
-  left: 0; top: 190px;
+  left: 0; top: 208px;
   width: 986px; height: 670px;
 }
 /* Значок Степика: повёрнутый скруглённый квадрат, фон вокруг прозрачный.
@@ -450,7 +453,7 @@ img {
    Габарит 174,6 — это сторона 156 со скруглением 55,5, повёрнутая на 47,73°. */
 .inside-doodle {
   position: absolute;
-  left: 748.5px; top: 94px;
+  left: 748.5px; top: 110px;
   width: 174.6px; height: 174.6px;
 }
 /* ===== Для практики понадобятся =====
@@ -458,7 +461,7 @@ img {
    текста на белом, 456 и 477 в колонке 986, зазор 53.
    Стиль «soft&availability» из макета: Graphik Regular 32, интерлиньяж 1.02.
    Строки в Фигме разложены по 33px с зазором 5, поэтому тут шаг 38. */
-.practice { top: 3325px; left: 32px; width: 986px; height: 147px; }
+.practice { top: 3335px; left: 32px; width: 986px; height: 147px; }
 .inside-notes {
   position: absolute;
     /* Фигма стопит строки боксами по 32,64 с зазором 5,36, а у нас шаг задан
@@ -495,10 +498,8 @@ img {
 }
 
 /* ===== Авторы ===== */
-.authors { top: 3562px; left: 32px; width: 986px; height: 527px; }
-/* Кружки в макете подняты к заголовку ближе остальных блоков: ряд стоит
-   на 85 от верха секции, а не на 103, как подсказывал бы шаг h2 + 40. */
-.authors .h2 { margin-bottom: 22.36px; }
+.authors { top: 3572px; left: 32px; width: 986px; height: 527px; }
+.authors .h2 { margin-bottom: 40px; }
 .authors-row { display: flex; gap: 44px; }
 .author { width: 292px; }
 .author-wide { width: 312px; }
@@ -509,10 +510,10 @@ img {
   border-radius: 50%;
   object-fit: cover;
 }
-/* От низа кружка до подписи 46: в макете подпись стоит на 419 от верха
-   секции, а кружок — на 85, и высота кружка 288. */
+/* От низа кружка до подписи 28: подпись в макете стоит на 419 от верха
+   секции, кружок на 103, высота кружка 288. */
 .author p {
-  margin-top: 46px;
+  margin-top: 28px;
   width: 300px;
   font: 500 20px/1.35 'Graphik', sans-serif;
 }
@@ -598,7 +599,7 @@ img {
    и после правок макета фото перестало совпадать с рамкой. Прозрачность
    не нужна, потому что полотно под карточкой белое. У мобильного своя
    картинка — она уже, выше и телефон в ней стоит иначе; выбирает `<picture>`. */
-.tg { top: 4161px; left: 32px; width: 986px; height: 440px; background: #fff; }
+.tg { top: 4189px; left: 32px; width: 986px; height: 440px; background: #fff; }
 /* обёртка picture ничего не рисует, но инлайновый бокс добавил бы строку —
    делаем её блочной, а картинка внутри всё равно позиционирована */
 .tg picture { display: block; }
@@ -625,7 +626,7 @@ img {
    50%, прозрачные углы нужны, потому что он наезжает на нижний снимок.
    Координаты — от верхнего края снимков: бокс секции в Фигме стоит на 18
    ниже них (все четыре рамки сдвинуты на −18 внутри него). */
-.gallery { top: 4691px; left: 32px; width: 986px; height: 702px; }
+.gallery { top: 4869px; left: 32px; width: 986px; height: 702px; }
 .gal { position: absolute; overflow: hidden; background: #d9d9d9; }
 .gal > img { position: absolute; }
 .gal-tall { left: 0; top: 0; width: 431px; height: 702px; }
@@ -642,7 +643,7 @@ img {
 }
 
 /* ===== Вопросы ===== */
-.faq { top: 5501px; left: 32px; width: 986px; height: 640px; }
+.faq { top: 5661px; left: 32px; width: 986px; height: 640px; }
 .faq .h2 { margin-bottom: 40px; }
 .faq-item { margin-bottom: 32px; }
 .faq-item .h3 { margin-bottom: 8px; }
@@ -663,7 +664,7 @@ img {
    зашитыми в саму картинку, и жёлтой кнопкой. Под ней таймлайн.
    `top` секции — это верх плашки: бокс `1850:2979` в Фигме стоит на 18 ниже,
    потому что внутри него плашка сдвинута на −18. */
-.buy { top: 6213px; left: 32px; width: 986px; height: 578px; }
+.buy { top: 6391px; left: 32px; width: 986px; height: 578px; }
 .buy-card { position: relative; width: 986px; height: 406px; color: #fff; }
 .buy-bg {
   width: 986px; height: 406px;
@@ -744,7 +745,7 @@ img {
 .when-date + .when-what { margin-top: 6px; }
 
 /* ===== Если пока не определились ===== */
-.undecided { top: 6881px; left: 32px; width: 986px; height: 204px; }
+.undecided { top: 7041px; left: 32px; width: 986px; height: 204px; }
 .undecided .h2 { margin-bottom: 24px; }
 .undecided p {
   width: 571px;
@@ -754,7 +755,7 @@ img {
 /* ===== Подвал ===== */
 .site-footer {
   position: absolute;
-  left: 0; top: 7245px;
+  left: 0; top: 7385px;
   width: 1050px;
   display: flex; align-items: center; justify-content: space-between;
   font: 400 15px/1.25 'Graphik', sans-serif;
