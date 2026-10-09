@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=108">
+  <link rel="stylesheet" href="style.css?v=109">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -324,7 +324,7 @@
       <!-- ===== Если пока не определились ===== -->
       <section class="undecided" aria-label="Если пока не определились">
         <h2 class="h2">Если пока<br>не&nbsp;определились</h2>
-        <p>Тогда почитайте <a class="u" href="urok/" target="_blank">открытый урок</a> или задайте вопрос<br>авторам в&nbsp;Телеграме: <a class="u" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">@tuptoppppp.</a></p>
+        <p>Тогда почитайте <a class="u" href="urok/" target="_blank">открытый урок</a> или задайте вопрос <br class="wide-only">авторам в&nbsp;Телеграме: <a class="u" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">@tuptoppppp.</a></p>
       </section>
 
     </div>
@@ -393,16 +393,24 @@
   (() => {
     const SHEET = 1050;        // ширина белого полотна в вёрстке
     const MAX = 1200 / SHEET;  // ≈1.1429 — на экране полотно шириной 1200
-    const page = document.getElementById('page');
+    const MOB = 375;           // натуральная ширина мобильного макета
+    const MOB_MAX = 1.2;       // выше не растягиваем: дальше холст просто шире
+    const root = document.documentElement;
     const fit = () => {
+      const vw = root.clientWidth;
       if (matchMedia('(max-width: 759px)').matches) {
-        document.documentElement.style.removeProperty('--zoom');
+        /* Мобильный холст тоже в натуральную величину макета (375), и его
+           кладёт на экран тот же зум. До 450px ширины макет масштабируется
+           один в один; выше потолка масштаб стоит, а холст расширяется —
+           раскладка там поточная и лишнюю ширину разбирает сама. */
+        const z = Math.min(MOB_MAX, vw / MOB);
+        root.style.setProperty('--zoom', z.toFixed(4));
+        root.style.setProperty('--page-w', (vw / z).toFixed(2) + 'px');
         return;
       }
-      const z = Math.min(MAX, document.documentElement.clientWidth / SHEET);
-      document.documentElement.style.setProperty('--zoom', z.toFixed(4));
+      root.style.removeProperty('--page-w');
+      root.style.setProperty('--zoom', Math.min(MAX, vw / SHEET).toFixed(4));
     };
-    void page;
     fit();
     window.addEventListener('resize', fit, { passive: true });
   })();

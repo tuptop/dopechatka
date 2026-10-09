@@ -782,9 +782,15 @@ img {
    который меняет meta viewport по ширине экрана.
    ============================================================ */
 @media (max-width: 759px) {
+  /* Мобильная вёрстка тоже в натуральную величину макета (колонка 343
+     в холсте 375), на экран её кладёт тот же zoom, что и десктоп. Потолок
+     1.2: до 450px ширины макет масштабируется один в один, дальше масштаб
+     стоит, а холст становится шире — раскладка тут поточная и лишнюю
+     ширину разбирает сама. Значения считает скрипт «АВТОСКЕЙЛ ХОЛСТА»,
+     в CSS лежат дефолты на случай отключённого JS. */
   #page {
-    zoom: 1;
-    width: 100%;
+    zoom: var(--zoom, 1);
+    width: var(--page-w, 100%);
     min-height: 0;
     padding-top: 16px;
   }
@@ -793,7 +799,8 @@ img {
     height: auto;
     margin: 0;
     overflow: hidden;
-    padding-bottom: 80px;
+    /* от низа контента до подвала 130: 102 тут и 28 в отбивке подвала */
+    padding-bottom: 102px;
   }
   .sheet > section,
   .sheet > .hero {
@@ -804,13 +811,12 @@ img {
     z-index: auto;
   }
 
-  /* Сбрасываем десктопные координаты: на мобильном всё в потоке.
-     Таймлайн (.when-col) не трогаем — он и на мобильном живёт по своей сетке. */
-  .intro-cap, .intro-first, .intro-rest,
-  .inside-shot, .inside-notes,
+  /* Сбрасываем десктопные координаты у того, что на мобильном идёт в поток.
+     Плашки (лид-карточка и финальная) и таймлайн внутри себя остались
+     абсолютными — в макете они так и свёрстаны, только уже. */
+  .intro-first, .intro-rest,
+  .inside-shot,
   .tg-title, .tg-text, .tg .btn,
-  .buy-kicker, .buy-title, .buy-text, .buy-head, .buy-old, .buy-now,
-  .badge-head, .badge-old, .badge-now,
   .when, .sprint, .video-circle, .bubbles, .site-footer {
     left: auto; top: auto; right: auto; bottom: auto;
   }
@@ -818,13 +824,11 @@ img {
   /* перенос строки, который нужен только широкому экрану */
   .wide-only { display: none; }
 
-  /* кнопка на мобильном ниже — 52 вместо 56 */
-  .btn { height: 52px; }
-
-  /* Типографика */
+  /* Типографика мобильного макета (2078:1371).
+     H3 тут наборный, как и на десктопе, но крупнее: Graphik Semibold 24. */
   .h1 { font: 400 60px/51px 'Spectral', Cambria, Georgia, serif; letter-spacing: -1.8px; }
-  .h2 { font: 400 38px/36.8px 'Spectral', Cambria, Georgia, serif; letter-spacing: -0.76px; }
-  .h3 { font: 700 23px/21.1px 'Spectral', Cambria, Georgia, serif; }
+  .h2 { font: 400 42px/38.64px 'Spectral', Cambria, Georgia, serif; letter-spacing: -0.84px; }
+  .h3 { font: 600 24px/1.05 'Graphik', sans-serif; }
 
   /* ===== Хиро ===== */
   .hero { margin: 0 !important; }
@@ -839,23 +843,22 @@ img {
   .hero .h1 { position: static; margin: 0 16px; }
   .hero-sub {
     position: static;
-    width: auto; max-width: 292px;
+    width: auto; max-width: 278px;
     margin: 16px 16px 0;
     font-size: 18px;
-    line-height: 24.3px;
+    line-height: 1.25;
   }
+  /* Лид-плашка в поток, во всю колонку; внутри координаты макетные —
+     те же, что на десктопе, только кнопка во всю ширину карточки.
+     Зубцы из картинки тут не попадают в край, поэтому их рисуют
+     псевдоэлементы ниже, а текстура растягивается по карточке. */
   .badge {
     position: relative;
     left: auto; top: auto;
-    width: auto; height: auto;
+    width: auto; height: 292px;
     margin: 40px 16px 0;
-    padding: 24px 16px 28px;
-    /* зубцы из картинки тут не попадают в край карточки, поэтому их рисуют
-       псевдоэлементы ниже, а сама текстура растягивается по карточке */
     background: #2b241c url('assets/plate-badge.jpg') 50% 50% / cover;
-    text-align: center;
   }
-  /* на мобильной плашке зубцы рисуем теми же, что у чёрной карточки */
   .badge::before, .badge::after {
     content: '';
     position: absolute;
@@ -866,65 +869,78 @@ img {
   .badge::before { top: 0; }
   .badge::after { bottom: 0; transform: scaleY(-1); }
   .badge-bg { display: none; }
-  .badge-head, .badge-old, .badge-now, .badge .btn {
-    position: static;
-    width: auto; margin-left: 0;
-  }
-  .badge-old { position: relative; margin-top: 20px; font-size: 24px; letter-spacing: -0.24px; }
-  /* цена на мобильном выключена по центру, значит и линия тоже */
-  .badge-old::after { left: 50%; top: 9.5px; width: 68px; margin-left: -34px; }
-  .badge-now { font-size: 64px; letter-spacing: -1.92px; }
-  .badge-now .rub { font-size: 42px; letter-spacing: -0.84px; }
-  .badge-lead, .badge-note { font-size: 16px; line-height: 18.4px; }
-  .badge .btn { display: flex; margin-top: 22px; }
+  /* в макете крупная цена тут на 154 от верха карточки (бокс обрезан
+     по прописной), минус те же 0,138 em при кегле 60 */
+  .badge-now { top: 145.7px; }
+  .badge .btn { width: calc(100% - 40px); }
 
   /* ===== Вступление ===== */
-  .intro { position: static; width: auto; height: auto; margin-top: 80px !important; }
-  /* Тут буквица не поднятая, как на десктопе, а обтекаемая — и садится
-     на базовую линию второй строки. Отрицательная отбивка сверху именно
-     за этим: с прежними 6px буквица свисала на 7,4px ниже этой линии
-     (замер по краске). */
+  /* Буквица поднятая, как на десктопе: стоит на базовой линии первой
+     строки. В макете (Cambria) она при этом лежит на нуле — у Spectral
+     базовая внутри бокса выше на 3,5, отсюда и сдвиг. */
+  /* `.sheet > section { position: static }` бьёт просто `.intro`
+     по специфичности, поэтому position возвращаем тем же селектором —
+     иначе буквица позиционируется от полотна и улетает под облако реплик. */
+  .sheet > .intro {
+    position: relative;
+    left: auto; top: auto;
+    width: auto; height: auto;
+    margin-top: 80px !important;
+    padding-top: 29px;
+    /* отступ первой строки под буквицу; у абзаца ниже он снят */
+    text-indent: 37px;
+  }
   .intro-cap {
-    position: static;
-    float: left;
-    margin: -1.4px 6px 0 0;
-    font: 400 59px/51px 'Spectral', Cambria, Georgia, serif;
+    position: absolute;
+    left: -3px; top: 3.5px;
+    text-indent: 0;
+    font: 400 60px/51px 'Spectral', Cambria, Georgia, serif;
+    letter-spacing: -1.8px;
   }
   .intro-first,
-  .intro-rest { position: static; width: auto; font-size: 16px; }
-  /* «К» обтекается текстом: первая строка и первый абзац — один поток */
+  .intro-rest {
+    position: static;
+    width: auto;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  /* первый абзац — один поток, чтобы строка рвалась по месту, а не по вёрстке
+     десктопа: первая строка обтекает буквицу, остальные идут от края колонки */
   .intro-first, .intro-rest, .intro-rest p:first-child { display: inline; }
-  .intro-rest p:last-child { display: block; margin-top: 8px; }
+  .intro-rest p:last-child { display: block; margin-top: 11px; text-indent: 0; }
 
   /* ===== Программа ===== */
   .program { margin-top: 80px !important; }
-  .program .h2 { margin-bottom: 24px; }
-  .sprint { position: static; width: auto; margin-bottom: 40px; }
+  .program .h2 { margin-bottom: 40px; }
+  .sprint { position: static; width: auto; margin-bottom: 60px; }
+  .sprint:last-child { margin-bottom: 0; }
   .sprint::before { width: 100%; }
-  .sprint .h3 { padding-bottom: 20px; }
   .sprint-cols, .sprint-pair { flex-direction: column; gap: 20px; padding-left: 0; }
   .sprint-col { width: auto; }
-  /* фотография спринта тянется во всю колонку, пропорции держит aspect-ratio */
-  .sprint-pic { width: 100%; height: auto; }
+  /* фотография тянется во всю колонку, пропорции держит aspect-ratio;
+     до неё в макете 40, то есть 20 от флексового зазора плюс 20 тут */
+  .sprint-pic { width: 100%; height: auto; margin-top: 20px; }
   .sprint-pic-1 { aspect-ratio: 312 / 404; }
   .sprint-pic-2 { aspect-ratio: 312 / 540; }
   .sprint-pic-3 { aspect-ratio: 312 / 170; }
-  /* специфичность должна быть не ниже базовой (0,2,0), иначе кегль
-     заголовка группы тут не переопределится и останется десктопным */
-  .sprint-col .grp-t, .grp p { font-size: 16px; }
 
   /* ===== Что внутри ===== */
   .inside { margin-top: 80px !important; }
-  .inside-lead { width: auto; font-size: 16px; }
+  .inside .h2 { margin-bottom: 20px; }
+  .inside-lead { width: auto; font-size: 16px; line-height: 1.45; }
   .inside-shot {
     position: static;
     width: 100%; height: auto;
-    margin-top: 24px;
+    margin-top: 40px;
   }
+  /* Значок Степика висит на скриншоте, а не на секции, поэтому считаем
+     его от низа: скриншот 234 высотой, значок заходит на него на 47,6
+     сверху. Так он не поедет, если текст над скриншотом переберёт
+     лишнюю строку. */
   .inside-doodle {
     position: absolute;
-    left: auto; right: 16px; top: -40px;
-    width: 110px; height: 110px;
+    left: auto; right: 15px; top: auto; bottom: 188.4px;
+    width: 93.2px; height: 93.2px;
   }
   /* Этим секциям нужен position для абсолютных детей (значок Степика,
      карточка телеграма).
@@ -932,10 +948,13 @@ img {
      чем просто `.inside`, поэтому возвращаем через тот же `.sheet >`. */
   .sheet > .inside,
   .sheet > .tg { position: relative; left: auto; top: auto; }
-  .practice { width: auto; height: auto; margin-top: 80px !important; }
+  /* ===== Для практики понадобятся =====
+     От «Что внутри» тут 60, а не 80: в макете это один блок. */
+  .practice { width: auto; height: auto; margin-top: 60px !important; }
   .inside-notes {
     position: relative;
-    flex-direction: column; gap: 28px;
+    top: -2.28px;
+    flex-direction: column; gap: 32px;
     margin-top: 0;
     font-size: 22px;
     line-height: 27px;
@@ -946,25 +965,27 @@ img {
   .app { width: 22px; height: 22px; vertical-align: -2.1px; margin: 0 2px 0 4px; }
   .inf { width: 34px; height: 22px; vertical-align: -2.1px; }
 
-  /* ===== Авторы ===== */
+  /* ===== Авторы =====
+     Кружки идут во всю ширину колонки — так в макете. */
   .authors { margin-top: 80px !important; }
-  .authors-row { flex-direction: column; gap: 32px; }
+  .authors-row { flex-direction: column; gap: 44px; }
   .author, .author-wide { width: auto; }
-  .author-pic { width: min(100%, 288px); height: auto; aspect-ratio: 1; }
+  .author-pic { width: 100%; height: auto; aspect-ratio: 1; }
   .author-pic > img { width: 100%; height: 100%; margin: 0; }
-  .author p { width: auto; margin-top: 16px; font-size: 16px; }
+  .author p { width: auto; margin-top: 20px; font-weight: 400; }
   /* height: 100% от родителя с height: auto в части браузеров (Safari)
      схлопывается в ноль, и кружок пропадает. Задаём высоту пропорцией. */
   .video-circle {
     position: relative;
     left: 0;
-    width: min(100%, 288px);
+    width: 100%;
     height: auto; aspect-ratio: 1;
   }
   .video-circle .ring { width: 100%; height: 100%; }
   .video-circle .icon-play {
     left: 50%; top: 50%; right: auto; bottom: auto;
-    width: 60px; height: 60px;
+    /* треугольник из кита в той же пропорции к кружку, что на десктопе */
+    width: 71px; height: 71px;
     transform: translate(-50%, -50%);
   }
 
@@ -976,39 +997,39 @@ img {
   .tg {
     position: relative;
     margin-top: 80px !important;
-    padding: 32px 16px 0;
+    padding: 33px 16px 0;
     aspect-ratio: 343 / 619;
   }
   .tg-card { width: 100%; height: auto; }
   /* текст и кнопка в потоке, а картинка позиционирована — без `relative`
      они оказались бы под ней */
   .tg-title, .tg-text, .tg .btn { position: relative; width: auto; }
-  .tg-title { font-size: 36px; letter-spacing: -0.72px; }
-  .tg-text { margin-top: 16px; max-width: 276px; font-size: 16px; line-height: 1.45; }
-  .tg .btn { display: flex; margin-top: 40px; }
+  .tg-title { font-weight: 600; font-size: 36px; letter-spacing: -0.72px; }
+  .tg-text { margin-top: 16px; max-width: 272px; font-size: 16px; line-height: 1.45; }
+  .tg .btn { display: flex; height: 52px; margin-top: 40px; }
 
   /* ===== Вопросы ===== */
   .faq { margin-top: 80px !important; }
+  .faq .h2 { margin-bottom: 32px; }
+  .faq-item { margin-bottom: 36px; }
+  .faq-item:last-of-type { margin-bottom: 0; }
+  .faq-item .h3 { margin-bottom: 16px; }
   .faq-item p,
   .faq-item:nth-of-type(1) p, .faq-item:nth-of-type(2) p,
-  .faq-item:nth-of-type(3) p, .faq-item:nth-of-type(4) p { width: auto; font-size: 16px; }
+  .faq-item:nth-of-type(3) p, .faq-item:nth-of-type(4) p { width: auto; }
 
   /* ===== Финальный блок =====
-     Плашка 986 в ширину на мобильном не живёт: текст ужался бы до
-     нечитаемого. Поэтому тут она во всю ширину экрана, в поток, с зубцами
-     на псевдоэлементах и текстурой растянутой по карточке.
-     Мобильный макет под этот редизайн ещё не обновлён, раскладка своя. */
+     Плашка во всю колонку, 583 высотой; внутри — макетные координаты
+     от её верхнего края, выключка влево от 20, как в лид-карточке.
+     Зубцы рисуют псевдоэлементы, текстура растянута по карточке. */
   .buy { margin-top: 80px !important; }
   .buy-card {
     position: relative;
-    width: calc(100% + 32px); height: auto;
-    margin: 0 -16px;
-    padding: 34px 16px 36px;
+    width: auto; height: 583px;
+    margin: 0;
     background: #2b241c url('assets/plate-buy.jpg') 50% 50% / cover;
-    text-align: center;
   }
   .buy-bg { display: none; }
-  /* зубцы те же, что у плашки цены */
   .buy-card::before, .buy-card::after {
     content: '';
     position: absolute;
@@ -1018,27 +1039,45 @@ img {
   }
   .buy-card::before { top: 0; }
   .buy-card::after { bottom: 0; transform: scaleY(-1); }
-  .buy-kicker, .buy-title, .buy-text, .buy-head, .buy-old, .buy-now, .buy-card .btn {
-    position: static;
-    width: auto; max-width: none;
+  .buy-kicker {
+    left: 20px; top: 40px;
+    font-size: 20px; line-height: 19.4px;
+    letter-spacing: -0.4px;
   }
-  .buy-kicker { font-size: 18px; line-height: 1.15; }
-  /* интерлиньяж в базовом правиле задан в пикселях под кегль 88 — тут свой */
-  .buy-title { margin-top: 4px; font-size: 36px; line-height: 0.92; letter-spacing: -0.72px; }
-  .buy-text { margin: 16px auto 0; max-width: 273px; font-size: 16px; line-height: 1.45; }
-  .buy-head { margin: 24px auto 0; max-width: 273px; }
-  .buy-lead, .buy-note { font-size: 16px; line-height: 18.4px; }
-  .buy-old { position: relative; margin-top: 24px; font-size: 24px; letter-spacing: -0.48px; }
-  .buy-old::after { left: 50%; top: 9.5px; width: 68px; margin-left: -34px; }
-  .buy-now { margin-top: 2px; font-size: 64px; letter-spacing: -1.92px; }
-  .buy-now .rub { font-size: 42px; letter-spacing: -0.84px; }
-  .buy-card .btn { display: flex; margin-top: 24px; }
+  .buy-title {
+    left: 20px; top: 69px;
+    width: 295px;
+    font-size: 52px; line-height: 44.2px;
+    letter-spacing: -1.04px;
+  }
+  .buy-text {
+    left: 20px; top: 173px;
+    width: 303px;
+    font-size: 20px; line-height: 1.35;
+  }
+  .buy-head { left: 20px; top: 275px; width: 268px; }
+  .buy-lead, .buy-note { font-size: 18px; line-height: 20.7px; }
+  .buy-old {
+    left: 20px; top: 363px;
+    font-weight: 500; font-size: 20px; line-height: 21.6px;
+    letter-spacing: -0.2px;
+  }
+  .buy-old::after { left: 0; top: 10.5px; width: 56px; height: 1px; border-radius: 0.5px; }
+  /* 387 в макете — верх краски (бокс обрезан по прописной), минус 0,138 em */
+  .buy-now {
+    left: 20px; top: 378.7px;
+    width: 303px;
+    font-size: 60px;
+    letter-spacing: -1.8px;
+  }
+  .buy-now .rub { font-size: 40px; letter-spacing: -0.8px; margin-left: -6px; }
+  .buy-card .btn { left: 20px; top: 447px; width: calc(100% - 40px); }
 
   /* Таймлайн листается вбок, как в макете */
   .when {
     position: static;
     width: auto; height: auto;
-    margin-top: 48px;
+    margin-top: 40px;
     overflow-x: auto;
   }
   /* На десктопе линия висит на 20,45 выше блока — внутри прокручиваемой
@@ -1047,21 +1086,20 @@ img {
   .when-inner { position: relative; width: 986px; height: 120px; }
   .when-line { top: 0; }
   .when-col { top: 37px; }
-  .when-date, .when-what { font-size: 16px; }
 
   /* ===== Если пока не определились ===== */
   .undecided { margin-top: 80px !important; }
-  .undecided p { width: auto; font-size: 16px; }
+  .undecided p { width: auto; max-width: 270px; font-size: 16px; line-height: 1.45; }
 
   /* ===== Подвал ===== */
   .site-footer {
     position: static;
     width: auto;
     margin: 0;
-    padding: 38px 16px 44px;
+    padding: 28px 16px 40px;
     display: block;
     font-size: 15px;
   }
   .foot-left { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .site-footer > p { margin-top: 32px; }
+  .site-footer > p { margin-top: 32px; max-width: 253px; }
 }
