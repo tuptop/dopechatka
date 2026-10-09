@@ -888,11 +888,11 @@ img {
     margin-top: 80px !important;
     padding-top: 29px;
     /* отступ первой строки под буквицу; у абзаца ниже он снят */
-    text-indent: 37px;
+    text-indent: 39px;
   }
   .intro-cap {
     position: absolute;
-    left: -3px; top: 3.5px;
+    left: -3px; top: 4px;
     text-indent: 0;
     font: 400 60px/51px 'Spectral', Cambria, Georgia, serif;
     letter-spacing: -1.8px;
