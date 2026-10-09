@@ -503,7 +503,6 @@
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const rnd = (a, b) => a + Math.random() * (b - a);
     const pad = n => String(n).padStart(2, '0');
-    const randTime = () => Math.floor(rnd(0, 24)) + ':' + pad(Math.floor(rnd(0, 60)));
 
     const POOL = [
       'Не знаю чем отличается офсет от цифры. Кому заказать?',
@@ -530,17 +529,18 @@
       'QR на визитке — какой минимальный размер, чтобы читался? 10×10 мм пойдёт?',
       'Кто-нибудь печатал презентации из фигмы? Как сделать, чтобы шрифты не поехали?',
       'Сколько стоит вёрстка и подготовка к печати книги на 300 страниц?',
-      'Заказчик печатает флаер на фотобумаге. RGB 300 dpi хватит, или конвертить в CMYK?'
+      'Заказчик печатает флаер на фотобумаге. RGB 300 dpi хватит, или конвертить в CMYK?',
+      // реплики из картинки для превью (узел 2135:8775)
+      'Что такое CMYK и почему всё стало серым?',
+      'Почему чёрный на печати вышел серым?',
+      'Типография вернула макет: нет вылетов. Это что?',
+      'Типография просит PDF/X-1a. Где эта кнопка?',
+      'На экране фото чёткое, а в печати мыло. Почему?',
+      'Сколько миллиметров давать на вылеты? 3 или 5?',
+      'Нужна ли цветопроба, если тираж 500 штук?',
+      'Как проверить, что шрифты не слетят в PDF?',
+      'Визитки пришли обрезанные криво. Чья это вина?'
     ];
-    for (let i = POOL.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [POOL[i], POOL[j]] = [POOL[j], POOL[i]];
-    }
-    let idx = 0;
-    const nextText = () => {
-      if (idx >= POOL.length) idx = 0;
-      return POOL[idx++];
-    };
 
     // Облако реплик. Плашки падают вразнобой по всей площади, а не по
     // заранее размеченным местам: площадь делится на ячейки, и в каждой
@@ -597,26 +597,61 @@
       }
       return a;
     };
+
+    /* Колода карточек: фраза плюс время, по одной на каждую реплику из POOL.
+       Время у всех разное — берём случайное в рабочих часах и проверяем
+       по множеству уже выданных, как в макете (9:12, 11:14, 13:54…).
+
+       Плашка берёт карточку из колоды и возвращает её, когда её убирают,
+       поэтому **ни фраза, ни время на экране не повторяются**. Плата за это —
+       живых плашек не может быть больше, чем реплик в POOL: когда карточки
+       кончились, `place()` возвращает null и место остаётся пустым. Хочется
+       облако плотнее — надо дописать реплик, а не крутить сетку. */
+    const usedTimes = new Set();
+    const uniqTime = () => {
+      let t;
+      do { t = Math.floor(rnd(9, 21)) + ':' + pad(Math.floor(rnd(0, 60))); } while (usedTimes.has(t));
+      usedTimes.add(t);
+      return t;
+    };
+    const free = shuffle(POOL.map(text => ({ text, time: uniqTime() })));
+    const FEED = 8;   // столько карточек держим для ленты поверх облака
     // по одной случайной точке на ячейку: покрытие ровное, а на вид — хаос.
     // Полосу задаём явно, чтобы той же сеткой досыпать края, когда окно
     // развернули: столбцов там столько, сколько влезает по шагу CELL.
+    // Точки идут по столбцам слева направо — порядок нужен для выборки ниже,
+    // поэтому тут не перемешиваем.
     const gridIn = (x0, x1) => {
       const cols = Math.max(1, Math.round((x1 - x0) / CELL));
       const cw = (x1 - x0) / cols;
       const ch = (AREA.y1 - AREA.y0) / AREA.rows;
       const out = [];
-      for (let r = 0; r < AREA.rows; r++) {
-        for (let c = 0; c < cols; c++) {
+      for (let c = 0; c < cols; c++) {
+        for (let r = 0; r < AREA.rows; r++) {
           out.push([x0 + c * cw + rnd(0, cw), AREA.y0 + r * ch + rnd(0, ch), tilt()]);
         }
       }
-      return shuffle(out);
+      return out;
     };
     const grid = () => gridIn(AREA.x0, AREA.x1);
+    /* Мест в сетке больше, чем реплик, поэтому берём каждое k-е — список идёт
+       по столбцам, так что выборка расходится по всей ширине и в облаке
+       не остаётся дыр (случайная выборка их оставляла). Порядок появления
+       всё равно перемешиваем: каскад должен быть вразнобой. */
+    const sample = (cells, n) => {
+      if (n >= cells.length) return shuffle(cells.slice());
+      const step = cells.length / n, out = [];
+      for (let i = 0; i < n; i++) {
+        out.push(cells[Math.min(cells.length - 1, Math.floor(i * step + rnd(0, step)))]);
+      }
+      return shuffle(out);
+    };
     const anywhere = () => [rnd(AREA.x0, AREA.x1), rnd(AREA.y0, AREA.y1), tilt()];
 
     let z = 1;
     const place = (x, y, rot, show) => {
+      const card = free.pop();
+      if (!card) return null;                       // реплики кончились — места не занимаем
       const el = document.createElement('div');
       el.className = 'bbl';
       // форм в ките две — с хвостиком слева и справа, у каждой своя иконка
@@ -624,8 +659,9 @@
       if (v === 2) el.classList.add('bbl-2');
       el.style.cssText = 'left:' + Math.round(x) + 'px; top:' + Math.round(y) + 'px; z-index:' + (++z) + '; --rot:' + rot.toFixed(1) + 'deg';
       el.innerHTML = '<p></p><div class="bbl-foot"><img src="assets/bbl-icon-' + v + '.svg" alt=""><time></time></div>';
-      el.querySelector('p').textContent = nextText();
-      el.querySelector('time').textContent = randTime();
+      el.querySelector('p').textContent = card.text;
+      el.querySelector('time').textContent = card.time;
+      el._card = card;
       box.appendChild(el);
       // Одного requestAnimationFrame мало: он срабатывает до того, как браузер
       // посчитает стартовый стиль новой плашки, и перехода не выходит — она
@@ -635,6 +671,8 @@
       else el.classList.add('in');
       return el;
     };
+    // убираем плашку и возвращаем её карточку в колоду
+    const recycle = el => { free.push(el._card); el.remove(); };
 
     /* Перетаскивание. Плашку берут левой кнопкой и кладут куда хотят;
        по нажатию она сразу выходит на передний план. Координаты внутри
@@ -676,16 +714,23 @@
       }, step);
     };
 
-    // дальше — новая реплика раз в 3–4 секунды в случайную точку облака
+    /* Дальше — новая реплика раз в 3–4 секунды в случайную точку облака.
+       Лента держит не больше FEED плашек: лишнюю убираем, её карточка
+       возвращается в колоду, и следующая реплика берёт уже её. Поэтому
+       поток не иссякает, хотя фразы на экране не повторяются. */
     const live = [];
     const feed = () => setTimeout(() => {
-      const [x, y, rot] = anywhere();
-      live.push(place(x, y, rot, true));
-      if (live.length > 14) {                        // не растим DOM бесконечно
+      // Сначала освобождаем карточку, потом кладём новую плашку — иначе, когда
+      // колода пуста, `place` вернул бы null и лента встала бы насовсем.
+      while (live.length >= FEED || !free.length) {
         const old = live.shift();
-        if (held && held.el === old) live.push(old);  // ту, что держат мышью, не трогаем
-        else old.remove();
+        if (!old) break;
+        if (held && held.el === old) { live.push(old); break; }  // ту, что держат мышью, не трогаем
+        recycle(old);
       }
+      const [x, y, rot] = anywhere();
+      const el = place(x, y, rot, true);
+      if (el) live.push(el);
       feed();
     }, rnd(3000, 4000));
 
@@ -697,7 +742,9 @@
     //    Нижний порог 7мс — это уже быстрее кадра, то есть на широких экранах
     //    в один кадр попадает по две-три плашки. Строгой очереди «по одной»
     //    там больше нет, но на глаз каскад читается.
-    const spots = grid();
+    //    Плашек берём столько, на сколько хватает карточек, оставив FEED
+    //    для ленты; `sample` разводит их по всей ширине.
+    const spots = sample(grid(), Math.max(1, free.length - FEED));
     const covered = { x0: AREA.x0, x1: AREA.x1 };
     if (reduce) {
       spots.forEach(([x, y, rot]) => place(x, y, rot, false));
@@ -726,8 +773,11 @@
         if (AREA.x0 < covered.x0 - CELL / 2) { add.push(...gridIn(AREA.x0, covered.x0)); covered.x0 = AREA.x0; }
         if (AREA.x1 > covered.x1 + CELL / 2) { add.push(...gridIn(covered.x1, AREA.x1)); covered.x1 = AREA.x1; }
         if (!add.length) return;
-        if (reduce) add.forEach(([x, y, rot]) => place(x, y, rot, false));
-        else drip(shuffle(add), 60);
+        // в новую полосу уйдёт столько плашек, на сколько хватит свободных
+        // карточек; остальное досыпет лента, она кладёт уже по новым границам
+        const pick = sample(add, Math.max(1, free.length - 1));
+        if (reduce) pick.forEach(([x, y, rot]) => place(x, y, rot, false));
+        else drip(pick, 60);
       }, 250);
     }, { passive: true });
   })();
