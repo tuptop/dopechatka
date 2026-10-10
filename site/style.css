@@ -671,8 +671,9 @@ img {
 .buy-kicker, .buy-title, .buy-text, .buy-head, .buy-old, .buy-now { position: absolute; }
 .buy-kicker {
   left: 53px; top: 52px;
-  font: 500 26px/25.22px 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -0.52px;
+  /* Regular и без трекинга — по просьбе автора: в макете тут Medium −0.52,
+     но на рендере начертание спорило с заголовком под ним. */
+  font: 400 26px/25.22px 'Spectral', Cambria, Georgia, serif;
 }
 .buy-title {
   left: 53px; top: 91px;
@@ -1050,7 +1051,6 @@ img {
   .buy-kicker {
     left: 20px; top: 40px;
     font-size: 20px; line-height: 19.4px;
-    letter-spacing: -0.4px;
   }
   .buy-title {
     left: 20px; top: 69px;
