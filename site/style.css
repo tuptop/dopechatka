@@ -605,7 +605,11 @@ img {
   pointer-events: none;
   visibility: hidden;
 }
-.video-circle.paused .icon-play { visibility: visible; }
+/* Треугольник виден не только на паузе, но и пока ролик идёт без звука:
+   кружок запускается сам и молча, и это единственный знак, что его можно
+   нажать и посмотреть со звуком. */
+.video-circle.paused .icon-play,
+.video-circle.silent .icon-play { visibility: visible; }
 
 /* ===== Телеграм-канал ===== */
 /* Карточка целиком — одна картинка из макета: в ней и рамка с зубцами,

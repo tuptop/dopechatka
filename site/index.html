@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=116">
+  <link rel="stylesheet" href="style.css?v=117">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -251,7 +251,11 @@
           <div class="author author-wide">
             <div class="author-pic">
               <div class="video-circle paused" id="nastya-circle" title="Кружок от Насти — нажмите, чтобы посмотреть">
-                <video src="assets/nastya-circle.mp4" poster="assets/nastya-poster.jpg" loop playsinline preload="metadata"></video>
+                <!-- `muted` и `playsinline` стоят атрибутами, иначе айфон не даст
+                     запустить ролик сам; `autoplay` намеренно нет — запуск делает
+                     скрипт, когда кружок доедет до экрана, чтобы не тянуть 4 МБ
+                     на каждой загрузке страницы -->
+                <video src="assets/nastya-circle.mp4" poster="assets/nastya-poster.jpg" loop muted playsinline preload="metadata"></video>
                 <svg class="ring" viewBox="0 0 288 288" aria-hidden="true">
                   <circle class="ring-bg" cx="144" cy="144" r="134.62"></circle>
                   <circle class="ring-bar" cx="144" cy="144" r="134.62" pathLength="100"></circle>
@@ -914,9 +918,44 @@
     const state = () => {
       circle.classList.toggle('paused', video.paused);
       circle.classList.toggle('playing', !video.paused);
+      // Пока ролик идёт без звука, треугольник остаётся на месте: это
+      // единственный знак, что кружок можно нажать и посмотреть по-настоящему.
+      circle.classList.toggle('silent', video.muted && !video.paused);
     };
     video.addEventListener('play', state);
     video.addEventListener('pause', state);
+    video.addEventListener('volumechange', state);
+
+    /* Автозапуск без звука.
+
+       Политики браузеров сходятся в одном: сам по себе ролик может поехать
+       только молча. Поэтому `muted` стоит атрибутом в разметке (айфону важно,
+       чтобы он был до первого `play()`), рядом с ним `playsinline` — без него
+       Safari откроет видео на весь экран.
+
+       Запускаем не на загрузке, а когда кружок доезжает до экрана: он лежит
+       глубоко внизу страницы, и тянуть четыре мегабайта тем, кто до него не долистал,
+       незачем. Заодно это лечит Safari, который сам останавливает ролики
+       за пределами экрана и не всегда их возобновляет.
+
+       Если не дали — ничего страшного: остаётся постер с треугольником,
+       то есть ровно то, что было на сайте раньше. Так ведут себя айфон
+       в режиме энергосбережения, Android с экономией трафика и Firefox,
+       если автозапуск запрещён руками.
+
+       При `prefers-reduced-motion` не запускаем вовсе: это движение, которое
+       человек не просил. */
+    let touched = false;   // кружок уже трогали руками — дальше он сам по себе
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        if (touched) { io.disconnect(); return; }
+        entries.forEach(e => {
+          if (e.isIntersecting) video.play().catch(() => {});
+          else video.pause();
+        });
+      }, { threshold: 0.5 });
+      io.observe(circle);
+    }
 
     /* Перемотка: узелок можно схватить и вести по окружности. Угол считаем
        от центра кружка — 0° это двенадцать часов, дальше по часовой, то есть
@@ -952,15 +991,30 @@
     circle.addEventListener('click', () => {
       // клик сразу после перемотки — это её хвост, а не намерение переключить
       if (Date.now() - lastScrub < 300) return;
+      touched = true;
+      /* Первое осмысленное нажатие — «посмотреть по-настоящему»: включаем звук
+         и начинаем сначала, чем бы кружок до этого ни занимался. Дальше он
+         ведёт себя как обычный плеер: нажатие ставит на паузу и снимает с неё.
+
+         Нажатие — это жест, так что звук тут разрешают почти всегда; если всё же
+         нет, промис отвалится, и мы возвращаемся к беззвучному воспроизведению.
+         `muted` при этом снова становится true, поэтому следующее нажатие опять
+         попробует включить звук, а не поставит на паузу.
+
+         `currentTime` до загрузки метаданных старый Safari встречает исключением —
+         отсюда try. */
+      if (video.muted) {
+        video.muted = false;
+        try { video.currentTime = 0; } catch (e) {}
+        setProgress();
+        video.play().catch(() => {
+          video.muted = true;
+          video.play().catch(() => {});
+        });
+        return;
+      }
       if (!video.paused) { video.pause(); return; }
-      // На телефоне воспроизведение со звуком могут не разрешить — тогда
-      // play() молча отвалится промисом. Пробуем ещё раз без звука, чтобы
-      // кружок хотя бы заиграл, а не выглядел сломанным.
-      video.muted = false;
-      video.play().catch(() => {
-        video.muted = true;
-        video.play().catch(() => {});
-      });
+      video.play().catch(() => {});
     });
   })();
 </script>
