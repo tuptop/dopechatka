@@ -327,7 +327,7 @@ img {
 }
 /* Первая строка наборная, остальные — сериф: так в макете. Обе на одном
    интерлиньяже 1,15, поэтому строки идут сплошным блоком. */
-.badge-lead { font: 600 18px/20.7px 'Graphik', sans-serif; }
+.badge-lead { font: 600 18px/20.7px 'Graphik', sans-serif; letter-spacing: 0.01em; }
 .badge-note { font: 600 18px/20.7px 'Spectral', Cambria, Georgia, serif; }
 .badge-old, .badge-now {
   position: absolute;
@@ -688,7 +688,7 @@ img {
 }
 /* Правая колонка: подзаголовок, цена, кнопка — все от 637 */
 .buy-head { left: 637px; top: 54px; width: 265px; }
-.buy-lead { font: 600 16px/19.2px 'Graphik', sans-serif; }
+.buy-lead { font: 600 16px/19.2px 'Graphik', sans-serif; letter-spacing: 0.01em; }
 .buy-note { font: 600 16px/19.2px 'Spectral', Cambria, Georgia, serif; }
 /* Как и в лид-карточке: приглушён только текст цены, линия поверх остаётся
    жёлтой, поэтому альфа в цвете, а не `opacity`. */
