@@ -339,7 +339,6 @@ img {
 .badge-old {
   top: 130px; width: 223px;
   font: 500 20px/21.6px 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -0.2px;
   color: rgba(255, 255, 255, 0.5);
 }
 /* Линия перечёркивания. В макете она жёлтая и волосяная (обводка 1 со
@@ -349,7 +348,7 @@ img {
 .badge-old::after {
   content: '';
   position: absolute; left: 0; top: 10px;
-  width: 56px; height: 1px;
+  width: 57px; height: 1px;
   border-radius: 0.5px;
   background: #fedd2d;
 }
@@ -360,12 +359,11 @@ img {
 .badge-now {
   top: 147.7px; width: 223px;
   font: 400 60px/1 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -1.8px;
 }
 /* Пробел перед рублём в макете уже, чем даёт обычный: там он набран спаном
    другого начертания, и один к одному в CSS не переводится. Подтягиваем
    по рендеру — замер по колонкам краски даёт 6px при кегле 60 и 9px при 98. */
-.badge-now .rub { font-size: 40px; letter-spacing: -0.8px; margin-left: -6px; }
+.badge-now .rub { font-size: 40px; letter-spacing: -0.8px; margin-left: -7px; }
 .badge .btn { position: absolute; left: 20px; top: 214px; width: 268px; }
 
 /* ===== Вступление с буквицей =====
@@ -696,13 +694,12 @@ img {
 .buy-old {
   left: 637px; top: 137px;
   font: 400 32px/1 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -0.64px;
   color: rgba(255, 255, 255, 0.5);
 }
 .buy-old::after {
   content: '';
   position: absolute; left: -3px; top: 14.2px;
-  width: 91px; height: 1.6px;
+  width: 93px; height: 1.6px;
   border-radius: 0.8px;
   background: #fedd2d;
 }
@@ -712,9 +709,8 @@ img {
   left: 637px; top: 165.5px;
   width: 280px;
   font: 400 98px/1 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -2.94px;
 }
-.buy-now .rub { font-size: 64px; letter-spacing: -1.28px; margin-left: -9px; }
+.buy-now .rub { font-size: 64px; letter-spacing: -1.28px; margin-left: -12px; }
 .buy-card .btn { position: absolute; left: 637px; top: 262px; width: 265px; }
 
 /* Таймлайн */
@@ -770,8 +766,13 @@ img {
   text-decoration: underline;
   text-decoration-thickness: 0.025em;
   text-decoration-skip-ink: none;
-  text-underline-offset: 0.26em;
-  opacity: 0.85;
+  /* Отбивка тут своя, 0.3em вместо 0.26: белая линия на чёрном зрительно
+     липнет к буквам сильнее, чем чёрная на белом, и при 15px её надо
+     отодвинуть. Приглушена, как и у ссылок в тексте, только линия — сам
+     текст остаётся белым; прежняя `opacity: 0.85` гасила и то, и другое,
+     отчего линия выходила заметно жирнее, чем везде. */
+  text-underline-offset: 0.3em;
+  text-decoration-color: rgba(255, 255, 255, 0.6);
   cursor: default;
 }
 
@@ -869,9 +870,16 @@ img {
   .badge::before { top: 0; }
   .badge::after { bottom: 0; transform: scaleY(-1); }
   .badge-bg { display: none; }
+  /* Трекинг у цен тут свой: на десктопе автор его сняла, а в мобильном
+     макете (`2078:1757`, `2078:1755`) он остался — −1.8 и −0.2, и линия
+     перечёркивания на пиксель короче. */
+  .badge-old { letter-spacing: -0.2px; }
+  .badge-old::after { width: 56px; }
   /* в макете крупная цена тут на 154 от верха карточки (бокс обрезан
      по прописной), минус те же 0,138 em при кегле 60 */
-  .badge-now { top: 145.7px; }
+  .badge-now { top: 145.7px; letter-spacing: -1.8px; }
+  /* при трекинге −1.8 пробел перед рублём уже, чем на десктопе без трекинга */
+  .badge-now .rub { margin-left: -6px; }
   .badge .btn { width: calc(100% - 40px); }
 
   /* ===== Вступление ===== */
