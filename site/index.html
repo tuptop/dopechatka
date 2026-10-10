@@ -65,7 +65,7 @@
           </div>
           <p class="badge-old">22 500</p>
           <p class="badge-now">4500&nbsp;<span class="rub">₽</span></p>
-          <a class="btn btn-yellow js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Предзаказ</a>
+          <a class="btn btn-yellow js-checkout" href="https://stepik.org/course/299554/promo" target="_blank" rel="noopener">Предзаказ</a>
         </div>
       </section>
 
@@ -317,7 +317,7 @@
           </div>
           <p class="buy-old">22 500</p>
           <p class="buy-now">4500&nbsp;<span class="rub">₽</span></p>
-          <a class="btn btn-yellow js-checkout" href="https://t.me/tuptoppppp" target="_blank" rel="noopener">Предзаказ</a>
+          <a class="btn btn-yellow js-checkout" href="https://stepik.org/course/299554/promo" target="_blank" rel="noopener">Предзаказ</a>
         </div>
 
         <!-- Таймлайн выхода уроков -->
@@ -377,7 +377,10 @@
       shop: '',                 // ← поддомен payform, напр. 'dopechatka' → https://dopechatka.payform.ru
       price: '4500',            // цена предзаказа, ₽ (без пробелов)
       product: 'Курс «Допечатная подготовка» — предзаказ',
-      fallback: 'https://t.me/tuptoppppp' // запасной вариант, пока нет платёжной ссылки
+      // Пока платёжки нет, жёлтые кнопки ведут на страницу курса на Степике —
+      // там и оформляется предзаказ. В разметке у них стоит тот же адрес,
+      // чтобы кнопки работали и с отключённым JS.
+      fallback: 'https://stepik.org/course/299554/promo'
     };
     const base = location.origin + location.pathname.replace(/[^/]*$/, '');
     const checkoutUrl = () => {
