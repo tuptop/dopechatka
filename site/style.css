@@ -327,7 +327,7 @@ img {
 }
 /* Первая строка наборная, остальные — сериф: так в макете. Обе на одном
    интерлиньяже 1,15, поэтому строки идут сплошным блоком. */
-.badge-lead { font: 600 18px/20.7px 'Graphik', sans-serif; letter-spacing: 0.01em; }
+.badge-lead { font: 600 18px/20.7px 'Graphik', sans-serif; letter-spacing: 0.02em; }
 .badge-note { font: 600 18px/20.7px 'Spectral', Cambria, Georgia, serif; }
 .badge-old, .badge-now {
   position: absolute;
