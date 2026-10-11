@@ -80,7 +80,7 @@ html, body {
   position: relative;
   width: 1050px;
   margin: 0 auto;
-  min-height: 7063.5px;
+  min-height: 6979px;
   padding-top: 24px;
   zoom: var(--zoom, 1.1429);
 }
@@ -99,7 +99,7 @@ img {
 .sheet {
   position: relative;
   width: 1050px;
-  height: 6956.5px;
+  height: 6872px;
   margin: 0;
   background: #fff;
   border-radius: 4px;
@@ -402,12 +402,15 @@ img {
 .intro-rest p + p { margin-top: 8px; }
 
 /* ===== Программа ===== */
-.program { top: 1088px; left: 32px; width: 986px; height: 1764.5px; }
-.program .h2 { margin-bottom: 40px; }
+.program { top: 1088px; left: 32px; width: 986px; height: 1680px; }
+/* Заголовок сдвинут на 5 влево: так автор выровняла его `П` по левому краю
+   колонки — у серифа своя боковая полуапрошь, и без поправки заголовок
+   казался отодвинутым от разделителя под ним (узел 2319:15658, x = −5). */
+.program .h2 { margin: 0 0 40px -5px; }
 .sprint { position: absolute; left: 0; width: 986px; }
 .sprint:nth-of-type(1) { top: 103px; }
-.sprint:nth-of-type(2) { top: 703px; }
-.sprint:nth-of-type(3) { top: 1446.5px; }
+.sprint:nth-of-type(2) { top: 671px; }
+.sprint:nth-of-type(3) { top: 1378px; }
 .sprint .h3 {
   margin-top: 12px;
   padding-bottom: 32px;
@@ -430,14 +433,14 @@ img {
   justify-content: space-between;
   align-items: flex-start;
 }
-.sprint-col { width: 312px; display: flex; flex-direction: column; gap: 24px; }
+.sprint-col { width: 312px; display: flex; flex-direction: column; gap: 20px; }
 /* В третьем спринте текстовые колонки сгруппированы и стоят в 20 друг от друга */
 .sprint-pair { display: flex; gap: 20px; }
 .sprint-pic { width: 312px; }
-.sprint-pic-1 { height: 482px; }
-.sprint-pic-2 { height: 624px; }
-.sprint-pic-3 { height: 245px; }
-.grp { display: flex; flex-direction: column; gap: 6px; }
+.sprint-pic-1 { height: 450px; }
+.sprint-pic-2 { height: 589px; }
+.sprint-pic-3 { height: 230px; }
+.grp { display: flex; flex-direction: column; gap: 4px; }
 /* .grp p бьёт .grp-t по специфичности (0,1,1 против 0,1,0), поэтому заголовок
    группы задаём селектором из двух классов — иначе он теряет Semibold и
    выглядит так же, как пункты внутри. Опорный класс тут .sprint-col, а не .grp:
@@ -477,10 +480,10 @@ img {
 /* Бирка в строке заголовка задаёт высоту этой строки: 26 своих плюс
    поля. Отрицательная отбивка −1 как раз даёт макетные 44,5 на двух
    строках (без неё 46,7) — замерено по живому заголовку. */
-.sprint-col .grp-t .tag { margin: -1px 5px -1px 0; vertical-align: middle; }
+.sprint-col .grp-t .tag { margin: -1px 0 -1px 5px; vertical-align: middle; }
 
 /* ===== Что внутри ===== */
-.inside { top: 2942.5px; left: 32px; width: 986px; height: 878px; }
+.inside { top: 2858px; left: 32px; width: 986px; height: 878px; }
 .inside .h2 { margin-bottom: 24px; }
 .inside-lead {
   width: 574px;
@@ -505,7 +508,7 @@ img {
    текста на белом, 456 и 477 в колонке 986, зазор 53.
    Стиль «soft&availability» из макета: Graphik Regular 32, интерлиньяж 1.02.
    Строки в Фигме разложены по 33px с зазором 5, поэтому тут шаг 38. */
-.practice { top: 3880.5px; left: 32px; width: 986px; height: 147px; }
+.practice { top: 3796px; left: 32px; width: 986px; height: 147px; }
 .inside-notes {
   position: absolute;
     /* Фигма стопит строки боксами по 32,64 с зазором 5,36, а у нас шаг задан
@@ -542,7 +545,7 @@ img {
 }
 
 /* ===== Авторы ===== */
-.authors { top: 4117.5px; left: 32px; width: 986px; height: 527px; }
+.authors { top: 4033px; left: 32px; width: 986px; height: 527px; }
 .authors .h2 { margin-bottom: 40px; }
 .authors-row { display: flex; gap: 44px; }
 .author { width: 292px; }
@@ -647,7 +650,7 @@ img {
    и после правок макета фото перестало совпадать с рамкой. Прозрачность
    не нужна, потому что полотно под карточкой белое. У мобильного своя
    картинка — она уже, выше и телефон в ней стоит иначе; выбирает `<picture>`. */
-.tg { top: 4734.5px; left: 32px; width: 986px; height: 440px; background: #fff; }
+.tg { top: 4650px; left: 32px; width: 986px; height: 440px; background: #fff; }
 /* обёртка picture ничего не рисует, но инлайновый бокс добавил бы строку —
    делаем её блочной, а картинка внутри всё равно позиционирована */
 .tg picture { display: block; }
@@ -670,7 +673,7 @@ img {
 .tg .btn { position: absolute; left: 32px; top: 324px; }
 
 /* ===== Вопросы ===== */
-.faq { top: 5264.5px; left: 32px; width: 986px; height: 640px; }
+.faq { top: 5180px; left: 32px; width: 986px; height: 640px; }
 .faq .h2 { margin-bottom: 40px; }
 .faq-item { margin-bottom: 32px; }
 .faq-item .h3 { margin-bottom: 8px; }
@@ -691,7 +694,7 @@ img {
    зашитыми в саму картинку, и жёлтой кнопкой. Под ней таймлайн.
    `top` секции — это верх плашки: бокс `1850:2979` в Фигме стоит на 18 ниже,
    потому что внутри него плашка сдвинута на −18. */
-.buy { top: 5994.5px; left: 32px; width: 986px; height: 560px; }
+.buy { top: 5910px; left: 32px; width: 986px; height: 560px; }
 .buy-card { position: relative; width: 986px; height: 406px; color: #fff; }
 .buy-bg {
   width: 986px; height: 406px;
@@ -770,7 +773,7 @@ img {
 .when-date + .when-what { margin-top: 6px; }
 
 /* ===== Если пока не определились ===== */
-.undecided { top: 6644.5px; left: 32px; width: 986px; height: 204px; }
+.undecided { top: 6560px; left: 32px; width: 986px; height: 204px; }
 .undecided .h2 { margin-bottom: 24px; }
 .undecided p {
   width: 571px;
@@ -784,7 +787,7 @@ img {
    + 32, и забыть эти 24 легко: один раз так и вышло, зазор стал 8 вместо 32. */
 .site-footer {
   position: absolute;
-  left: 0; top: 7012.5px;
+  left: 0; top: 6928px;
   width: 1050px;
   display: flex; align-items: center; justify-content: space-between;
   font: 400 15px/1.25 'Graphik', sans-serif;
@@ -954,7 +957,8 @@ img {
 
   /* ===== Программа ===== */
   .program { margin-top: 80px !important; }
-  .program .h2 { margin-bottom: 40px; }
+  /* на мобильном заголовок стоит по краю колонки, сдвиг −5 не нужен */
+  .program .h2 { margin: 0 0 40px; }
   .sprint { position: static; width: auto; margin-bottom: 60px; }
   .sprint:last-child { margin-bottom: 0; }
   .sprint::before { width: 100%; }
@@ -963,9 +967,9 @@ img {
   /* фотография тянется во всю колонку, пропорции держит aspect-ratio;
      до неё в макете 40, то есть 20 от флексового зазора плюс 20 тут */
   .sprint-pic { width: 100%; height: auto; margin-top: 20px; }
-  .sprint-pic-1 { aspect-ratio: 312 / 482; }
-  .sprint-pic-2 { aspect-ratio: 312 / 624; }
-  .sprint-pic-3 { aspect-ratio: 312 / 245; }
+  .sprint-pic-1 { aspect-ratio: 312 / 450; }
+  .sprint-pic-2 { aspect-ratio: 312 / 589; }
+  .sprint-pic-3 { aspect-ratio: 312 / 230; }
 
   /* ===== Что внутри ===== */
   .inside { margin-top: 80px !important; }
