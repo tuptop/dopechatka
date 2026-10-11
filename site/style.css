@@ -652,11 +652,13 @@ img {
    делаем её блочной, а картинка внутри всё равно позиционирована */
 .tg picture { display: block; }
 .tg-card { position: absolute; left: 0; top: 0; width: 986px; height: 440px; }
+/* Regular, не Bold: автор облегчила заголовок вслед за надзаголовком
+   «Курс» в финальной плашке. Трекинг макетный, −1.2. */
 .tg-title {
   position: absolute;
   left: 32px; top: 46px;
   width: 526px;
-  font: 700 60px/1 'Spectral', Cambria, Georgia, serif;
+  font: 400 60px/1 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -1.2px;
 }
 .tg-text {
