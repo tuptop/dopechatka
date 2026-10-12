@@ -249,7 +249,17 @@
         <h2 class="h2">Авторы</h2>
         <div class="authors-row">
           <div class="author">
-            <div class="author-pic"><img src="assets/pasha.png" alt="Паша Лемба" width="288" height="288"></div>
+            <div class="author-pic">
+              <div class="video-circle paused" id="pasha-circle" title="Кружок от Паши — нажмите, чтобы посмотреть">
+                <video src="assets/pasha-circle.mp4" poster="assets/pasha-poster.jpg" loop muted playsinline preload="metadata"></video>
+                <svg class="ring" viewBox="0 0 288 288" aria-hidden="true">
+                  <circle class="ring-bg" cx="144" cy="144" r="134.62"></circle>
+                  <circle class="ring-bar" cx="144" cy="144" r="134.62" pathLength="100"></circle>
+                  <circle class="ring-knob" cx="144" cy="9.38" r="6"></circle>
+                </svg>
+                <svg class="icon-play" viewBox="0 0 60 60" aria-hidden="true"><path d="M45 28.268C46.3333 29.0378 46.3333 30.9623 45 31.7321L24 43.8564C22.6667 44.6262 21 43.664 21 42.1244L21 17.8756C21 16.336 22.6667 15.3738 24 16.1436L45 28.268Z" fill="#fff"/></svg>
+              </div>
+            </div>
             <p><b>Паша</b> — дизайнер.<br>Подготовил к&nbsp;печати очень<br>много макетов и&nbsp;заработал<br>на&nbsp;этом много денег</p>
           </div>
           <div class="author">
@@ -918,7 +928,8 @@
   })();
 
   /* ============================================================
-     КРУЖОК НАСТИ: плей по клику, таймбар по окружности
+     ВИДЕО-КРУЖКИ АВТОРОВ: плей по клику, таймбар по окружности.
+     Инициализируется каждый .video-circle — их три: Паша, Тоня, Настя
      ============================================================ */
   (() => {
     const init = circle => {
