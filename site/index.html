@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=137">
+  <link rel="stylesheet" href="style.css?v=138">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -447,18 +447,17 @@
     const SHEET = 1050;        // ширина белого полотна в вёрстке
     const MAX = 1200 / SHEET;  // ≈1.1429 — на экране полотно шириной 1200
     const MOB = 375;           // натуральная ширина мобильного макета
-    const MOB_MAX = 1.2;       // выше не растягиваем: дальше холст просто шире
     const root = document.documentElement;
     const fit = () => {
       const vw = root.clientWidth;
       if (matchMedia('(max-width: 759px)').matches) {
-        /* Мобильный холст тоже в натуральную величину макета (375), и его
-           кладёт на экран тот же зум. До 450px ширины макет масштабируется
-           один в один; выше потолка масштаб стоит, а холст расширяется —
-           раскладка там поточная и лишнюю ширину разбирает сама. */
-        const z = Math.min(MOB_MAX, vw / MOB);
-        root.style.setProperty('--zoom', z.toFixed(4));
-        root.style.setProperty('--page-w', (vw / z).toFixed(2) + 'px');
+        /* Мобильный холст — натуральная величина макета (375), и он тянется
+           на всю ширину окна без потолка: макет повторяется один в один
+           на любом экране, только крупнее или мельче. Потолок 1.2 тут был
+           до этого — выше него холст расширялся, а кегли оставались
+           макетными, и на планшете текст выглядел мелким. */
+        root.style.setProperty('--zoom', (vw / MOB).toFixed(4));
+        root.style.setProperty('--page-w', MOB + 'px');
         return;
       }
       root.style.removeProperty('--page-w');

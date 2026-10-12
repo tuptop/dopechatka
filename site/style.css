@@ -999,12 +999,13 @@ img {
   /* Трекинг у цен тут свой: на десктопе автор его сняла, а в мобильном
      макете (`2078:1757`, `2078:1755`) он остался — −1.8 и −0.2. Ширину
      линии не задаём: она идёт по тексту, а с трекингом он чуть уже. */
-  .badge-old { letter-spacing: -0.2px; }
+  /* Трекинг у цен тут снят — в обновлённой лид-плашке (2396:1989) его нет,
+     как и на десктопе. У финальной плашки в макете он пока остался. */
+  .badge-old { letter-spacing: 0; }
   /* в макете крупная цена тут на 154 от верха карточки (бокс обрезан
      по прописной), минус те же 0,138 em при кегле 60 */
-  .badge-now { top: 145.7px; letter-spacing: -1.8px; }
+  .badge-now { top: 145.7px; letter-spacing: 0; }
   /* при трекинге −1.8 пробел перед рублём уже, чем на десктопе без трекинга */
-  .badge-now .rub { margin-left: -6px; }
   .badge .btn { width: calc(100% - 40px); }
 
   /* ===== Вступление ===== */
@@ -1025,7 +1026,10 @@ img {
   }
   .intro-cap {
     position: absolute;
-    left: -3px; top: 4px;
+    /* 6, а не прежние 4: буквица стоит на базовой линии первой строки,
+       а строка подросла с 16/23,2 до 18/26,1 — базовая уехала вниз
+       на 2,2. Считается как и на десктопе, по метрикам. */
+    left: -3px; top: 6px;
     text-indent: 0;
     font: 400 60px/51px 'Spectral', Cambria, Georgia, serif;
     letter-spacing: -1.8px;
@@ -1034,7 +1038,7 @@ img {
   .intro-rest {
     position: static;
     width: auto;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.45;
   }
   /* первый абзац — один поток, чтобы строка рвалась по месту, а не по вёрстке
@@ -1057,11 +1061,17 @@ img {
   .sprint-pic-1 { aspect-ratio: 312 / 450; }
   .sprint-pic-2 { aspect-ratio: 312 / 589; }
   .sprint-pic-3 { aspect-ratio: 312 / 230; }
+  /* В мобильном макете у программы свой кегль: и заголовки групп, и пункты
+     набраны 18/1.25 — на десктопе это 19/1.2 и 16/1.2. Селекторы повторяют
+     базовые: `.grp p` — это (0,1,1), простой `.grp-t` ему проигрывает,
+     поэтому заголовок берём теми же двумя классами. */
+  .sprint-col .grp-t { font-size: 18px; line-height: 1.25; }
+  .grp p { font-size: 18px; line-height: 1.25; }
 
   /* ===== Что внутри ===== */
   .inside { margin-top: 80px !important; }
   .inside .h2 { margin-bottom: 20px; }
-  .inside-lead { width: auto; font-size: 16px; line-height: 1.45; }
+  .inside-lead { width: auto; font-size: 18px; line-height: 1.45; }
   .inside-shot {
     position: static;
     width: 100%; height: auto;
@@ -1139,7 +1149,7 @@ img {
      они оказались бы под ней */
   .tg-title, .tg-text, .tg .btn { position: relative; width: auto; }
   .tg-title { font-weight: 600; font-size: 36px; letter-spacing: -0.72px; }
-  .tg-text { margin-top: 16px; max-width: 272px; font-size: 16px; line-height: 1.45; }
+  .tg-text { margin-top: 16px; max-width: 311px; font-size: 18px; line-height: 1.45; }
   .tg .btn { display: flex; height: 52px; margin-top: 40px; }
 
   /* ===== Вопросы ===== */
@@ -1176,6 +1186,7 @@ img {
   .buy-kicker {
     left: 20px; top: 40px;
     font-size: 20px; line-height: 19.4px;
+    font-weight: 500; letter-spacing: -0.4px;
   }
   .buy-title {
     left: 20px; top: 69px;
@@ -1221,7 +1232,7 @@ img {
 
   /* ===== Если пока не определились ===== */
   .undecided { margin-top: 80px !important; }
-  .undecided p { width: auto; max-width: 270px; font-size: 16px; line-height: 1.45; }
+  .undecided p { width: auto; max-width: 299px; font-size: 18px; line-height: 1.45; }
 
   /* ===== Подвал ===== */
   .site-footer {
