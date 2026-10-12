@@ -17,7 +17,7 @@
   <link rel="icon" href="../favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 
-  <link rel="stylesheet" href="../style.css?v=138">
+  <link rel="stylesheet" href="../style.css?v=139">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -155,6 +155,16 @@
            макетными, и на планшете текст выглядел мелким. */
         root.style.setProperty('--zoom', (vw / MOB).toFixed(4));
         root.style.setProperty('--page-w', MOB + 'px');
+        /* Проверяем, что zoom вообще применился. Если браузер его игнорирует,
+           холст остаётся 375 на экране шире — и вся страница прижимается
+           к левому краю узкой колонкой (на это жаловались с айфона). Тогда
+           отдаём обычную резину: масштаб 1, ширина 100%. Мобильная раскладка
+           поточная и это переживает — только кегли остаются макетными. */
+        const page = document.getElementById('page');
+        if (page && Math.abs(page.getBoundingClientRect().width - vw) > 1) {
+          root.style.setProperty('--zoom', '1');
+          root.style.setProperty('--page-w', '100%');
+        }
         return;
       }
       root.style.removeProperty('--page-w');
