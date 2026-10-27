@@ -1191,7 +1191,7 @@ img {
   .tg-title, .tg-text, .tg .btn { position: relative; width: auto; }
   .tg-title { font-weight: 600; font-size: 36px; letter-spacing: -0.72px; }
   .tg-text { margin-top: 16px; max-width: 311px; font-size: 18px; line-height: 1.45; }
-  .tg .btn { display: flex; height: 52px; margin-top: 40px; }
+  .tg .btn { display: flex; height: 52px; margin-top: 30px; }
 
   /* ===== Вопросы ===== */
   .faq { margin-top: 80px !important; }
