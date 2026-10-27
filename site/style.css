@@ -80,7 +80,7 @@ html, body {
   position: relative;
   width: 1050px;
   margin: 0 auto;
-  min-height: 7006.5px;
+  min-height: 7178px;
   padding-top: 24px;
   zoom: var(--zoom, 1.1429);
 }
@@ -99,7 +99,7 @@ img {
 .sheet {
   position: relative;
   width: 1050px;
-  height: 6899.5px;
+  height: 7071px;
   margin: 0;
   background: #fff;
   border-radius: 4px;
@@ -232,9 +232,15 @@ img {
   width: 248px;
   display: flex; align-items: center; justify-content: space-between;
 }
-/* Иконка в ките стала залитой, без кружка, и габарит у неё 24 по высоте,
-   а по ширине чуть больше — картинка свисает влево на полпикселя. */
-.bbl-foot img { height: 24px; width: auto; margin-left: -0.4px; }
+/* Иконка в ките залитая, без кружка; габарит 24 по высоте, а по ширине
+   чуть больше — картинка свисает влево на полпикселя.
+
+   В самих файлах вьюбокс расширен на 1 с каждой стороны: у всех трёх иконок
+   контур доходил ровно до края, и на рендере их срезало (у огня — заметно,
+   вертикальным сколом справа). Отрицательные поля возвращают эту единицу
+   обратно, поэтому рисунок стоит там же и того же размера, что и раньше:
+   габарит 26, из него 24 — сама иконка. */
+.bbl-foot img { height: 26px; width: auto; margin: -1px 0 -1px -1.4px; }
 .bbl-foot time { font: 400 13px/1.25 'Graphik', sans-serif; }
 @media (prefers-reduced-motion: reduce) {
   .bbl { transition: none; }
@@ -361,7 +367,7 @@ img {
    от верха строки до прописной: (1 − 1,522)/2 + 1,059 − 0,66 = 0,138 em,
    при кегле 60 это 8,28. */
 .badge-now {
-  top: 147.7px; width: 223px;
+  top: 145.7px; width: 223px;
   font: 400 60px/1 'Spectral', Cambria, Georgia, serif;
 }
 /* Пробел перед рублём в макете уже, чем даёт обычный: там он набран спаном
@@ -406,15 +412,15 @@ img {
 .intro-rest p + p { margin-top: 8px; }
 
 /* ===== Программа ===== */
-.program { top: 1088px; left: 32px; width: 986px; height: 1707.5px; }
+.program { top: 1088px; left: 32px; width: 986px; height: 1879px; }
 /* Заголовок сдвинут на 5 влево: так автор выровняла его `П` по левому краю
    колонки — у серифа своя боковая полуапрошь, и без поправки заголовок
    казался отодвинутым от разделителя под ним (узел 2319:15658, x = −5). */
 .program .h2 { margin: 0 0 40px -5px; }
 .sprint { position: absolute; left: 0; width: 986px; }
 .sprint:nth-of-type(1) { top: 103px; }
-.sprint:nth-of-type(2) { top: 683px; }
-.sprint:nth-of-type(3) { top: 1397.5px; }
+.sprint:nth-of-type(2) { top: 780px; }
+.sprint:nth-of-type(3) { top: 1569px; }
 .sprint .h3 {
   margin-top: 12px;
   padding-bottom: 32px;
@@ -441,9 +447,9 @@ img {
 /* В третьем спринте текстовые колонки сгруппированы и стоят в 20 друг от друга */
 .sprint-pair { display: flex; gap: 20px; }
 .sprint-pic { width: 312px; }
-.sprint-pic-1 { height: 450px; }
-.sprint-pic-2 { height: 589px; }
-.sprint-pic-3 { height: 230px; }
+.sprint-pic-1 { height: 559px; }
+.sprint-pic-2 { height: 596px; }
+.sprint-pic-3 { height: 238px; }
 .grp { display: flex; flex-direction: column; gap: 5px; }
 /* .grp p бьёт .grp-t по специфичности (0,1,1 против 0,1,0), поэтому заголовок
    группы задаём селектором из двух классов — иначе он теряет Semibold и
@@ -487,32 +493,40 @@ img {
 .sprint-col .grp-t .tag { margin: -1px 0 -1px 5px; vertical-align: middle; }
 
 /* ===== Что внутри ===== */
-.inside { top: 2885.5px; left: 32px; width: 986px; height: 878px; }
+.inside { top: 3057px; left: 32px; width: 986px; height: 878px; }
 .inside .h2 { margin-bottom: 24px; }
 .inside-lead {
   width: 574px;
   font: 500 20px/1.35 'Graphik', sans-serif;
 }
+/* Скриншот урока: в макете у него скругление 12 и волосяная рамка
+   rgba(34,34,34,.15). Рамка в Фигме внутренняя, поэтому тут `border-box` —
+   иначе картинка станет 988 и уедет от правого края колонки. */
 .inside-shot {
   position: absolute;
   left: 0; top: 208px;
   width: 986px; height: 670px;
+  box-sizing: border-box;
+  border: 1px solid rgba(34, 34, 34, 0.15);
+  border-radius: 12px;
 }
 /* Значок Степика: повёрнутый скруглённый квадрат, фон вокруг прозрачный.
    В Фигме это картинка в повёрнутой маске, и экспорт её обрезки приходит
    битым — поэтому фон выбит заливкой от краёв (белая «S» внутри осталась).
-   Габарит 174,6 — это сторона 156 со скруглением 55,5, повёрнутая на 47,73°. */
+   Габарит 220,4 — это сторона 156 со скруглением 55,5, повёрнутая на 47,73°
+   (156 × (cos 47,73° + sin 47,73°)); значок автор увеличила вместе
+   со сменой скриншота. */
 .inside-doodle {
   position: absolute;
-  left: 748.5px; top: 110px;
-  width: 174.6px; height: 174.6px;
+  left: 725.61px; top: 87.75px;
+  width: 220.37px; height: 220.37px;
 }
 /* ===== Для практики понадобятся =====
    После редизайна чёрной полосы с уголками тут нет — просто две колонки
    текста на белом, 456 и 477 в колонке 986, зазор 53.
    Стиль «soft&availability» из макета: Graphik Regular 32, интерлиньяж 1.02.
    Строки в Фигме разложены по 33px с зазором 5, поэтому тут шаг 38. */
-.practice { top: 3823.5px; left: 32px; width: 986px; height: 147px; }
+.practice { top: 3995px; left: 32px; width: 986px; height: 147px; }
 .inside-notes {
   position: absolute;
     /* Фигма стопит строки боксами по 32,64 с зазором 5,36, а у нас шаг задан
@@ -549,7 +563,7 @@ img {
 }
 
 /* ===== Авторы ===== */
-.authors { top: 4060.5px; left: 32px; width: 986px; height: 527px; }
+.authors { top: 4232px; left: 32px; width: 986px; height: 527px; }
 .authors .h2 { margin-bottom: 40px; }
 .authors-row { display: flex; gap: 44px; }
 .author { width: 292px; }
@@ -661,7 +675,7 @@ img {
    и после правок макета фото перестало совпадать с рамкой. Прозрачность
    не нужна, потому что полотно под карточкой белое. У мобильного своя
    картинка — она уже, выше и телефон в ней стоит иначе; выбирает `<picture>`. */
-.tg { top: 4677.5px; left: 32px; width: 986px; height: 440px; background: #fff; }
+.tg { top: 4849px; left: 32px; width: 986px; height: 440px; background: #fff; }
 /* обёртка picture ничего не рисует, но инлайновый бокс добавил бы строку —
    делаем её блочной, а картинка внутри всё равно позиционирована */
 .tg picture { display: block; }
@@ -684,7 +698,7 @@ img {
 .tg .btn { position: absolute; left: 32px; top: 324px; }
 
 /* ===== Вопросы ===== */
-.faq { top: 5207.5px; left: 32px; width: 986px; height: 640px; }
+.faq { top: 5379px; left: 32px; width: 986px; height: 640px; }
 .faq .h2 { margin-bottom: 40px; }
 .faq-item { margin-bottom: 32px; }
 .faq-item .h3 { margin-bottom: 8px; }
@@ -694,10 +708,10 @@ img {
 }
 /* В макете у каждого ответа своя ширина — от неё зависит, где рвётся строка.
    Высоты блоков (54 / 81 / 108 / 54) из этого и складываются. */
-.faq-item:nth-of-type(1) p { width: 540px; }
-.faq-item:nth-of-type(2) p { width: 637px; }
-.faq-item:nth-of-type(3) p { width: 574px; }
-.faq-item:nth-of-type(4) p { width: 397px; }
+.faq-item:nth-of-type(1) p { width: 538px; }
+.faq-item:nth-of-type(2) p { width: 518px; }
+.faq-item:nth-of-type(3) p { width: 500px; }
+.faq-item:nth-of-type(4) p { width: 396px; }
 
 /* ===== Финальный блок: плашка с ценой =====
    Конверта, письма, печати и образцов печати больше нет — после редизайна это
@@ -705,7 +719,7 @@ img {
    зашитыми в саму картинку, и жёлтой кнопкой. Под ней таймлайн.
    `top` секции — это верх плашки: бокс `1850:2979` в Фигме стоит на 18 ниже,
    потому что внутри него плашка сдвинута на −18. */
-.buy { top: 5937.5px; left: 32px; width: 986px; height: 560px; }
+.buy { top: 6109px; left: 32px; width: 986px; height: 560px; }
 .buy-card { position: relative; width: 986px; height: 406px; color: #fff; }
 .buy-bg {
   width: 986px; height: 406px;
@@ -733,7 +747,7 @@ img {
 }
 .buy-text {
   left: 53px; top: 259px;
-  width: 400px;
+  width: 460px;
   font: 400 24px/1.15 'Graphik', sans-serif;
 }
 /* Правая колонка: подзаголовок, цена, кнопка — все от 637 */
@@ -779,12 +793,12 @@ img {
 .when-col:nth-of-type(3) { left: 254px; }
 .when-col:nth-of-type(4) { left: 508px; }
 .when-col:nth-of-type(5) { left: 762px; }
-.when-date { font: 400 18px/1.2 'Graphik', sans-serif; }
+.when-date { font: 400 16px/1.2 'Graphik', sans-serif; }
 .when-what { margin-top: 3px; font: 700 18px/1.35 'Graphik', sans-serif; }
 .when-date + .when-what { margin-top: 6px; }
 
 /* ===== Если пока не определились ===== */
-.undecided { top: 6587.5px; left: 32px; width: 986px; height: 204px; }
+.undecided { top: 6759px; left: 32px; width: 986px; height: 204px; }
 .undecided .h2 { margin-bottom: 24px; }
 .undecided p {
   width: 571px;
@@ -798,7 +812,7 @@ img {
    + 32, и забыть эти 24 легко: один раз так и вышло, зазор стал 8 вместо 32. */
 .site-footer {
   position: absolute;
-  left: 0; top: 6955.5px;
+  left: 0; top: 7127px;
   width: 1050px;
   display: flex; align-items: center; justify-content: space-between;
   font: 400 15px/1.25 'Graphik', sans-serif;
@@ -1059,12 +1073,15 @@ img {
   .sprint::before { width: 100%; }
   .sprint-cols, .sprint-pair { flex-direction: column; gap: 20px; padding-left: 0; }
   .sprint-col { width: auto; }
-  /* фотография тянется во всю колонку, пропорции держит aspect-ratio;
-     до неё в макете 40, то есть 20 от флексового зазора плюс 20 тут */
-  .sprint-pic { width: 100%; height: auto; margin-top: 20px; }
-  .sprint-pic-1 { aspect-ratio: 312 / 450; }
-  .sprint-pic-2 { aspect-ratio: 312 / 589; }
-  .sprint-pic-3 { aspect-ratio: 312 / 230; }
+  /* Фотография тянется во всю колонку, пропорции держит aspect-ratio;
+     до неё в макете 40, то есть 20 от флексового зазора плюс 20 тут.
+     Кадр на мобильном свой — шире и ниже десктопного (343×508, 594 и 260),
+     поэтому тут `object-fit: cover`: файл один, а лишнее по высоте
+     обрезается. */
+  .sprint-pic { width: 100%; height: auto; margin-top: 20px; object-fit: cover; }
+  .sprint-pic-1 { aspect-ratio: 343 / 508; }
+  .sprint-pic-2 { aspect-ratio: 343 / 594; }
+  .sprint-pic-3 { aspect-ratio: 343 / 260; }
   /* В мобильном макете у программы свой кегль: и заголовки групп, и пункты
      набраны 18/1.25 — на десктопе это 19/1.2 и 16/1.2. Селекторы повторяют
      базовые: `.grp p` — это (0,1,1), простой `.grp-t` ему проигрывает,
@@ -1082,13 +1099,15 @@ img {
     margin-top: 40px;
   }
   /* Значок Степика висит на скриншоте, а не на секции, поэтому считаем
-     его от низа: скриншот 234 высотой, значок заходит на него на 47,6
-     сверху. Так он не поедет, если текст над скриншотом переберёт
-     лишнюю строку. */
+     его от низа: скриншот 233 высотой, значок торчит над ним на 37,5
+     и заходит на него на 39. Так он не поедет, если текст над скриншотом
+     переберёт лишнюю строку. Размер и место сняты с мобильного макета
+     по краске — автор ставила значок там отдельно, пропорция
+     с десктопом не сходится. */
   .inside-doodle {
     position: absolute;
-    left: auto; right: 15px; top: auto; bottom: 188.4px;
-    width: 93.2px; height: 93.2px;
+    left: auto; right: 23px; top: auto; bottom: 194.6px;
+    width: 76.6px; height: 76.6px;
   }
   /* Этим секциям нужен position для абсолютных детей (значок Степика,
      карточка телеграма).
@@ -1146,7 +1165,7 @@ img {
     position: relative;
     margin-top: 80px !important;
     padding: 33px 16px 0;
-    aspect-ratio: 343 / 619;
+    aspect-ratio: 343 / 620;
   }
   .tg-card { width: 100%; height: auto; }
   /* текст и кнопка в потоке, а картинка позиционирована — без `relative`
