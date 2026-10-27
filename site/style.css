@@ -501,14 +501,29 @@ img {
 }
 /* Скриншот урока: в макете у него скругление 12 и волосяная рамка
    rgba(34,34,34,.15). Рамка в Фигме внутренняя, поэтому тут `border-box` —
-   иначе картинка станет 988 и уедет от правого края колонки. */
-.inside-shot {
+   иначе картинка станет 988 и уедет от правого края колонки.
+
+   Скриншотов четыре (узлы в секции `2609:18346`), и они лежат стопкой
+   в `.inside-shots`: по скроллу видно тот, чей интервал сейчас идёт.
+   Переключает их скрипт «СКРИНШОТЫ В «ЧТО ВНУТРИ»». */
+.inside-shots {
   position: absolute;
   left: 0; top: 208px;
   width: 986px; height: 670px;
+}
+.inside-shot {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
   box-sizing: border-box;
   border: 1px solid rgba(34, 34, 34, 0.15);
   border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.inside-shot.is-on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .inside-shot { transition: none; }
 }
 /* Значок Степика: повёрнутый скруглённый квадрат, фон вокруг прозрачный.
    В Фигме это картинка в повёрнутой маске, и экспорт её обрезки приходит
@@ -955,7 +970,7 @@ img {
      Плашки (лид-карточка и финальная) и таймлайн внутри себя остались
      абсолютными — в макете они так и свёрстаны, только уже. */
   .intro-first, .intro-rest,
-  .inside-shot,
+  .inside-shots,
   .tg-title, .tg-text, .tg .btn,
   .when, .sprint, .video-circle, .bubbles, .site-footer {
     left: auto; top: auto; right: auto; bottom: auto;
@@ -1093,9 +1108,12 @@ img {
   .inside { margin-top: 80px !important; }
   .inside .h2 { margin-bottom: 20px; }
   .inside-lead { width: auto; font-size: 18px; line-height: 1.45; }
-  .inside-shot {
-    position: static;
+  /* Стопка скриншотов идёт в поток, высоту ей держит пропорция — сами
+     картинки внутри остались абсолютными, иначе они сложились бы столбиком. */
+  .inside-shots {
+    position: relative;
     width: 100%; height: auto;
+    aspect-ratio: 986 / 670;
     margin-top: 40px;
   }
   /* Значок Степика висит на скриншоте, а не на секции, поэтому считаем

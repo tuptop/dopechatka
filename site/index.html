@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=141">
+  <link rel="stylesheet" href="style.css?v=142">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -246,7 +246,15 @@
       <section class="inside" aria-label="Что внутри курса">
         <h2 class="h2">Что&nbsp;внутри</h2>
         <p class="inside-lead">Курс на&nbsp;Степике: уроки с&nbsp;матчастью, практическими примерами, полезными инструментами и&nbsp;заданиями. <a class="u" data-utm="inside" href="https://stepik.org/a/299554" target="_blank" rel="noopener">Урок «Как понять задачу»</a> открыт для&nbsp;всех.</p>
-        <img class="inside-shot" src="assets/inside-screen.jpg" alt="Урок курса на Степике: теория, примеры и задания" width="986" height="670">
+        <!-- Четыре скриншота урока лежат стопкой: по скроллу видно тот, чей
+             интервал сейчас идёт. Первый грузится сразу, остальные лениво —
+             браузер возьмёт их, когда блок подъедет к экрану. -->
+        <div class="inside-shots">
+          <img class="inside-shot is-on" src="assets/inside-screen-1.jpg" alt="Урок курса на Степике: теория, примеры и задания" width="986" height="670">
+          <img class="inside-shot" src="assets/inside-screen-2.jpg" alt="" width="986" height="670" loading="lazy" decoding="async">
+          <img class="inside-shot" src="assets/inside-screen-3.jpg" alt="" width="986" height="670" loading="lazy" decoding="async">
+          <img class="inside-shot" src="assets/inside-screen-4.jpg" alt="" width="986" height="670" loading="lazy" decoding="async">
+        </div>
         <img class="inside-doodle" src="assets/stepik-badge.png" alt="Степик">
 
       </section>
@@ -1080,6 +1088,44 @@
         const e = p * p * (3 - 2 * p);          // smoothstep: мягкий старт и финиш
         o.tex.style.transform = 'translate3d(0,' + (-(1 - e) * travel).toFixed(1) + 'px,0)';
       }
+    };
+    const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(draw); } };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
+    draw();
+  })();
+
+  /* ============================================================
+     СКРИНШОТЫ В «ЧТО ВНУТРИ»: меняются по скроллу
+
+     Четыре картинки лежат стопкой, видно ту, чей интервал сейчас идёт.
+     Интервалы равные и отмеряются по проходу всей секции через экран:
+     0 — блок только показался снизу, 1 — только что ушёл за верх,
+     то есть ровно то окно, которое в CSS называется `cover 0% … 100%`.
+
+     Делаем скриптом, а не таймлайном прокрутки: тут не движение,
+     а переключение из четырёх состояний, и рывков в нём быть не может —
+     зато работает везде, включая Firefox, без второго кода на запас.
+     ============================================================ */
+  (() => {
+    const box = document.querySelector('.inside');
+    const shots = box ? [...box.querySelectorAll('.inside-shot')] : [];
+    if (shots.length < 2) return;
+
+    let cur = 0, queued = false;
+    const draw = () => {
+      queued = false;
+      const r = box.getBoundingClientRect();
+      const vh = innerHeight || document.documentElement.clientHeight;
+      let p = (vh - r.top) / (vh + r.height);
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+      // p === 1 на самом краю не должно давать пятый индекс
+      let i = Math.floor(p * shots.length);
+      if (i >= shots.length) i = shots.length - 1;
+      if (i === cur) return;
+      shots[cur].classList.remove('is-on');
+      shots[i].classList.add('is-on');
+      cur = i;
     };
     const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(draw); } };
     addEventListener('scroll', onScroll, { passive: true });
