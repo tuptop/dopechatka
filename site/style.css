@@ -80,7 +80,7 @@ html, body {
   position: relative;
   width: 1050px;
   margin: 0 auto;
-  min-height: 7178px;
+  min-height: 7155px;
   padding-top: 24px;
   zoom: var(--zoom, 1.1429);
 }
@@ -99,7 +99,7 @@ img {
 .sheet {
   position: relative;
   width: 1050px;
-  height: 7071px;
+  height: 7048px;
   margin: 0;
   background: #fff;
   border-radius: 4px;
@@ -412,7 +412,7 @@ img {
 .intro-rest p + p { margin-top: 8px; }
 
 /* ===== Программа ===== */
-.program { top: 1088px; left: 32px; width: 986px; height: 1879px; }
+.program { top: 1088px; left: 32px; width: 986px; height: 1856px; }
 /* Заголовок сдвинут на 5 влево: так автор выровняла его `П` по левому краю
    колонки — у серифа своя боковая полуапрошь, и без поправки заголовок
    казался отодвинутым от разделителя под ним (узел 2319:15658, x = −5). */
@@ -420,7 +420,7 @@ img {
 .sprint { position: absolute; left: 0; width: 986px; }
 .sprint:nth-of-type(1) { top: 103px; }
 .sprint:nth-of-type(2) { top: 780px; }
-.sprint:nth-of-type(3) { top: 1569px; }
+.sprint:nth-of-type(3) { top: 1546px; }
 .sprint .h3 {
   margin-top: 12px;
   padding-bottom: 32px;
@@ -448,7 +448,7 @@ img {
 .sprint-pair { display: flex; gap: 20px; }
 .sprint-pic { width: 312px; }
 .sprint-pic-1 { height: 559px; }
-.sprint-pic-2 { height: 596px; }
+.sprint-pic-2 { height: 615px; }
 .sprint-pic-3 { height: 238px; }
 .grp { display: flex; flex-direction: column; gap: 5px; }
 /* .grp p бьёт .grp-t по специфичности (0,1,1 против 0,1,0), поэтому заголовок
@@ -493,7 +493,7 @@ img {
 .sprint-col .grp-t .tag { margin: -1px 0 -1px 5px; vertical-align: middle; }
 
 /* ===== Что внутри ===== */
-.inside { top: 3057px; left: 32px; width: 986px; height: 878px; }
+.inside { top: 3034px; left: 32px; width: 986px; height: 878px; }
 .inside .h2 { margin-bottom: 24px; }
 .inside-lead {
   width: 574px;
@@ -526,7 +526,7 @@ img {
    текста на белом, 456 и 477 в колонке 986, зазор 53.
    Стиль «soft&availability» из макета: Graphik Regular 32, интерлиньяж 1.02.
    Строки в Фигме разложены по 33px с зазором 5, поэтому тут шаг 38. */
-.practice { top: 3995px; left: 32px; width: 986px; height: 147px; }
+.practice { top: 3972px; left: 32px; width: 986px; height: 147px; }
 .inside-notes {
   position: absolute;
     /* Фигма стопит строки боксами по 32,64 с зазором 5,36, а у нас шаг задан
@@ -563,7 +563,7 @@ img {
 }
 
 /* ===== Авторы ===== */
-.authors { top: 4232px; left: 32px; width: 986px; height: 527px; }
+.authors { top: 4209px; left: 32px; width: 986px; height: 527px; }
 .authors .h2 { margin-bottom: 40px; }
 .authors-row { display: flex; gap: 44px; }
 .author { width: 292px; }
@@ -675,7 +675,7 @@ img {
    и после правок макета фото перестало совпадать с рамкой. Прозрачность
    не нужна, потому что полотно под карточкой белое. У мобильного своя
    картинка — она уже, выше и телефон в ней стоит иначе; выбирает `<picture>`. */
-.tg { top: 4849px; left: 32px; width: 986px; height: 440px; background: #fff; }
+.tg { top: 4826px; left: 32px; width: 986px; height: 440px; background: #fff; }
 /* обёртка picture ничего не рисует, но инлайновый бокс добавил бы строку —
    делаем её блочной, а картинка внутри всё равно позиционирована */
 .tg picture { display: block; }
@@ -698,7 +698,7 @@ img {
 .tg .btn { position: absolute; left: 32px; top: 324px; }
 
 /* ===== Вопросы ===== */
-.faq { top: 5379px; left: 32px; width: 986px; height: 640px; }
+.faq { top: 5356px; left: 32px; width: 986px; height: 640px; }
 .faq .h2 { margin-bottom: 40px; }
 .faq-item { margin-bottom: 32px; }
 .faq-item .h3 { margin-bottom: 8px; }
@@ -719,7 +719,7 @@ img {
    зашитыми в саму картинку, и жёлтой кнопкой. Под ней таймлайн.
    `top` секции — это верх плашки: бокс `1850:2979` в Фигме стоит на 18 ниже,
    потому что внутри него плашка сдвинута на −18. */
-.buy { top: 6109px; left: 32px; width: 986px; height: 560px; }
+.buy { top: 6086px; left: 32px; width: 986px; height: 560px; }
 .buy-card { position: relative; width: 986px; height: 406px; color: #fff; }
 .buy-bg {
   width: 986px; height: 406px;
@@ -798,7 +798,7 @@ img {
 .when-date + .when-what { margin-top: 6px; }
 
 /* ===== Если пока не определились ===== */
-.undecided { top: 6759px; left: 32px; width: 986px; height: 204px; }
+.undecided { top: 6736px; left: 32px; width: 986px; height: 204px; }
 .undecided .h2 { margin-bottom: 24px; }
 .undecided p {
   width: 571px;
@@ -812,7 +812,7 @@ img {
    + 32, и забыть эти 24 легко: один раз так и вышло, зазор стал 8 вместо 32. */
 .site-footer {
   position: absolute;
-  left: 0; top: 7127px;
+  left: 0; top: 7104px;
   width: 1050px;
   display: flex; align-items: center; justify-content: space-between;
   font: 400 15px/1.25 'Graphik', sans-serif;
