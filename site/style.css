@@ -1282,11 +1282,13 @@ img {
   .buy-now .rub { font-size: 40px; letter-spacing: -0.8px; margin-left: -6px; }
   .buy-card .btn { left: 20px; top: 447px; width: calc(100% - 40px); }
 
-  /* Таймлайн листается вбок, как в макете */
+  /* Таймлайн листается до краёв полотна, сохраняя поля у первой и последней отметок. */
   .when {
     position: static;
     width: auto; height: auto;
     margin-top: 40px;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
     overflow-x: auto;
   }
   /* На десктопе линия висит на 20,45 выше блока — внутри прокручиваемой
