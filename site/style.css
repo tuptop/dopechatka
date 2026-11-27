@@ -945,7 +945,7 @@ img {
   #page.landing {
     --gutter: clamp(16px, calc(16px + (100vw - 375px) / 35), 24px);
     width: 100%;
-    max-width: 640px;
+    max-width: 680px;
   }
   .sheet {
     width: 100%;
@@ -1001,7 +1001,7 @@ img {
   .hero .h1 {
     position: static;
     margin: 0 var(--gutter);
-    font-size: clamp(49px, 16vw, 60px);
+    font-size: clamp(49px, calc(60px + (100vw - 375px) / 20), 72px);
     line-height: 0.85;
   }
   .hero-sub {
@@ -1016,7 +1016,7 @@ img {
   .card-frame {
     display: block;
     width: 100%;
-    max-width: 343px;
+    max-width: 400px;
     min-height: 0;
     margin-inline: auto;
   }
@@ -1360,7 +1360,21 @@ img {
   .landing .sprint-pair > * { flex: 1; min-width: 0; }
   .landing .authors-row {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 32px 24px;
   }
+  .landing .intro-first,
+  .landing .intro-rest,
+  .landing .inside-lead,
+  .landing .faq-item p {
+    font-size: 19px;
+  }
+  .landing .inside-notes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    font-size: 18px;
+    line-height: 1.45;
+  }
+  .landing .author p { font-size: 16px; }
 }
