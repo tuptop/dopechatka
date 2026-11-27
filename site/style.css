@@ -766,6 +766,7 @@ img {
 }
 /* Правая колонка: подзаголовок, цена, кнопка — все от 637 */
 .buy-head { left: 637px; top: 54px; width: 265px; }
+.buy-lead-mobile { display: none; }
 .buy-lead { font: 600 16px/19.2px 'Graphik', sans-serif; letter-spacing: 0.01em; }
 .buy-note { font: 600 16px/19.2px 'Spectral', Cambria, Georgia, serif; }
 /* Как и в лид-карточке: приглушён только текст цены, линия поверх остаётся
@@ -1026,7 +1027,7 @@ img {
     margin-top: 40px;
   }
   .card-frame-tg { aspect-ratio: 343 / 657; }
-  .card-frame-buy { aspect-ratio: 343 / 583; }
+  .card-frame-buy { aspect-ratio: 343 / 610; }
   .card-frame > .badge,
   .card-frame > .tg-panel,
   .card-frame > .buy-card {
@@ -1229,13 +1230,13 @@ img {
   .faq-item:nth-of-type(3) p, .faq-item:nth-of-type(4) p { width: auto; }
 
   /* ===== Финальный блок =====
-     Плашка во всю колонку, 583 высотой; внутри — макетные координаты
+     Плашка во всю колонку, 610 высотой; внутри — макетные координаты
      от её верхнего края, выключка влево от 20, как в лид-карточке.
      Зубцы рисуют псевдоэлементы, текстура растянута по карточке. */
   .buy { margin-top: 80px !important; }
   .buy-card {
     position: relative;
-    height: 583px;
+    height: 610px;
     margin: 0;
     background: #2b241c url('assets/plate-buy.jpg') 50% 50% / cover;
   }
@@ -1250,37 +1251,38 @@ img {
   .buy-card::before { top: 0; }
   .buy-card::after { bottom: 0; transform: scaleY(-1); }
   .buy-kicker {
-    left: 20px; top: 40px;
+    left: 20px; top: 39.5px;
     font-size: 20px; line-height: 19.4px;
     font-weight: 500; letter-spacing: -0.4px;
   }
   .buy-title {
-    left: 20px; top: 69px;
+    left: 20px; top: 68.5px;
     width: 295px;
     font-size: 52px; line-height: 44.2px;
     letter-spacing: -1.04px;
   }
   .buy-text {
-    left: 20px; top: 173px;
+    left: 20px; top: 172.5px;
     width: 303px;
     font-size: 20px; line-height: 1.35;
   }
-  .buy-head { left: 20px; top: 275px; width: 268px; }
+  .buy-head { left: 20px; top: 301.5px; width: 268px; }
+  .buy-lead-mobile { display: inline; }
   .buy-lead, .buy-note { font-size: 18px; line-height: 20.7px; }
   .buy-old {
-    left: 20px; top: 363px;
+    left: 20px; top: 389.5px;
     font-weight: 500; font-size: 20px; line-height: 21.6px;
     letter-spacing: -0.2px;
   }
-  /* 387 в макете — верх краски (бокс обрезан по прописной), минус 0,138 em */
+  /* 413,5 в макете — верх краски (бокс обрезан по прописной), минус 0,138 em */
   .buy-now {
-    left: 20px; top: 378.7px;
+    left: 20px; top: 405.2px;
     width: 303px;
     font-size: 60px;
     letter-spacing: -1.8px;
   }
   .buy-now .rub { font-size: 40px; letter-spacing: -0.8px; margin-left: -6px; }
-  .buy-card .btn { left: 20px; top: 447px; width: calc(100% - 40px); }
+  .buy-card .btn { left: 20px; top: 473.5px; width: calc(100% - 40px); }
 
   /* Таймлайн листается до краёв полотна, сохраняя поля у первой и последней отметок. */
   .when {
