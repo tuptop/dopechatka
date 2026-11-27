@@ -698,12 +698,12 @@ img {
   position: absolute;
   left: 32px; top: 46px;
   width: 465px;
-  font: 400 56px/0.9 'Spectral', Cambria, Georgia, serif;
+  font: 400 56px/0.95 'Spectral', Cambria, Georgia, serif;
   letter-spacing: -1.12px;
 }
 .tg-text {
   position: absolute;
-  left: 32px; top: 170.8px;
+  left: 32px; top: 172.4px;
   width: 526px;
   font: 500 20px/1.35 'Graphik', sans-serif;
 }
