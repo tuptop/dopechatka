@@ -28,7 +28,7 @@
   <link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <link rel="stylesheet" href="style.css?v=147">
+  <link rel="stylesheet" href="style.css?v=149">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -45,7 +45,7 @@
   <noscript><div><img src="https://mc.yandex.ru/watch/113259666" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
 
-  <div id="page">
+  <div id="page" class="landing">
     <div class="sheet">
 
       <!-- ===== Хиро: облако реплик, заголовок, фото с параллаксом, плашка цены ===== -->
@@ -57,15 +57,17 @@
         <h1 class="h1">Допечатная<br>подготовка</h1>
         <p class="hero-sub">Онлайн-курс по&nbsp;работе с&nbsp;печатной продукцией <br class="wide-only">для&nbsp;дизайнеров и&nbsp;менеджеров</p>
 
-        <div class="badge">
-          <div class="badge-bg" aria-hidden="true"><i></i></div>
-          <div class="badge-head">
-            <p class="badge-lead">Ранний доступ к&nbsp;курсу</p>
-            <p class="badge-note">Включает доступ ко&nbsp;всем урокам, которые выйдут позже</p>
+        <div class="card-frame card-frame-badge">
+          <div class="badge">
+            <div class="badge-bg" aria-hidden="true"><i></i></div>
+            <div class="badge-head">
+              <p class="badge-lead">Ранний доступ к&nbsp;курсу</p>
+              <p class="badge-note">Включает доступ ко&nbsp;всем урокам, которые выйдут позже</p>
+            </div>
+            <p class="badge-old">22&nbsp;500</p>
+            <p class="badge-now">4500&nbsp;<span class="rub">₽</span></p>
+            <a class="btn btn-yellow js-checkout" data-utm="hero" href="https://stepik.org/a/299554" target="_blank" rel="noopener">Предзаказ</a>
           </div>
-          <p class="badge-old">22&nbsp;500</p>
-          <p class="badge-now">4500&nbsp;<span class="rub">₽</span></p>
-          <a class="btn btn-yellow js-checkout" data-utm="hero" href="https://stepik.org/a/299554" target="_blank" rel="noopener">Предзаказ</a>
         </div>
       </section>
 
@@ -322,16 +324,20 @@
 
       <!-- ===== Телеграм-канал ===== -->
       <section class="tg" aria-label="Телеграм-канал курса">
-        <!-- Карточка целиком одна картинка из макета, у мобильного своя:
-             она уже, выше и телефон в ней стоит иначе. Текст и кнопка лежат
-             поверх, поэтому картинка идёт первой. -->
-        <picture>
-          <source media="(max-width: 759px)" srcset="assets/tg-card-mobile-2x.png">
-          <img class="tg-card" src="assets/tg-card-2x.png" alt="Телеграм-канал курса на экране телефона">
-        </picture>
-        <h2 class="tg-title">Подписывайтесь<br>на&nbsp;телеграм-канал</h2>
-        <p class="tg-text">Рассказываем о&nbsp;курсе, публикуем анонсы, <br class="wide-only">даём полезные советы по&nbsp;работе с&nbsp;печатью.</p>
-        <a class="btn btn-dark" href="https://t.me/lembadesign" target="_blank" rel="noopener">Заглянуть</a>
+        <div class="card-frame card-frame-tg">
+          <div class="tg-panel">
+            <!-- Карточка целиком одна картинка из макета, у мобильного своя:
+                 она уже, выше и телефон в ней стоит иначе. Текст и кнопка лежат
+                 поверх, поэтому картинка идёт первой. -->
+            <picture>
+              <source media="(max-width: 759px)" srcset="assets/tg-card-mobile-2x.png">
+              <img class="tg-card" src="assets/tg-card-2x.png" alt="Телеграм-канал курса на экране телефона">
+            </picture>
+            <h2 class="tg-title">Подписывайтесь<br>на&nbsp;телеграм-канал</h2>
+            <p class="tg-text">Рассказываем о&nbsp;курсе, публикуем анонсы, <br class="wide-only">даём полезные советы по&nbsp;работе с&nbsp;печатью.</p>
+            <a class="btn btn-dark" href="https://t.me/lembadesign" target="_blank" rel="noopener">Заглянуть</a>
+          </div>
+        </div>
       </section>
 
       <!-- ===== Вопросы ===== -->
@@ -357,18 +363,20 @@
 
       <!-- ===== Плашка с ценой ===== -->
       <section class="buy" aria-label="Предзаказ курса">
-        <div class="buy-card">
-          <div class="buy-bg" aria-hidden="true"><i></i></div>
-          <p class="buy-kicker">Курс</p>
-          <h2 class="buy-title">Допечатная подготовка</h2>
-          <p class="buy-text">Для&nbsp;дизайнеров, менеджеров и&nbsp;всех, кто&nbsp;работает с&nbsp;печатными проектами</p>
-          <div class="buy-head">
-            <p class="buy-lead">Ранний доступ</p>
-            <p class="buy-note">Включает доступ ко&nbsp;всем урокам, которые выйдут позже</p>
+        <div class="card-frame card-frame-buy">
+          <div class="buy-card">
+            <div class="buy-bg" aria-hidden="true"><i></i></div>
+            <p class="buy-kicker">Курс</p>
+            <h2 class="buy-title">Допечатная подготовка</h2>
+            <p class="buy-text">Для&nbsp;дизайнеров, менеджеров и&nbsp;всех, кто&nbsp;работает с&nbsp;печатными проектами</p>
+            <div class="buy-head">
+              <p class="buy-lead">Ранний доступ</p>
+              <p class="buy-note">Включает доступ ко&nbsp;всем урокам, которые выйдут позже</p>
+            </div>
+            <p class="buy-old">22&nbsp;500</p>
+            <p class="buy-now">4500&nbsp;<span class="rub">₽</span></p>
+            <a class="btn btn-yellow js-checkout" data-utm="buy" href="https://stepik.org/a/299554" target="_blank" rel="noopener">Предзаказ</a>
           </div>
-          <p class="buy-old">22&nbsp;500</p>
-          <p class="buy-now">4500&nbsp;<span class="rub">₽</span></p>
-          <a class="btn btn-yellow js-checkout" data-utm="buy" href="https://stepik.org/a/299554" target="_blank" rel="noopener">Предзаказ</a>
         </div>
 
         <!-- Таймлайн выхода уроков -->
@@ -524,32 +532,17 @@
   (() => {
     const SHEET = 1050;        // ширина белого полотна в вёрстке
     const MAX = 1200 / SHEET;  // ≈1.1429 — на экране полотно шириной 1200
-    const MOB = 375;           // натуральная ширина мобильного макета
     const root = document.documentElement;
+    const page = document.getElementById('page');
+    const mobile = matchMedia('(max-width: 759px)');
+    const card = page.querySelector('.card-frame');
     const fit = () => {
-      const vw = root.clientWidth;
-      if (matchMedia('(max-width: 759px)').matches) {
-        /* Мобильный холст — натуральная величина макета (375), и он тянется
-           на всю ширину окна без потолка: макет повторяется один в один
-           на любом экране, только крупнее или мельче. Потолок 1.2 тут был
-           до этого — выше него холст расширялся, а кегли оставались
-           макетными, и на планшете текст выглядел мелким. */
-        root.style.setProperty('--zoom', (vw / MOB).toFixed(4));
-        root.style.setProperty('--page-w', MOB + 'px');
-        /* Проверяем, что zoom вообще применился. Если браузер его игнорирует,
-           холст остаётся 375 на экране шире — и вся страница прижимается
-           к левому краю узкой колонкой (на это жаловались с айфона). Тогда
-           отдаём обычную резину: масштаб 1, ширина 100%. Мобильная раскладка
-           поточная и это переживает — только кегли остаются макетными. */
-        const page = document.getElementById('page');
-        if (page && Math.abs(page.getBoundingClientRect().width - vw) > 1) {
-          root.style.setProperty('--zoom', '1');
-          root.style.setProperty('--page-w', '100%');
-        }
+      if (mobile.matches) {
+        root.style.setProperty('--zoom', '1');
+        page.style.setProperty('--card-scale', card.getBoundingClientRect().width / 343);
         return;
       }
-      root.style.removeProperty('--page-w');
-      root.style.setProperty('--zoom', Math.min(MAX, vw / SHEET).toFixed(4));
+      root.style.setProperty('--zoom', Math.min(MAX, root.clientWidth / SHEET));
     };
     fit();
     window.addEventListener('resize', fit, { passive: true });
