@@ -694,22 +694,20 @@ img {
    делаем её блочной, а картинка внутри всё равно позиционирована */
 .tg picture { display: block; }
 .tg-card { position: absolute; left: 0; top: 0; width: 986px; height: 440px; }
-/* Regular, не Bold: автор облегчила заголовок вслед за надзаголовком
-   «Курс» в финальной плашке. Трекинг макетный, −1.2. */
 .tg-title {
   position: absolute;
   left: 32px; top: 46px;
-  width: 526px;
-  font: 400 60px/1 'Spectral', Cambria, Georgia, serif;
-  letter-spacing: -1.2px;
+  width: 465px;
+  font: 400 56px/0.9 'Spectral', Cambria, Georgia, serif;
+  letter-spacing: -1.12px;
 }
 .tg-text {
   position: absolute;
-  left: 32px; top: 190px;
+  left: 32px; top: 170.8px;
   width: 526px;
   font: 500 20px/1.35 'Graphik', sans-serif;
 }
-.tg .btn { position: absolute; left: 32px; top: 324px; }
+.tg .btn { position: absolute; left: 32px; top: 324px; padding-inline: 40px; }
 
 /* ===== Вопросы ===== */
 .faq { top: 5356px; left: 32px; width: 986px; height: 640px; }
@@ -1174,7 +1172,7 @@ img {
   }
 
   /* ===== Телеграм =====
-     У мобильного своя карточка-картинка (узел 2001:4361, 343×619): рамка
+     У мобильного своя карточка-картинка (узел 3452:4332, 343×657): рамка
      с зубцами и телефон в ней уже есть, рисовать их CSS'ом не нужно.
      Высоту секции держит `aspect-ratio` — картинка лежит абсолютно
      и в поток не считается. */
@@ -1182,15 +1180,15 @@ img {
     position: relative;
     margin-top: 80px !important;
     padding: 33px 16px 0;
-    aspect-ratio: 343 / 620;
+    aspect-ratio: 343 / 657;
   }
   .tg-card { width: 100%; height: auto; }
   /* текст и кнопка в потоке, а картинка позиционирована — без `relative`
      они оказались бы под ней */
   .tg-title, .tg-text, .tg .btn { position: relative; width: auto; }
-  .tg-title { font-weight: 600; font-size: 36px; letter-spacing: -0.72px; }
+  .tg-title { font-weight: 600; font-size: 36px; line-height: 1; letter-spacing: -0.72px; }
   .tg-text { margin-top: 16px; max-width: 311px; font-size: 18px; line-height: 1.45; }
-  .tg .btn { display: flex; height: 52px; margin-top: 30px; }
+  .tg .btn { display: flex; height: 52px; margin-top: 30px; padding-inline: 24px; }
 
   /* ===== Вопросы ===== */
   .faq { margin-top: 80px !important; }
