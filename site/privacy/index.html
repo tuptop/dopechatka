@@ -17,7 +17,7 @@
   <link rel="icon" href="../favicon.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 
-  <link rel="stylesheet" href="../style.css?v=148">
+  <link rel="stylesheet" href="../style.css?v=144">
 </head>
 <body>
   <!-- Yandex.Metrika counter -->
@@ -131,6 +131,48 @@
     </footer>
   </div>
 
-<script src="../autoscale.js"></script>
+<script>
+  /* ============================================================
+     АВТОСКЕЙЛ ХОЛСТА
+     Тот же, что на главной: вёрстка в натуральную величину макета
+     (полотно 1050), на экран её кладёт zoom с потолком 1200/1050.
+     Ниже 760px включается мобильная раскладка со своим холстом 375.
+     Меняешь потолок — поменяй и в CSS, где лежит дефолт на случай
+     отключённого JS, и на главной странице.
+     ============================================================ */
+  (() => {
+    const SHEET = 1050;        // ширина белого полотна в вёрстке
+    const MAX = 1200 / SHEET;  // ≈1.1429 — на экране полотно шириной 1200
+    const MOB = 375;           // натуральная ширина мобильного макета
+    const root = document.documentElement;
+    const fit = () => {
+      const vw = root.clientWidth;
+      if (matchMedia('(max-width: 759px)').matches) {
+        /* Мобильный холст — натуральная величина макета (375), и он тянется
+           на всю ширину окна без потолка: макет повторяется один в один
+           на любом экране, только крупнее или мельче. Потолок 1.2 тут был
+           до этого — выше него холст расширялся, а кегли оставались
+           макетными, и на планшете текст выглядел мелким. */
+        root.style.setProperty('--zoom', (vw / MOB).toFixed(4));
+        root.style.setProperty('--page-w', MOB + 'px');
+        /* Проверяем, что zoom вообще применился. Если браузер его игнорирует,
+           холст остаётся 375 на экране шире — и вся страница прижимается
+           к левому краю узкой колонкой (на это жаловались с айфона). Тогда
+           отдаём обычную резину: масштаб 1, ширина 100%. Мобильная раскладка
+           поточная и это переживает — только кегли остаются макетными. */
+        const page = document.getElementById('page');
+        if (page && Math.abs(page.getBoundingClientRect().width - vw) > 1) {
+          root.style.setProperty('--zoom', '1');
+          root.style.setProperty('--page-w', '100%');
+        }
+        return;
+      }
+      root.style.removeProperty('--page-w');
+      root.style.setProperty('--zoom', Math.min(MAX, vw / SHEET).toFixed(4));
+    };
+    fit();
+    window.addEventListener('resize', fit, { passive: true });
+  })();
+</script>
 </body>
 </html>
